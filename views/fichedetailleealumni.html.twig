@@ -1,0 +1,37 @@
+{% extends "layout.html.twig" %}
+
+ {% block title %}Fiche détaillée d'un ancien élève{% endblock %}
+
+        {% block content %}
+     
+<div class="col-md-12">
+    
+            <h1>Fiche détaillée d'un ancien élève</h1>
+            
+
+			<article>
+				<h2>{{ user.firstname }} {{ user.username }}</h2>
+                <p>{{ user.phone }}</p>
+                <p>{{ user.city }}</p>
+                <p>{{ user.promo }}</p>
+                <p>{{ user.presentation }}</p>
+                <p>{{ user.skills }}</p>
+                <p>{{ user.status }}</p>
+                <p>{{ user.searchjob }}</p>
+                <p>{{ user.searchtime }}</p>
+                <p>{{ user.job }}</p>
+                <p>{{ user.contract }}</p>
+                <p>{{ user.companytype }}</p>
+                <p>{{ user.wage }}</p>
+                <p>{{ user.companyname }}</p>
+                <p>{{ user.linkedinurl  }}</p>
+                <p>{{ user.cv }}</p>
+                <p>{{ user.sponsorship }}</p>
+                
+            </article>
+            
+      
+             
+    </div>
+
+		    {% endblock %} 

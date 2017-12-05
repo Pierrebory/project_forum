@@ -12,6 +12,12 @@ $app->get('/', 'WF3\Controller\HomeController::homePageAction')
 $app->match('/annuaire', 'WF3\Controller\HomeController::annuaireAction')
     ->bind('annuaire');
 
+//page détaillée d'un ancien élève
+$app->match('/annuaire/{id}', 'WF3\Controller\HomeController::getAlumniAction')
+    ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
+    ->bind('fichedétaillée');
 
+
+//page Forum
 $app->get('/forum', 'WF3\Controller\HomeController::forumPageAction')->bind('forum');
 

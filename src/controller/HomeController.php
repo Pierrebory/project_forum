@@ -15,14 +15,16 @@ class HomeController{
     
     //page Annuaire qui affiche uniquement les noms des anciens élèves
     public function annuaireAction(Application $app){
-        $users = $app['dao.users']->displayName();
+        $users = $app['dao.users']->findAll();
         return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
     }
     
     
-  
-    
-    
+  //page détaillée d'un ancien élève
+    public function getAlumniAction(Application $app, $userid){
+        $user = $app['dao.users']->displayAlumni($userid);
+        return $app['twig']->render('fichedetailleealumni.html.twig', array('user' => $user)); 
+    }
     
     
     

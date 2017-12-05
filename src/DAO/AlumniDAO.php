@@ -16,6 +16,11 @@ class AlumniDao extends DAO implements UserProviderInterface
 {
     
     
+    
+    
+    
+    
+    
     //méthode de recherche d'un ancien élève par son nom
     public function findAlumniByUsername($username){
         $result = $this->bdd->prepare('SELECT promo, presentation, skills, status, searchjob, searchtime, job, contract, companytype, wage, companyname, linkedinurl, cv, sponsorship  FROM alumni INNER JOIN users ON alumni.alumni_id = users.id WHERE $username LIKE :username');
