@@ -12,10 +12,10 @@
            
 			{% for user in users %}
             
-          {{ dump(user) }}
+         
            
 			<ul>
-				<li><a href="{{ path('fichedétaillée', {id: users.id}) }}">{{ user.firstname }} {{ user.username }}</a> </li>
+				<li><a href="{{ path('fichedétaillée', {id: user.id}) }}">{{ user.firstname }} {{ user.username }}</a> </li>
 			</ul>
             
 			{% endfor %} 
