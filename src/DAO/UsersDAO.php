@@ -23,7 +23,7 @@ class UsersDAO extends DAO implements UserProviderInterface
     
     //méthode pour afficher la fiche complète d'un ancien élève 
     public function displayAlumni($userid){
-        $result = $this->bdd->prepare('SELECT users.id AS userid, avatar, firstname, username, phone, city, promo, presentation, skills, status, searchjob, searchtime, job, contract, companyname, linkedinurl, cv, sponsorship FROM users INNER JOIN alumni ON alumni.alumni_id = users.id WHERE users.id = :iduser');
+        $result = $this->bdd->prepare('SELECT users.id, username, firstname, phone, city, promo, presentation, skills, status, searchjob, searchtime, job, contract, companyname, linkedinurl, cv, sponsorship FROM users INNER JOIN alumni ON alumni.alumni_id = users.id WHERE users.id = :iduser');
         $result->bindValue(':iduser', $userid);
         $result->execute();
         return $result->fetch(\PDO::FETCH_ASSOC);   

@@ -13,9 +13,9 @@ $app->match('/annuaire', 'WF3\Controller\HomeController::annuaireAction')
     ->bind('annuaire');
 
 //page détaillée d'un ancien élève
-$app->match('/annuaire/{userid}', 'WF3\Controller\HomeController::getAlumniAction')
+$app->match('/annuaire/{id}', 'WF3\Controller\HomeController::getAlumniAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
-    ->bind('fichedétaillée');
+    ->bind('fichedetaillee');
 
 
 //page Forum
