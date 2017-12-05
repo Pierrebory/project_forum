@@ -12,5 +12,5 @@ class HomeController{
 
 	 	return $app['twig']->render('index.html.twig');
 	}
-
+ 
 }
