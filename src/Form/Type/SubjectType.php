@@ -40,10 +40,11 @@ class SubjectType extends AbstractType
                         'min' => 3,
                     ))
                 )
-            ))
+            ));
    
        
     }
+
 
     //à rajouter mais pour l'instant on s'en occupe pas
     public function getName()

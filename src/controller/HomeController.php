@@ -2,9 +2,12 @@
 namespace WF3\Controller;
 
 use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
+
 //cette ligne nous permet d'utiliser le service fourni par symfony pour gérer 
 use WF3\Domain\User;
 use WF3\Form\Type\RegisterType;
+use WF3\Form\Type\SubjectType;
 
 class HomeController{
 
@@ -30,14 +33,21 @@ class HomeController{
     
  
     
-    public function forumPageAction(Application $app){
+    public function forumPageAction(Application $app, Request $request){
+         $subjectForm = $app['form.factory']->create(subjectType::class);
+        $subjectForm->handleRequest($request);
+        if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
+            
 		$subjects = $app['dao.subject']->getSubjects();
 
-	 	return $app['twig']->render('subject_forum.html.twig', array('subjects' => $subjects));
+	 	return $app['twig']->render('subject_forum.html.twig', array(
+            'form'=>$subjectForm->createView(),
+            'subjects' => $subjects));
 	}
+    }
 
 	//////////// FORMULAIRE INSCRIPTION ////////////
-    public function registerAction(Application $app){
+    public function registerAction(Application $app, Request $request){
 		$user = new User();
 		$userForm = $app['form.factory']->create(RegisterType::class, $user);
 		// on envoie les paramètres de la requête à notre objet formulaire
