@@ -32,18 +32,20 @@ class HomeController{
     
     
  
-    
+    ///////////////////////PAGE SUJET FORUM////////////////////////
     public function forumPageAction(Application $app, Request $request){
-         $subjectForm = $app['form.factory']->create(subjectType::class);
+        $subjects =[];
+        $subjectForm = $app['form.factory']->create(subjectType::class);
         $subjectForm->handleRequest($request);
         if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
             
 		$subjects = $app['dao.subject']->getSubjects();
 
-	 	return $app['twig']->render('subject_forum.html.twig', array(
+	 	
+	   }
+        return $app['twig']->render('subject_forum.html.twig', array(
             'form'=>$subjectForm->createView(),
-            'subjects' => $subjects));
-	}
+            'subjects'=>$subjects));
     }
 
 	//////////// FORMULAIRE INSCRIPTION ////////////
