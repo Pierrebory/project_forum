@@ -15,3 +15,4 @@ $app->match('/annuaire', 'WF3\Controller\HomeController::annuaireAction')
 
 $app->get('/forum', 'WF3\Controller\HomeController::forumPageAction')->bind('forum');
 
+

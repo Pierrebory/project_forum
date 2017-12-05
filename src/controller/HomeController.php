@@ -29,8 +29,8 @@ class HomeController{
  
     
     public function forumPageAction(Application $app){
-		$subject = $app['dao.subject']->getSubject();
+		$subjects = $app['dao.subject']->getSubjects();
 
-	 	return $app['twig']->render('subject_forum.html.twig', array('subject' => $subject));
+	 	return $app['twig']->render('subject_forum.html.twig', array('subjects' => $subjects));
 	}
 }
