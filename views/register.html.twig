@@ -13,9 +13,11 @@
                 <div class="form-group">
                     {{ form_label(userForm.username, null) }}
                     <div>
-	                    <div class="alert alert-danger">
-	                        {{ form_errors(userForm.username) }}
-	                    </div>
+                    	{% if not userForm.vars.valid %}
+		                    <div class="alert alert-danger">
+		                        {{ form_errors(userForm.username) }}
+		                    </div>
+		                {% endif %}
                         {{ form_widget(userForm.username, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
@@ -24,9 +26,11 @@
                 <div class="form-group">
                     {{ form_label(userForm.firstname, null) }}
                     <div>
-	                    <div class="alert alert-danger">
-	                        {{ form_errors(userForm.firstname) }}
-	                    </div>
+                    	{% if not userForm.vars.valid %}
+		                    <div class="alert alert-danger">
+		                        {{ form_errors(userForm.firstname) }}
+		                    </div>
+		                {% endif %}
                         {{ form_widget(userForm.firstname, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
@@ -35,9 +39,11 @@
                 <div class="form-group">
                     {{ form_label(userForm.email, null) }}
                     <div>
-	                    <div class="alert alert-danger">
-	                        {{ form_errors(userForm.email) }}
-	                    </div>
+                    	{% if not userForm.vars.valid %}
+		                    <div class="alert alert-danger">
+		                        {{ form_errors(userForm.email) }}
+		                    </div>
+		                {% endif %}
                         {{ form_widget(userForm.email, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
@@ -46,9 +52,11 @@
                 <div class="form-group">
                     {{ form_label(userForm.password, null) }}
                     <div>
-	                    <div class="alert alert-danger">
-	                        {{ form_errors(userForm.password) }}
-	                    </div>
+                    	{% if not userForm.vars.valid %}
+		                    <div class="alert alert-danger">
+		                        {{ form_errors(userForm.password) }}
+		                    </div>
+		                {% endif %}
                         {{ form_widget(userForm.password, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
@@ -57,9 +65,11 @@
                 <div class="form-group">
                     {{ form_label(userForm.phone, null) }}
                     <div>
-	                    <div class="alert alert-danger">
-	                        {{ form_errors(userForm.phone) }}
-	                    </div>
+                    	{% if not userForm.vars.valid %}
+		                    <div class="alert alert-danger">
+		                        {{ form_errors(userForm.phone) }}
+		                    </div>
+		                {% endif %}
                         {{ form_widget(userForm.phone, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
@@ -68,9 +78,11 @@
                 <div class="form-group">
                     {{ form_label(userForm.city, null) }}
                     <div>
-	                    <div class="alert alert-danger">
-	                        {{ form_errors(userForm.city) }}
-	                    </div>
+                    	{% if not userForm.vars.valid %}
+		                    <div class="alert alert-danger">
+		                        {{ form_errors(userForm.city) }}
+		                    </div>
+		                {% endif %}
                         {{ form_widget(userForm.city, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
@@ -79,17 +91,19 @@
                 <div class="form-group">
                     {{ form_label(userForm.role, null) }}
                     <div>
-	                    <div class="alert alert-danger">
-	                        {{ form_errors(userForm.role) }}
-	                    </div>
+                    	{% if not userForm.vars.valid %}
+		                    <div class="alert alert-danger">
+		                        {{ form_errors(userForm.role) }}
+		                    </div>
+		                {% endif %}
                         {{ form_widget(userForm.role, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
                     </div>
                 </div>   
-                                                                 
+
                 <div class="form-group">
-                    <input type="submit" class="btn btn-primary btn-lg" value="send" />
+                    <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" />
                 </div>
             {{ form_end(userForm) }}
         </div>

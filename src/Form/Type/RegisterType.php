@@ -79,16 +79,15 @@ class RegisterType extends AbstractType
         ));   
 
         ////////////////// MOT DE PASSE /////////////////////
-        $builder->add('password', RepeatedType::class, array(
-            'label' => 'Votre mot de passe*',           
+        $builder->add('password', RepeatedType::class, array(       
             'type' => PasswordType::class,
             'attr' => array(
                 'placeholder' => 'Au moins 4 caractères'
             ),            
             'invalid_message' => 'Les mots de passe doivent être identiques.',
             'required' => true,
-            'first_options'  => array('label' => 'Mot de passe'),
-            'second_options' => array('label' => 'Répeter le mot de passe'),
+            'first_options'  => array('label' => 'Votre mot de passe*'),
+            'second_options' => array('label' => 'Répetez le mot de passe*'),
             'constraints' => array(
                 new Assert\NotBlank(),
                 new Assert\Length(array(
@@ -138,6 +137,7 @@ class RegisterType extends AbstractType
         ));   
 
 
+        //////////////////// ROLE ////////////////////
         $builder->add('role', ChoiceType::class, array(
             'label' => 'Qui êtes-vous ?*',           
             'attr' => array(
