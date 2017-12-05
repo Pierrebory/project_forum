@@ -35,7 +35,7 @@ class User implements UserInterface
     }
 
     public function setUsername($name) {
-        if(!empty($name) AND is_string($name) AND mb_strlen($password) >= 2){
+        if(!empty($name) AND is_string($name) AND mb_strlen($name) >= 2){
         $this->username = $name;
         return $this;
         }
@@ -46,7 +46,7 @@ class User implements UserInterface
     }
 
     public function setFirstname($firstname) {
-        if(!empty($firstname) AND is_string($firstname) AND mb_strlen($password) >= 2){
+        if(!empty($firstname) AND is_string($firstname) AND mb_strlen($firstname) >= 2){
         $this->firstname = $firstname;
         return $this;
     }
