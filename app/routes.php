@@ -4,3 +4,6 @@
 
 //page d'accueil qui affiche tout les articles
 $app->get('/', 'WF3\Controller\HomeController::homePageAction')->bind('home'); 
+//
+
+$app->get('/forum', 'WF3\Controller\HomeController::forumPageAction')->bind('forum');
