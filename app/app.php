@@ -63,7 +63,9 @@ $app['dao.users'] = function($app){
 };
 
 $app['dao.subject'] = function($app){
-	return new WF3\DAO\SubjectDAO($app['db'], 'subject', 'WF3\Domain\Subjects');
+	$subjectDAO = new WF3\DAO\SubjectDAO($app['db'], 'forum_subjects', 'WF3\Domain\Subjects');
+    $subjectDAO->setUserDAO($app['dao.users']);
+    return $subjectDAO;
 
 };
 
@@ -74,6 +76,7 @@ $app['dao.alumni'] = function($app){
 	$AlumniDAO = new WF3\DAO\AlumniDAO($app['db'], 'alumni', 'WF3\Domain\Alumni');
     return $AlumniDAO;
 };
+
 
 
 

@@ -8,6 +8,7 @@ class JobOffert
    
     private $id;
     private $title;
+    private $city;
     private $date_offer;
     private $description;
     private $skills;
@@ -36,6 +37,17 @@ class JobOffert
     public function setTitle($title) {
         if(!empty($title) AND is_string($title) AND mb_strlen($title) >= 2){
         $this->title = $title;
+        return $this;
+        }
+    }
+    
+    public function getCity() {
+        return $this->city;
+    }
+
+    public function setCity($city) {
+        if(!empty($city) AND is_string($city)){
+        $this->city = $city;
         return $this;
         }
     }

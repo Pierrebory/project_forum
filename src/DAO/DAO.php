@@ -26,7 +26,7 @@ class DAO implements DB{
         
     }
     
-    public function buildObject(array $row){
+    public function buildObject($row){
         $class = $this->objectClassName;
         $object = new $class();
         foreach($row as $key=>$value){
