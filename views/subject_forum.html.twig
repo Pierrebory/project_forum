@@ -1,0 +1,16 @@
+	{% extends "layout.html.twig" %}
+	
+	{% block title %}Un sujet{% endblock %}
+	
+	{% block content %}
+            <h2>Mon sujet</h2>
+            
+			<article>
+				<h2>{{ subject.title }}</h2>
+				{# article.title est l'équivalent twig de $article['title'] en php #}
+				<p>{{ subject.message }}</p>
+				<p>publié le {{ subject.date_message }}<br>
+				par {{ subject.user_id.username }}</p>
+			</article>
+		{% endblock %}
+		
