@@ -55,19 +55,20 @@ $app['swiftmailer.options'] = array(
 );
 
 
-$app['dao.article'] = function($app){
-	$articleDAO = new WF3\DAO\ArticleDAO($app['db'], 'articles', 'WF3\Domain\Article');
-    //on injecte dans $articleDAO une instance de la classe UserDAO : injection de dépendance
-    //elle est faite une seule fois, ici
-    $articleDAO->setUserDAO($app['dao.user']);
-    return $articleDAO;
+//on enregistre un nouveau service :
+//on pourra ainsi accéder à notre classe UsersDAO grâce à $app['dao.users'] 
+$app['dao.users'] = function($app){
+	return new WF3\DAO\UsersDAO($app['db'], 'users', 'WF3\Domain\User');
 };
 
-//on enregistre un nouveau service :
-//on pourra ainsi accéder à notre classe UserDAO grâce à $app['dao.user'] 
-$app['dao.user'] = function($app){
-	return new WF3\DAO\UserDAO($app['db'], 'users', 'WF3\Domain\User');
+
+
+
+$app['dao.alumni'] = function($app){
+	$AlumniDAO = new WF3\DAO\AlumniDAO($app['db'], 'alumni', 'WF3\Domain\Alumni');
+    return $AlumniDAO;
 };
+
 
 
 

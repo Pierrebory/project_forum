@@ -11,6 +11,18 @@ use WF3\Domain\User;
 class UsersDAO extends DAO implements UserProviderInterface
 {
     
+    
+    //méthode pour afficher les avatars, prénoms, noms, ville et la promo de tous les anciens
+    public function displayName{
+        $result = $this->bdd->query('SELECT avatar, firstname, username, city, promo FROM users INNER JOIN alumni ON alumni.alumni_id = users.id');
+        return $result->fetchALL(\PDO::FETCH_ASSOC);
+    }  
+    
+    
+    
+    
+    
+    
     /**
      * {@inheritDoc}
      */
