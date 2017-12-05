@@ -3,14 +3,41 @@
 	{% block title %}Un sujet{% endblock %}
 	
 	{% block content %}
+{{ form_start(subjectForm, { 'attr': {'class': 'form-horizontal'} }) }}
+                <div class="form-group">
+                    {{ form_label(contactForm.title, null) }}
+                    <div>
+                        {{ form_errors(contactForm.title) }}
+                        {{ form_widget(contactForm.title, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(contactForm.message, null) }}
+                    <div>
+                    <div class="alert alert-danger">
+                        {{ form_errors(contactForm.message) }}
+                    </div>
+                        {{ form_widget(contactForm.message, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Send" />
+                </div>
+            {{ form_end(subjectForm) }}
             <h2>Mon sujet</h2>
             
+       {% for subject in subjects %}
 			<article>
 				<h2>{{ subject.title }}</h2>
-				{# article.title est l'équivalent twig de $article['title'] en php #}
 				<p>{{ subject.message }}</p>
 				<p>publié le {{ subject.date_message }}<br>
 				par {{ subject.user_id.username }}</p>
 			</article>
+        {%endfor%}
 		{% endblock %}
 		

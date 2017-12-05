@@ -15,6 +15,8 @@ $app->match('/annuaire', 'WF3\Controller\HomeController::annuaireAction')
 
 $app->get('/forum', 'WF3\Controller\HomeController::forumPageAction')->bind('forum');
 
+
 // formulaire d'inscription
 $app->match('/register', 'WF3\Controller\HomeController::registerAction')
     ->bind('register');
+

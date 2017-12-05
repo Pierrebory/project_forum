@@ -57,7 +57,7 @@ class User implements UserInterface
     }
 
     public function setEmail($email) {
-        if(!empty($email) AND is_string($email) filter_var($email, FILTER_VALIDATE_EMAIL)){
+        if(!empty($email) AND is_string($email) AND filter_var($email, FILTER_VALIDATE_EMAIL)){
         $this->email = $email;
         return $this;
     }
@@ -91,7 +91,7 @@ class User implements UserInterface
     }
     
     public function setPhone($phone) {
-        if(!empty($phone) AND is_numeric($phone) AND mb_strlen($phone) = 10){
+        if(!empty($phone) AND is_numeric($phone)){
         $this->phone = $phone;
         return $this;
     }

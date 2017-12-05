@@ -5,7 +5,7 @@ $app['db.options'] = array(
 	'charset' => 'utf8',
 	'host' => 'localhost',
 	'port' => '3306',
-	'dbname' => 'blog2',
+	'dbname' => 'project_forum',
 	'user' => 'root',
 	'password' => '',
 );
