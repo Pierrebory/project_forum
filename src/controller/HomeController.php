@@ -37,7 +37,7 @@ class HomeController{
 	}
 
 	//////////// FORMULAIRE INSCRIPTION ////////////
-    public function registerAction(Application $app){
+    public function registerAction(Application $app, Request $request){
 		$user = new User();
 		$userForm = $app['form.factory']->create(RegisterType::class, $user);
 		// on envoie les paramètres de la requête à notre objet formulaire
