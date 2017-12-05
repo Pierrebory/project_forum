@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class RegisterType extends AbstractType
@@ -28,7 +29,7 @@ class RegisterType extends AbstractType
                     'max' => 45,
                     'minMessage' => 'Votre nom doit faire au moins 2 caractères.',
                     'minMessage' => 'Votre nom ne dois pas faire plus de 45 caractères.'
-                ))
+                )),
                 new Assert\Regex(array(
                     'pattern' => '/\d/',
                     'match'   => false,
@@ -51,7 +52,7 @@ class RegisterType extends AbstractType
                     'max' => 45,
                     'minMessage' => 'Votre prénom doit faire au moins 2 caractères.',
                     'minMessage' => 'Votre prénom ne dois pas faire plus de 45 caractères.'
-                ))
+                )),
                 new Assert\Regex(array(
                     'pattern' => '/\d/',
                     'match'   => false,
@@ -106,7 +107,7 @@ class RegisterType extends AbstractType
             'attr' => array(
                 'placeholder' => 'Au format 0123456789'
             ),           
-            'constraints' => array(
+            'constraints' => array(            
                 new Assert\Regex(array(
                     'pattern' => '/[0][1-9][0-9]{8}/',
                     'message' => 'Votre numéro de téléphone n\'est pas valide.'              
@@ -120,8 +121,14 @@ class RegisterType extends AbstractType
             'attr' => array(
                 'placeholder' => 'Au moins 2 caractères'
             ),           
-            'required' => true,                
+            'required' => true,                            
             'constraints' => array(
+                new Assert\Length(array(
+                    'min' => 2,
+                    'max' => 255,
+                    'minMessage' => 'Votre ville doit faire au moins 2 caractères.',
+                    'minMessage' => 'Votre ville ne dois pas faire plus de 255 caractères.'
+                )),                   
                 new Assert\Regex(array(
                     'pattern' => '/\d/',
                     'match'   => false,
