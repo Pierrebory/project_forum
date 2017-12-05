@@ -55,10 +55,15 @@ $app['swiftmailer.options'] = array(
 );
 
 
+
 //on enregistre un nouveau service :
 //on pourra ainsi accéder à notre classe UsersDAO grâce à $app['dao.users'] 
 $app['dao.users'] = function($app){
 	return new WF3\DAO\UsersDAO($app['db'], 'users', 'WF3\Domain\User');
+
+$app['dao.subject'] = function($app){
+	return new WF3\DAO\SubjectDAO($app['db'], 'subject', 'WF3\Domain\Subjects');
+
 };
 
 
