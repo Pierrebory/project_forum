@@ -10,8 +10,10 @@ class ResponseDAO extends DAO{
 	}
     
     public function getResponses(){
-		$result = $this->bdd->query('SELECT * FROM forum_responses');
+		$result = $this->bdd->query('SELECT * FROM forum_responses ORDER BY date_message DESC');
 		$rows = $result->fetchALL(\PDO::FETCH_ASSOC);
+                $responses = [];
+
         foreach($rows as $row){
             $responses[] = $this->buildObject($row);
         }
@@ -40,4 +42,17 @@ class ResponseDAO extends DAO{
         //on renvoie l'article
         return $response;
     }
+    
+    
+    
+    /*public function responsesajax(){
+        $result = $this->bdd->query('SELECT * FROM forum_responses');
+        $rows =  $result->fetchALL(\PDO::FETCH_ASSOC);
+        $responses = [];
+        foreach($rows as $row){
+            $response = $this->buildobject($row);
+            $responses[$row['id']] = $response;
+        }
+        return $responses;
+    }*/
 }

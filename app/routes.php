@@ -29,3 +29,9 @@ $app->match('/register', 'WF3\Controller\HomeController::registerAction')
 
 $app->match('forum/subject/responses', 'WF3\Controller\HomeController::subjectAction')
 ->bind('forumsubject');
+
+
+////////////AJAX///////////
+
+/*$app->match('/ajax/recherche', 'WF3\Controller\AjaxController::AjaxActionForum')
+    ->bind('ajaxResultatForum');*/
