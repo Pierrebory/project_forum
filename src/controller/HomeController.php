@@ -90,7 +90,7 @@ class HomeController{
 	        //on remplace le mdp en clair par le mdp crypté
 	        $user->setPassword($password);
 
-		    $app['dao.user']->insert($user);				
+		    $app['dao.users']->insert($user);				
 		    $app['session']->getFlashBag()->add('success', 'vous êtes bien enregistré');
 		    return $app->redirect($app['url_generator']->generate('home'));			
 		}
