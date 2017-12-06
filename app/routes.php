@@ -27,14 +27,17 @@ $app->match('/inscription', 'WF3\Controller\HomeController::registerAction')
     ->bind('inscription');
 
 // formulaire de connexion
-$app->match('/connexion', 'WF3\Controller\HomeController::registerAction')
-    ->bind('connexion');
+$app->match('/login', 'WF3\Controller\HomeController::loginAction')
+    ->bind('login');
+
+// mot de passe oublié
+$app->match('/mdpoublie', 'WF3\Controller\HomeController::resetPassAction')
+    ->bind('mdpoublie');
 
 $app->match('forum/subject/responses', 'WF3\Controller\HomeController::subjectAction')
 
 ->bind('forumsubject');
 
-->bind('forumsubject');
 
 
 ////////////AJAX///////////

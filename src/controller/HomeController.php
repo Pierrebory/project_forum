@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use WF3\Domain\User;
 use WF3\Domain\Subjects;
 use WF3\Domain\Responses;
+use WF3\Form\Type\ConnectType;
 use WF3\Form\Type\RegisterType;
 use WF3\Form\Type\SubjectType;
 use WF3\Form\Type\ResponsesType;
@@ -103,6 +104,7 @@ class HomeController{
 
 		/////////////// CONNEXION //////////////////
 	public function loginAction(Application $app, Request $request){
+
 		return $app['twig']->render('login.html.twig', array(
 			'error' => $app['security.last_error']($request), 
 			'last_username' => $app['session']->get('_security.last_username')
