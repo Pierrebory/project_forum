@@ -1,47 +1,51 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8" />
-        <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+  <meta charset="utf-8">
+  <title>WebForce3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="color/default.css" rel="stylesheet">
+  <link rel="shortcut icon" href="img/favicon.ico">
 
-    <link rel="stylesheet" href="{{ asset('css/scrolling-nav.css') }}">
-        
 
-    <title>{% block title %}{% endblock %}</title>
+  
 </head>
-<body>
-    
-        <header>
-            <img src="{{ asset('elandy.jpg') }}" class="img img-responsive img-rounded" width="150">
-             <div class="container">
-        <div class="row">
-          <div>
-           <h1>Projet Final Forum</h1>
+
+<header>
+  
+          <!-- navbar -->
+          <div class="navbar-wrapper">
+            <div class="navbar navbar-inverse navbar-fixed-top">
+              <div class="navbar-inner">
+                <div class="container">
+                  <!-- Responsive navbar -->
+                  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </a>
+                  <h1 class="brand"><a href="index.html"><img src="img/webforce3.png" alt="" />Les Anciens</a></h1>
+                  <!-- navigation -->
+                  <nav class="pull-right nav-collapse collapse">
+                    <ul id="menu-main" class="nav">
+                      <li><a title="team" href="#about">Annuaire</a></li>
+                      <li><a title="services" href="#services">Forum</a></li>
+                      <li><a title="works" href="#works">Offre d'emploi</a></li>
+                      <li><a title="blog" href="#blog">Contact</a></li>
+                      <li><a title="contact" href="#contact">Connexion</a></li>
+                      <li><a href="page.html">Inscription</a></li>
+                      <!-- A MODIDIER FORMAT TWIG-->
+                    </ul>
+                  </nav>
+                </div>
+              </div>
             </div>
-                 </div>
-            </div>
+          </div>
         </header>
-         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#services">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+        <body> 
+
+
         <div>
            
            {% block content %}{% endblock %}
