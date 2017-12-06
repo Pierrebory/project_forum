@@ -6,8 +6,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 //cette ligne nous permet d'utiliser le service fourni par symfony pour gérer 
 use WF3\Domain\User;
+use WF3\Domain\Subjects;
 use WF3\Form\Type\RegisterType;
 use WF3\Form\Type\SubjectType;
+
 
 class HomeController{
 
@@ -26,27 +28,33 @@ class HomeController{
     
     
   
-    
-    
-    
-    
-    
- 
-    ///////////////////////PAGE SUJET FORUM////////////////////////
-    public function forumPageAction(Application $app, Request $request){
-        $subjects =[];
-        $subjectForm = $app['form.factory']->create(subjectType::class);
+    //////////////////////FORMULAIRE PAGE FORUM/////////////////////
+     public function forumPageAction(Application $app, Request $request){
+         $subject = new Subjects();
+        $subjectForm = $app['form.factory']->create(SubjectType::class, $subject);
         $subjectForm->handleRequest($request);
+                 $subjects = $app['dao.subject']->getSubjects();
+
         if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
-            
-		$subjects = $app['dao.subject']->getSubjects();
+        $subject->setUser_id(1);
+		 $app['dao.subject']->insert($subject);
 
 	 	
 	   }
         return $app['twig']->render('subject_forum.html.twig', array(
-            'form'=>$subjectForm->createView(),
-            'subjects'=>$subjects));
+            'subjectForm'=>$subjectForm->createView(),
+            'subject'=>$subject,
+        'subjects'=>$subjects));
+   
+         
+         
     }
+    
+     
+    
+   
+   
+
 
 	//////////// FORMULAIRE INSCRIPTION ////////////
     public function registerAction(Application $app, Request $request){

@@ -13,10 +13,11 @@ $app->match('/annuaire', 'WF3\Controller\HomeController::annuaireAction')
     ->bind('annuaire');
 
 
-$app->get('/forum', 'WF3\Controller\HomeController::forumPageAction')->bind('forum');
+$app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')->bind('forum');
 
 
 // formulaire d'inscription
 $app->match('/register', 'WF3\Controller\HomeController::registerAction')
     ->bind('register');
+
 
