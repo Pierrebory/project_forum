@@ -26,11 +26,22 @@ $app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')->bind('f
 
 
 // formulaire d'inscription
-$app->match('/register', 'WF3\Controller\HomeController::registerAction')
-    ->bind('register');
+$app->match('/inscription', 'WF3\Controller\HomeController::registerAction')
+    ->bind('inscription');
 
+// formulaire de connexion
+$app->match('/connexion', 'WF3\Controller\HomeController::registerAction')
+    ->bind('connexion');
 
 
 $app->match('forum/subject/responses', 'WF3\Controller\HomeController::subjectAction')
+
 ->bind('forumsubject');
+
+
+////////////AJAX///////////
+
+/*$app->match('/ajax/recherche', 'WF3\Controller\AjaxController::AjaxActionForum')
+    ->bind('ajaxResultatForum');*/
+
 

@@ -10,7 +10,7 @@ class SubjectDAO extends DAO{
 	}
     
     public function getSubjects(){
-		$result = $this->bdd->query('SELECT * FROM forum_subjects');
+		$result = $this->bdd->query('SELECT * FROM forum_subjects ORDER BY date_message DESC');
 		$rows = $result->fetchALL(\PDO::FETCH_ASSOC);
         foreach($rows as $row){
             $subjects[] = $this->buildObject($row);
