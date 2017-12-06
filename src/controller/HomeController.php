@@ -22,16 +22,33 @@ class HomeController{
     
     //page Annuaire qui affiche uniquement les noms des anciens élèves
     public function annuaireAction(Application $app){
-        $users = $app['dao.users']->displayName();
+        $users = $app['dao.users']->findAll();
         return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
     }
     
     
+
   
     //////////////////////FORMULAIRE PAGE FORUM/////////////////////
      public function forumPageAction(Application $app, Request $request){
          $subject = new Subjects();
         $subjectForm = $app['form.factory']->create(SubjectType::class, $subject);
+
+  //page détaillée d'un ancien élève
+    public function getAlumniAction(Application $app, $id){
+        $user = $app['dao.users']->find($id);
+        $alumni = $app['dao.alumni']->findAlumniByUser($id);
+        return $app['twig']->render('fichedetaillealumni.html.twig', array('user' => $user,
+                                                                           'alumni' => $alumni)); 
+    }
+    
+    
+    
+ 
+    ///////////////////////PAGE SUJET FORUM////////////////////////
+    public function forumPageAction(Application $app, Request $request){
+        $subjects =[];
+        $subjectForm = $app['form.factory']->create(subjectType::class);
         $subjectForm->handleRequest($request);
                  $subjects = $app['dao.subject']->getSubjects();
 

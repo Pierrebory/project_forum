@@ -26,6 +26,10 @@ $app->register(new Silex\Provider\SessionServiceProvider());
 
 
 
+
+
+
+
 //service web profiler de symfony
 $app->register(new Provider\WebProfilerServiceProvider(), array(
     'profiler.cache_dir' => __DIR__.'/../cache/profiler',
@@ -74,8 +78,11 @@ $app['dao.subject'] = function($app){
 
 $app['dao.alumni'] = function($app){
 	$AlumniDAO = new WF3\DAO\AlumniDAO($app['db'], 'alumni', 'WF3\Domain\Alumni');
+    $AlumniDAO->setUserDAO($app['dao.users']);
     return $AlumniDAO;
 };
+
+
 
 
 
