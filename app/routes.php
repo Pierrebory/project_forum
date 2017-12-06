@@ -46,7 +46,10 @@ $app->match('/mdpoublie', 'WF3\Controller\HomeController::resetPassAction')
 
 
 $app->match('forum/subject/responses', 'WF3\Controller\HomeController::subjectAction')
-	->bind('forumsubject');
+    ->bind('forumsubject');
+
+
+
 
 
 ////////////AJAX///////////

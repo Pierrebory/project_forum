@@ -128,16 +128,16 @@ class HomeController{
     
     
      ///////////////////////PAGE REPONSE FORUM////////////////////////
-    public function subjectAction(Application $app, Request $request){
+    public function subjectAction(Application $app, Request $request, $idSubject){
         $response = new Responses();
         $responses =[];
         $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
         $responsesForm->handleRequest($request);
-                 $responses = $app['dao.response']->getResponses();
+                 $responses = $app['dao.response']->getResponses($idSubject);
 
         if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
         $response->setUser_id(1);
-            
+            $response->setSubject_id($request->query->get('id'));
             $response->setDate_message(date('Y-m-d H:i:s'));
 		 $app['dao.response']->insert($response);
 
