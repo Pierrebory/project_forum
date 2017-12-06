@@ -103,7 +103,7 @@ class JobOffert
 
     public function setContract($contract) {
         
-         if(!empty($contract) AND is_string($contract){
+         if(!empty($contract) AND is_string($contract)){
         $this->contract = $contract;
         return $this;
     }
@@ -118,6 +118,7 @@ class JobOffert
         $this->contractduration = $contractduration;
         return $this;
     }
+    }
     
     public function getTimetable() {
         return $this->timetable;
@@ -128,7 +129,7 @@ class JobOffert
         $this->timetable = $timetable;
         return $this;
     }
-
+    }
     
     public function getAvatar() {
         return $this->avatar;
@@ -139,6 +140,7 @@ class JobOffert
         $this->avatar = $avatar;
         return $this;
     }
+}
     
 
     public function getEmployer_id()
