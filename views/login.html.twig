@@ -1,0 +1,46 @@
+{% extends "layout.html.twig" %}
+  {% block title %}Connexion{% endblock %}
+
+  {% block content %}
+
+  <h2 class="text-center">Login</h2>
+         {% if error %}
+         <div class="alert alert-danger">
+             <strong>Nom d'utilisateur ou mot de passe incorrect!</strong> {{ error }}
+         </div>
+         {% endif %}
+            {{ form_start(userForm, { 'attr': {'class': 'form-horizontal'} }) }}
+
+                <div class="form-group">
+                    {{ form_label(userForm.email, null) }}
+                    <div>
+                        {% if userForm.email.vars.errors|length > 0 %}
+                            <div class="alert alert-danger">
+                                {% for error in userForm.email.vars.errors %}
+                                    {{ error.message }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {{ form_widget(userForm.email, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+                <div class="form-group">            
+                    {{ form_label(userForm.password, null, { 'label_attr':  {
+                        'class': 'col-sm-5 control-label'
+                    }}) }}
+                    <div class="col-sm-4">
+                        {{ form_widget(userForm.password, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" />
+                </div>
+            {{ form_end(userForm) }}
+        </div>
+  {% endblock %}

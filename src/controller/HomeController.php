@@ -99,6 +99,14 @@ class HomeController{
 		return $app['twig']->render('register.html.twig', array(
 			'userForm' => $userForm->createView(),
 		));		
+	}
+
+		/////////////// CONNEXION //////////////////
+	public function loginAction(Application $app, Request $request){
+		return $app['twig']->render('login.html.twig', array(
+			'error' => $app['security.last_error']($request), 
+			'last_username' => $app['session']->get('_security.last_username')
+		));
 	}	
     
     
