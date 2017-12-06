@@ -42,8 +42,6 @@ $app->match('/connexion', 'WF3\Controller\HomeController::registerAction')
 
 $app->match('forum/subject/responses', 'WF3\Controller\HomeController::subjectAction')
 
-->bind('forumsubject');
-
 
 ////////////AJAX///////////
 
