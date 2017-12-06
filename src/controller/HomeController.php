@@ -27,8 +27,10 @@ class HomeController{
     
   //page détaillée d'un ancien élève
     public function getAlumniAction(Application $app, $id){
-        $user = $app['dao.users']->displayAlumni($id);
-        return $app['twig']->render('fichedetailleealumni.html.twig', array('user' => $user)); 
+        $user = $app['dao.users']->find($id);
+        $alumni = $app['dao.alumni']->findAlumniByUser($id);
+        return $app['twig']->render('fichedetaillealumni.html.twig', array('user' => $user,
+                                                                           'alumni' => $alumni)); 
     }
     
     

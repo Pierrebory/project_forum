@@ -9,7 +9,7 @@ $app->get('/', 'WF3\Controller\HomeController::homePageAction')
 
 
 //page Annuaire des Anciens élèves
-$app->match('/annuaire', 'WF3\Controller\HomeController::annuaireAction')
+$app->get('/annuaire', 'WF3\Controller\HomeController::annuaireAction')
     ->bind('annuaire');
 
 //page détaillée d'un ancien élève
