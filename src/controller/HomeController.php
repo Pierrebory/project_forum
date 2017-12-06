@@ -29,10 +29,8 @@ class HomeController{
     
 
   
-    //////////////////////FORMULAIRE PAGE FORUM/////////////////////
-     public function forumPageAction(Application $app, Request $request){
-         $subject = new Subjects();
-        $subjectForm = $app['form.factory']->create(SubjectType::class, $subject);
+         
+     
 
   //page détaillée d'un ancien élève
     public function getAlumniAction(Application $app, $id){
@@ -47,8 +45,9 @@ class HomeController{
  
     ///////////////////////PAGE SUJET FORUM////////////////////////
     public function forumPageAction(Application $app, Request $request){
+        $subject = new Subjects();
         $subjects =[];
-        $subjectForm = $app['form.factory']->create(subjectType::class);
+        $subjectForm = $app['form.factory']->create(subjectType::class, $subject);
         $subjectForm->handleRequest($request);
                  $subjects = $app['dao.subject']->getSubjects();
 
@@ -63,8 +62,7 @@ class HomeController{
             'subject'=>$subject,
         'subjects'=>$subjects));
    
-         
-         
+
     }
     
      
