@@ -20,7 +20,11 @@ class ResponsesType extends AbstractType
     {
         //on liste les champs qu'on veut rajouter
         $builder
+
             ->add('message', TextareaType::class, array(
+
+            ->add('message', TextType::class, array(
+
                 'attr' => array(
                     'placeholder' => 'Votre message'
                 ),

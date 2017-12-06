@@ -4,6 +4,10 @@
 	
 	{% block content %}
 
+<br><br>
+<br>
+
+
 {{ form_start(responsesForm, { 'attr': {'class': 'form-horizontal'} }) }}
                 <div class="form-group">
                     {{ form_label(responsesForm.message, null) }}
@@ -22,6 +26,10 @@
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary btn-lg" value="Send" />
                 </div><br>
+
+
+
+
             {{ form_end(responsesForm) }}
         <h2>Mon sujet</h2>
           
@@ -34,5 +42,6 @@
                 <p>{{ response.message }}</p><hr>
 			</article>
         {%endfor%}
+
 
 {% endblock %}
