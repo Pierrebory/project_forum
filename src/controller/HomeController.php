@@ -135,7 +135,7 @@ class HomeController{
 
         if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
         $response->setUser_id(1);
-            $response->setSubject_id($request->query->get('id'));
+            $response->setSubject_id($idSubject);
             $response->setDate_message(date('Y-m-d H:i:s'));
 		 $app['dao.response']->insert($response);
 

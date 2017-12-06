@@ -40,7 +40,7 @@ $app->match('/connexion', 'WF3\Controller\HomeController::registerAction')
     ->bind('connexion');
 
 
-$app->match('forum/subject/responses', 'WF3\Controller\HomeController::subjectAction')
+$app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeController::subjectAction')
     ->bind('forumsubject');
 
 
