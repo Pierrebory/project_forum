@@ -1,9 +1,8 @@
 <?php
 
-
 namespace WF3\DAO;
 
-use WF3\Domain\Employer;
+use WF3\Domain\Employers;
 
 
 class EmployersDao extends DAO 

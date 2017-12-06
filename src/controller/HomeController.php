@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use WF3\Domain\User;
 use WF3\Domain\Subjects;
 use WF3\Domain\Responses;
+use WF3\Domain\Employer;
+use WF3\Domain\JobOffers;
 use WF3\Form\Type\RegisterType;
 use WF3\Form\Type\SubjectType;
 use WF3\Form\Type\ResponsesType;
@@ -44,6 +46,13 @@ class HomeController{
     }
     
     
+    //PAGE DE DETAIL DE L'OFFRE D'EMPLOI
+    public function detailOffreAction(Application $app, $id){
+        //je récupère l'id de l'offre d'emploi
+        $detailoffre = $app['dao.joboffers']->getAllOffer($id);
+        return $app['twig']->render('detailoffre.html.twig', array('detailoffre' => $detailoffre)); 
+
+    }
     
  
     ///////////////////////PAGE SUJET FORUM////////////////////////

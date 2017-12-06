@@ -2,8 +2,10 @@
 
 namespace WF3\Domain;
 
+use WF3\Domain\Employers;
+use WF3\Domain\JobOffers;
 
-class JobOffert 
+class JobOffers
 {
    
     private $id;
@@ -130,6 +132,8 @@ class JobOffert
         return $this;
     }
     }
+
+
     
     public function getAvatar() {
         return $this->avatar;

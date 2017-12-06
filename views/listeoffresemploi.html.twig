@@ -30,9 +30,7 @@
       <th scope="col">Poste</th>
       <th scope="col">Ville</th>
       <th scope="col">Détails</th>
-       
-        
-        
+    
     </tr>
       	
   </thead>
@@ -41,10 +39,12 @@
     <tr>
          {% for offre in offres %}
         
+      
+        
       <td>{{ offre.date_offer }}</td>
       <td>{{ offre.title }}</td>
       <td>{{ offre.city }}</td>
-        <td><a href="{{ path('offredetaillee', {id: offre.id}) }}">Détail du poste</a></td>
+        <td><a href="{{ path('detailoffre', {id:offre.id}) }}">Détail du poste</a></td>
         
     </tr>
       
