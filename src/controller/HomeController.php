@@ -37,12 +37,10 @@ class HomeController{
                                                                            'alumni' => $alumni)); 
     }
     
-    
+    //PAGE LISTE DES OFFRES D'EMPLOI
     public function offresAction(Application $app){
-        $offres = $app['dao.offres']->findAll();
-        
-        
-        
+        $offres = $app['dao.joboffers']->findAll();  
+        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres)); 
     }
     
     
