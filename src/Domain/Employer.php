@@ -4,7 +4,7 @@ namespace WF3\Domain;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class Employer implements UserInterface
+class Employer 
 {
    
     private $id;
@@ -52,7 +52,7 @@ class Employer implements UserInterface
     }
 
     public function setEmployer_id($employer_id) {
-        if(!empty($employer_id) AND is_int($employer_id)){
+        if(!empty($employer_id) AND is_numeric($employer_id)){
         $this->employer_id = $employer_id;
         return $this;
     }

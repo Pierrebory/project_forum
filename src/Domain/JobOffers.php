@@ -2,8 +2,10 @@
 
 namespace WF3\Domain;
 
+use WF3\Domain\Employers;
+use WF3\Domain\JobOffers;
 
-class JobOffert 
+class JobOffers
 {
    
     private $id;
@@ -103,7 +105,7 @@ class JobOffert
 
     public function setContract($contract) {
         
-         if(!empty($contract) AND is_string($contract){
+         if(!empty($contract) AND is_string($contract)){
         $this->contract = $contract;
         return $this;
     }
@@ -118,6 +120,7 @@ class JobOffert
         $this->contractduration = $contractduration;
         return $this;
     }
+    }
     
     public function getTimetable() {
         return $this->timetable;
@@ -127,6 +130,7 @@ class JobOffert
         if(!empty($timetable) AND is_string($timetable)){
         $this->timetable = $timetable;
         return $this;
+    }
     }
 
     
