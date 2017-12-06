@@ -24,7 +24,26 @@ $app->register(new Silex\Provider\AssetServiceProvider(), array(
 
 $app->register(new Silex\Provider\SessionServiceProvider());
 
-
+$app->register(new Silex\Provider\SecurityServiceProvider(), array(
+   'security.firewalls' => array(
+       'secured' => array(
+           'pattern' => '^/',
+           'anonymous' => true,
+           'logout' => true,
+           'form' => array('login_path' => '/login', 'check_path' => '/login_check'),
+           'users' => function () use ($app) {
+               return new WF3\DAO\UsersDAO($app['db'], 'users', 'WF3\Domain\User');
+           },
+           'logout' => array('logout_path' => '/logout', 'invalidate_session' => true)
+       ),
+   ),
+   'security.role_hierarchy' => array(
+      'ROLE_ADMIN' => array('ROLE_USER')
+    ),
+   'security.access_rules' => array(
+      array('^/admin', 'ROLE_ADMIN')
+    )
+));
 
 
 
@@ -70,6 +89,13 @@ $app['dao.subject'] = function($app){
 	$subjectDAO = new WF3\DAO\SubjectDAO($app['db'], 'forum_subjects', 'WF3\Domain\Subjects');
     $subjectDAO->setUserDAO($app['dao.users']);
     return $subjectDAO;
+
+};
+
+$app['dao.response'] = function($app){
+	$responseDAO = new WF3\DAO\ResponseDAO($app['db'], 'forum_responses', 'WF3\Domain\Responses');
+    $responseDAO->setUserDAO($app['dao.users']);
+    return $responseDAO;
 
 };
 

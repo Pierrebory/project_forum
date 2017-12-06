@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link href="css/bootstrap-responsive.css" rel="stylesheet">
-  <link href="css/style.css" rel="stylesheet">
+  <link href="{{ asset('css/bootstrap-responsive.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
   <link href="color/default.css" rel="stylesheet">
   <link rel="shortcut icon" href="img/favicon.ico">
 
@@ -24,17 +24,20 @@
                 <div class="container">
                   <!-- Responsive navbar -->
                   <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                </a>
-                  <h1 class="brand"><a href="index.html"><img src="img/webforce3.png" alt="" />Les Anciens</a></h1>
+                  </a>
+
+                  <h1 class="brand"><a href="{{ path('home') }}"><img src="img/webforce3.png" alt="" />Les Anciens</a></h1>
+
+                  <div class="brand"><a href="index.html"><img src="img/webforce3.png" alt="Webforce3, l'école des développeurs"></a></div>
                   <!-- navigation -->
                   <nav class="pull-right nav-collapse collapse">
                     <ul id="menu-main" class="nav">
-                      <li><a title="team" href="#about">Annuaire</a></li>
-                      <li><a title="services" href="#services">Forum</a></li>
-                      <li><a title="works" href="#works">Offre d'emploi</a></li>
-                      <li><a title="blog" href="#blog">Contact</a></li>
-                      <li><a title="contact" href="#contact">Connexion</a></li>
-                      <li><a href="page.html">Inscription</a></li>
+                      <li><a title="team" href="{{ path('annuaire') }}">Annuaire</a></li>
+                      <li><a title="services" href="{{ path('forum') }}">Forum</a></li>
+                      <li><a title="works" href="">Offres d'emploi</a></li>
+                      <li><a title="blog" href="">Contact</a></li>
+                      <li><a title="contact" href="">Connexion</a></li>
+                      <li><a href="{{ path('register') }}">Inscription</a></li>
                       <!-- A MODIDIER FORMAT TWIG-->
                     </ul>
                   </nav>

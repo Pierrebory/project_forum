@@ -7,8 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 //cette ligne nous permet d'utiliser le service fourni par symfony pour gérer 
 use WF3\Domain\User;
 use WF3\Domain\Subjects;
+use WF3\Domain\Responses;
 use WF3\Form\Type\RegisterType;
 use WF3\Form\Type\SubjectType;
+use WF3\Form\Type\ResponsesType;
 
 
 class HomeController{
@@ -26,13 +28,6 @@ class HomeController{
         return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
     }
     
-    
-
-  
-    //////////////////////FORMULAIRE PAGE FORUM/////////////////////
-     public function forumPageAction(Application $app, Request $request){
-         $subject = new Subjects();
-        $subjectForm = $app['form.factory']->create(SubjectType::class, $subject);
 
   //page détaillée d'un ancien élève
     public function getAlumniAction(Application $app, $id){
@@ -47,13 +42,16 @@ class HomeController{
  
     ///////////////////////PAGE SUJET FORUM////////////////////////
     public function forumPageAction(Application $app, Request $request){
+        $subject = new Subjects();
         $subjects =[];
-        $subjectForm = $app['form.factory']->create(subjectType::class);
+        $subjectForm = $app['form.factory']->create(subjectType::class, $subject);
         $subjectForm->handleRequest($request);
                  $subjects = $app['dao.subject']->getSubjects();
 
         if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
         $subject->setUser_id(1);
+             $subject->setDate_message(date('Y-m-d H:i:s'));
+
 		 $app['dao.subject']->insert($subject);
 
 	 	
@@ -63,8 +61,7 @@ class HomeController{
             'subject'=>$subject,
         'subjects'=>$subjects));
    
-         
-         
+
     }
     
      
@@ -93,7 +90,7 @@ class HomeController{
 	        //on remplace le mdp en clair par le mdp crypté
 	        $user->setPassword($password);
 
-		    $app['dao.user']->insert($user);				
+		    $app['dao.users']->insert($user);				
 		    $app['session']->getFlashBag()->add('success', 'vous êtes bien enregistré');
 		    return $app->redirect($app['url_generator']->generate('home'));			
 		}
@@ -103,4 +100,58 @@ class HomeController{
 			'userForm' => $userForm->createView(),
 		));		
 	}	
+    
+    
+     ///////////////////////PAGE REPONSE FORUM////////////////////////
+    public function subjectAction(Application $app, Request $request){
+        $response = new Responses();
+        $responses =[];
+        $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
+        $responsesForm->handleRequest($request);
+                 $responses = $app['dao.response']->getResponses();
+
+        if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
+        $response->setUser_id(1);
+            
+            $response->setDate_message(date('Y-m-d H:i:s'));
+		 $app['dao.response']->insert($response);
+
+	 	
+	   }
+        return $app['twig']->render('responses_forum.html.twig', array(
+            'responsesForm'=>$responsesForm->createView(),
+            'response'=>$response,
+        'responses'=>$responses));
+   
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
