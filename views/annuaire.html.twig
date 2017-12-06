@@ -5,21 +5,62 @@
 
         {% block content %}
 
-		<div class="col-md-12">
-            <h2>Annuaire des anciens élèves de Webforce3</h2>
+		<div class="col-md-12 text-center">
             
-			<!--j'utilise le langage twig, qui évite de mettre du php dans le html -->
-           
-			{% for user in users %}
+            <blockquote class="blockquote text-center"><h1>Annuaire des anciens élèves de Webforce3</h1> </blockquote>
             
-         
-           
-			<ul>
-                <li><a href="{{ path('fichedetaillee', {id: user.id}) }}">{{ user.firstname }} {{ user.username }}</a> </li>
-			</ul>
             
-			{% endfor %} 
-
 		</div>
+
+<br>
+<br>
+
+<a href="{{ path('register') }}"><button type="button" class="btn btn-info">Inscrivez-vous pour figurer dans l'annuaire</button></a>
+
+
+
+
+
+
+<table class="table table-striped">
+  <thead>
+     
+    <tr>
+      <th scope="col">Prénom</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Ville</th>
+      <th scope="col">Détails</th>
+   
+    </tr>
+      	
+  </thead>
+    
+  <tbody>
+    <tr>
+         {% for user in users %}
+        
+      <td>{{ user.firstname }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.city }}</td>
+        <td><a href="{{ path('fichedetaillee', {id: user.id}) }}">Fiche détaillée</a></td>
+        
+    </tr>
+      
+  {% endfor %} 
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     {% endblock %} 

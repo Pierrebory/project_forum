@@ -109,7 +109,19 @@ $app['dao.alumni'] = function($app){
 };
 
 
+$app['dao.joboffers'] = function($app){
+    $joboffersDAO = new WF3\DAO\joboffersDAO($app['db'], 'joboffers', 'WF3\Domain\Joboffers');
+    $joboffersDAO->setEmployersDAO($app['dao.employers']);
+    return $joboffersDAO;
+};
 
+
+$app['dao.employers'] = function($app){
+    $employersDAO = new WF3\DAO\employersDAO($app['db'], 'employers', 'WF3\Domain\Employers');
+    $employersDAO->setUserDAO($app['dao.users']);
+    return $employersDAO;
+    
+};
 
 
 

@@ -3,11 +3,11 @@ namespace WF3\DAO;
 
 class JoboffersDAO extends DAO{
 
-	//je crée un attribut qui va contenir un objet de classe UserDAO (la classe qui nous permet de manipuler la table users)
-	private $userDAO;
+	//je crée un attribut qui va contenir un objet de classe employerDAO (la classe qui nous permet de manipuler la table employers)
+	private $employersDAO;
 	//le setter associé
-	public function setUserDAO(UserDAO $userDAO){
-		$this->userDAO = $userDAO;
+	public function setEmployersDAO(EmployersDAO $employersDAO){
+		$this->employersDAO = $employersDAO;
 	}
 
     
@@ -46,7 +46,24 @@ class JoboffersDAO extends DAO{
 	}
     
     
-    
+    //je réécris ma méthode buildObject 
+    public function buildObject($row){
+    	//j'exécute le code de buildObject dans DAO
+    	//qui me renvoie un objet $joboffers de la classe Joboffers
+    	$joboffer = parent::buildObject($row);
+    	//getEmployer_id() renvoie l'id de l'employer
+    	$idemployer = $joboffers->getEmployer_id();
+    	//on utilise l'attribut employersDAo qui contient l'instance de la classe employerDAO 
+    	//pour aller chercher dans la table employers les infos de l'employeur correspondant
+    	if(array_key_exists('employer_id', $row) AND is_numeric($row['employer_id'])){
+        	$employer = $this->employersDAO->find($idemployer);
+        }
+        //on remplace l'id de l'employer par l'objet $employer de la classe EmployersDAO qui contient les infos sur l'employeur
+        $joboffer->setEmployer_id($employer);
+        //on renvoie la fiche complète de l'offre d'emploi avec les infos de l'employeur
+        return $joboffer;
+    }
+   
     
 }
 
