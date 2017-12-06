@@ -7,6 +7,7 @@ class Responses{
     private $message;
     private $date_message;
     private $date_edit;
+    private $subject_id;
     private $user_id;
 
     
@@ -24,6 +25,10 @@ class Responses{
     
     public function getDate_edit(){
         return $this->date_edit;
+    }
+    
+    public function getSubject_id(){
+        return $this->subject_id;
     }
     
     public function getuser_id(){
@@ -54,6 +59,12 @@ class Responses{
     public function setDate_edit($date_edit){
         if(!empty($date_edit) AND is_string($date_edit)){
             $this->date_edit = $date_edit; 
+        }
+    }
+    
+    public function setSubject_id($subject_id){
+        if(!empty($subject_id) AND is_string($subject_id)){
+            $this->subject_id = $subject_id; 
         }
     }
 

@@ -133,6 +133,7 @@ class JobOffers
     }
     }
 
+
     
     public function getAvatar() {
         return $this->avatar;
@@ -143,6 +144,7 @@ class JobOffers
         $this->avatar = $avatar;
         return $this;
     }
+}
     
 
     public function getEmployer_id()

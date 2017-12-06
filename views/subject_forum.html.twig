@@ -25,9 +25,9 @@
                             'class': 'form-control'
                         }}) }}
                     </div>
-                </div>
+                </div><br>
                 
-                <div class="form-group">
+                <div class="form-group" class="col-sm-12">
                     <input type="submit" class="btn btn-primary btn-lg" value="Send" />
                 </div>
             {{ form_end(subjectForm) }}
@@ -40,7 +40,7 @@
 				
 				<p>publié le {{ subject.date_message }}
 				par {{ subject.user_id.username }}</p>
-                <p>{{ subject.message }}</p>
+                <p>{{ subject.message }}</p><hr>
 			</article>
         {%endfor%}
 		{% endblock %}
