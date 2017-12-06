@@ -1,0 +1,38 @@
+{% extends "layout.html.twig" %}
+	
+	{% block title %}Un sujet{% endblock %}
+	
+	{% block content %}
+
+{{ form_start(responsesForm, { 'attr': {'class': 'form-horizontal'} }) }}
+                <div class="form-group">
+                    {{ form_label(responsesForm.message, null) }}
+                    <div>
+                        {%if not responsesForm.vars.valid %}
+                    <div class="alert alert-danger">
+                        {{ form_errors(responsesForm.message) }}
+                    </div>
+                        {%endif%}
+                        {{ form_widget(responsesForm.message, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Send" />
+                </div><br>
+            {{ form_end(responsesForm) }}
+        <h2>Mon sujet</h2>
+          
+            {% for response in responses %}
+			 <article>
+                
+				
+				<p>publié le {{ response.date_message }}
+				par {{ response.user_id.username }}</p>
+                <p>{{ response.message }}</p><hr>
+			</article>
+        {%endfor%}
+
+{% endblock %}

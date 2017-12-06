@@ -1,6 +1,6 @@
 	{% extends "layout.html.twig" %}
 	
-	{% block title %}Un sujet{% endblock %}
+	{% block title %}les sujet{% endblock %}
 	
 	{% block content %}
 {{ form_start(subjectForm, { 'attr': {'class': 'form-horizontal'} }) }}
@@ -16,9 +16,11 @@
                 <div class="form-group">
                     {{ form_label(subjectForm.message, null) }}
                     <div>
+                        {%if not subjectForm.vars.valid %}
                     <div class="alert alert-danger">
                         {{ form_errors(subjectForm.message) }}
                     </div>
+                        {%endif%}
                         {{ form_widget(subjectForm.message, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
@@ -29,14 +31,16 @@
                     <input type="submit" class="btn btn-primary btn-lg" value="Send" />
                 </div>
             {{ form_end(subjectForm) }}
+
             <h2>Mon sujet</h2>
-            
+          
        {% for subject in subjects %}
 			<article>
-				<h2>{{ subject.title }}</h2>
-				<p>{{ subject.message }}</p>
-				<p>publié le {{ subject.date_message }}<br>
+                <a href="{{ path('forumsubject', {id: subject.id}) }}"><h2>{{ subject.title }}</h2></a>
+				
+				<p>publié le {{ subject.date_message }}
 				par {{ subject.user_id.username }}</p>
+                <p>{{ subject.message }}</p>
 			</article>
         {%endfor%}
 		{% endblock %}

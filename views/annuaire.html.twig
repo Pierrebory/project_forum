@@ -10,12 +10,13 @@
             
 			<!--j'utilise le langage twig, qui évite de mettre du php dans le html -->
            
-			{% for user in users %} 
-          
-			<article>
-                {{ user.avatar }}
-				<h4>{{ user.firstname }}</h4>{{ user.username }} {{ user.promo }} {{ user.city }}
-			</article>
+			{% for user in users %}
+            
+         
+           
+			<ul>
+                <li><a href="{{ path('fichedetaillee', {id: user.id}) }}">{{ user.firstname }} {{ user.username }}</a> </li>
+			</ul>
             
 			{% endfor %} 
 

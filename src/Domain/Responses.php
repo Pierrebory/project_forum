@@ -58,7 +58,7 @@ class Responses{
     }
 
     public function setUser_id($user_id){  
-        if(!empty($user_id) AND is_numeric($user_id)){
+        if(!empty($user_id)){
             $this->user_id = $user_id;         
     }
     
