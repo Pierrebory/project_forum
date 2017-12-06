@@ -73,6 +73,13 @@ $app['dao.subject'] = function($app){
 
 };
 
+$app['dao.response'] = function($app){
+	$responseDAO = new WF3\DAO\ResponseDAO($app['db'], 'forum_responses', 'WF3\Domain\Responses');
+    $responseDAO->setUserDAO($app['dao.users']);
+    return $responseDAO;
+
+};
+
 
 
 
@@ -83,7 +90,19 @@ $app['dao.alumni'] = function($app){
 };
 
 
+$app['dao.joboffers'] = function($app){
+    $joboffersDAO = new WF3\DAO\joboffersDAO($app['db']), 'joboffers', 'WF3\Domain\Joboffers');
+    $joboffersDAO->setEmployersDAO($app['dao.employers']);
+    return $joboffersDAO;
+};
 
+
+$app['dao.employers'] = function($app){
+    $employersDAO = new WF3\DAO\employersDAO($app['db']), 'employers', 'WF3\Domain\Employers');
+    $employersDAO->setUserDAO($app['dao.users']);
+    return $employersDAO;
+    
+};
 
 
 

@@ -7,8 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 //cette ligne nous permet d'utiliser le service fourni par symfony pour gérer 
 use WF3\Domain\User;
 use WF3\Domain\Subjects;
+use WF3\Domain\Responses;
 use WF3\Form\Type\RegisterType;
 use WF3\Form\Type\SubjectType;
+use WF3\Form\Type\ResponsesType;
 
 
 class HomeController{
@@ -36,6 +38,14 @@ class HomeController{
     }
     
     
+    public function offresAction(Application $app){
+        $offres = $app['dao.offres']->findAll();
+        
+        
+        
+    }
+    
+    
     
  
     ///////////////////////PAGE SUJET FORUM////////////////////////
@@ -48,6 +58,8 @@ class HomeController{
 
         if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
         $subject->setUser_id(1);
+             $subject->setDate_message(date('Y-m-d H:i:s'));
+
 		 $app['dao.subject']->insert($subject);
 
 	 	
@@ -96,4 +108,58 @@ class HomeController{
 			'userForm' => $userForm->createView(),
 		));		
 	}	
+    
+    
+     ///////////////////////PAGE REPONSE FORUM////////////////////////
+    public function subjectAction(Application $app, Request $request){
+        $response = new Responses();
+        $responses =[];
+        $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
+        $responsesForm->handleRequest($request);
+                 $responses = $app['dao.response']->getResponses();
+
+        if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
+        $response->setUser_id(1);
+            
+            $response->setDate_message(date('Y-m-d H:i:s'));
+		 $app['dao.response']->insert($response);
+
+	 	
+	   }
+        return $app['twig']->render('responses_forum.html.twig', array(
+            'responsesForm'=>$responsesForm->createView(),
+            'response'=>$response,
+        'responses'=>$responses));
+   
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

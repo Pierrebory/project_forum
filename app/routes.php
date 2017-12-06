@@ -17,6 +17,10 @@ $app->match('/annuaire/{id}', 'WF3\Controller\HomeController::getAlumniAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
     ->bind('fichedetaillee');
 
+//pages liste des offres d'emploi
+$app->match('/offresemploi', 'WF3\Controller\HomeController::offresAction')
+    ->bind('offresemploi');
+
 //page Forum
 $app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')->bind('forum');
 
@@ -25,4 +29,8 @@ $app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')->bind('f
 $app->match('/register', 'WF3\Controller\HomeController::registerAction')
     ->bind('register');
 
+
+
+$app->match('forum/subject/responses', 'WF3\Controller\HomeController::subjectAction')
+->bind('forumsubject');
 
