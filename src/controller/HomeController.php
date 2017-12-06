@@ -28,11 +28,6 @@ class HomeController{
         return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
     }
     
-    
-
-  
-         
-     
 
   //page détaillée d'un ancien élève
     public function getAlumniAction(Application $app, $id){
