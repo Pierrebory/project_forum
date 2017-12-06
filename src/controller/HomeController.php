@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use WF3\Domain\User;
 use WF3\Domain\Subjects;
 use WF3\Domain\Responses;
+use WF3\Domain\Employer;
+use WF3\Domain\JobOffers;
 use WF3\Form\Type\RegisterType;
 use WF3\Form\Type\SubjectType;
 use WF3\Form\Type\ResponsesType;
@@ -37,7 +39,20 @@ class HomeController{
                                                                            'alumni' => $alumni)); 
     }
     
+    //PAGE LISTE DES OFFRES D'EMPLOI
+    public function offresAction(Application $app){
+        $offres = $app['dao.joboffers']->findAll();  
+        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres)); 
+    }
     
+    
+    //PAGE DE DETAIL DE L'OFFRE D'EMPLOI
+    public function detailOffreAction(Application $app, $id){
+        //je récupère l'id de l'offre d'emploi
+        $detailoffre = $app['dao.joboffers']->getAllOffer($id);
+        return $app['twig']->render('detailoffre.html.twig', array('detailoffre' => $detailoffre)); 
+
+    }
     
  
     ///////////////////////PAGE SUJET FORUM////////////////////////
@@ -99,6 +114,14 @@ class HomeController{
 		return $app['twig']->render('register.html.twig', array(
 			'userForm' => $userForm->createView(),
 		));		
+	}
+
+		/////////////// CONNEXION //////////////////
+	public function loginAction(Application $app, Request $request){
+		return $app['twig']->render('login.html.twig', array(
+			'error' => $app['security.last_error']($request), 
+			'last_username' => $app['session']->get('_security.last_username')
+		));
 	}	
     
     
