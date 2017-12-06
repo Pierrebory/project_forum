@@ -21,20 +21,33 @@ class RegisterType extends AbstractType
             'attr' => array(
                 'placeholder' => 'Au moins 2 caractères'
             ),
-            'required' => true,            
+            'required' => true,                      
             'constraints' => array(
                 new Assert\NotBlank(),
                 new Assert\Length(array(
                     'min' => 2,
                     'max' => 45,
                     'minMessage' => 'Votre nom doit faire au moins 2 caractères.',
-                    'minMessage' => 'Votre nom ne dois pas faire plus de 45 caractères.'
+                    'maxMessage' => 'Votre nom ne dois pas faire plus de 45 caractères.'
                 )),
                 new Assert\Regex(array(
                     'pattern' => '/\d/',
                     'match'   => false,
                     'message' => 'Votre nom ne doit pas contenir de chiffres.'    
-                ))                
+                )),
+                new Assert\Regex(array(
+                    'pattern' => '/[^- A-Za-z0-9\']/',
+                    'match'   => false,
+                    'message' => 'Votre nom ne doit pas contenir de caractères spéciaux.'            
+                )),
+                new Assert\Regex(array(
+                    'pattern' => '/^[A-Za-z]/',
+                    'message' => 'Votre nom doit commencer par une lettre.'            
+                )),   
+                new Assert\Regex(array(
+                    'pattern' => '/[A-Za-z]$/',
+                    'message' => 'Votre nom doit finir par une lettre.'            
+                ))          
             )
         ));
 
@@ -51,13 +64,26 @@ class RegisterType extends AbstractType
                     'min' => 2,
                     'max' => 45,
                     'minMessage' => 'Votre prénom doit faire au moins 2 caractères.',
-                    'minMessage' => 'Votre prénom ne dois pas faire plus de 45 caractères.'
+                    'maxMessage' => 'Votre prénom ne dois pas faire plus de 45 caractères.'
                 )),
                 new Assert\Regex(array(
                     'pattern' => '/\d/',
                     'match'   => false,
                     'message' => 'Votre prénom ne doit pas contenir de chiffres.'    
-                ))                  
+                )),
+                new Assert\Regex(array(
+                    'pattern' => '/[^- A-Za-z0-9\']/',
+                    'match'   => false,
+                    'message' => 'Votre prénom ne doit pas contenir de caractères spéciaux.'            
+                )),
+                new Assert\Regex(array(
+                    'pattern' => '/^[A-Za-z]/',
+                    'message' => 'Votre prénom doit commencer par une lettre.'            
+                )),   
+                new Assert\Regex(array(
+                    'pattern' => '/[A-Za-z]$/',
+                    'message' => 'Votre prénom doit finir par une lettre.'            
+                ))                                                                                   
             )
         ));   
 
@@ -81,20 +107,18 @@ class RegisterType extends AbstractType
         ////////////////// MOT DE PASSE /////////////////////
         $builder->add('password', RepeatedType::class, array(       
             'type' => PasswordType::class,
-            'attr' => array(
-                'placeholder' => 'Au moins 4 caractères'
-            ),            
+            'label' => false,           
             'invalid_message' => 'Les mots de passe doivent être identiques.',
             'required' => true,
-            'first_options'  => array('label' => 'Votre mot de passe*'),
-            'second_options' => array('label' => 'Répetez le mot de passe*'),
+            'first_options'  => array('label' => 'Votre mot de passe*', 'attr' => array('placeholder' => 'Au moins 4 caractères')),
+            'second_options' => array('label' => 'Répetez le mot de passe*', 'attr' => array('placeholder' => 'Identique au précédent')),
             'constraints' => array(
                 new Assert\NotBlank(),
                 new Assert\Length(array(
                     'min' => 4,
                     'max' => 255,
                     'minMessage' => 'Votre mot de passe doit faire au moins 4 caractères.',
-                    'minMessage' => 'Votre mot de passe ne dois pas faire plus de 255 caractères.'
+                    'maxMessage' => 'Votre mot de passe ne dois pas faire plus de 255 caractères.'
                 ))
             )            
         ));    
@@ -105,7 +129,8 @@ class RegisterType extends AbstractType
             'label' => 'Votre numéro de téléphone',
             'attr' => array(
                 'placeholder' => 'Au format 0123456789'
-            ),           
+            ),     
+            'required' => false,                  
             'constraints' => array(            
                 new Assert\Regex(array(
                     'pattern' => '/[0][1-9][0-9]{8}/',
@@ -126,27 +151,37 @@ class RegisterType extends AbstractType
                     'min' => 2,
                     'max' => 255,
                     'minMessage' => 'Votre ville doit faire au moins 2 caractères.',
-                    'minMessage' => 'Votre ville ne dois pas faire plus de 255 caractères.'
+                    'maxMessage' => 'Votre ville ne dois pas faire plus de 255 caractères.'
                 )),                   
                 new Assert\Regex(array(
                     'pattern' => '/\d/',
                     'match'   => false,
                     'message' => 'Votre ville ne doit pas contenir de chiffres.'            
-                ))
+                )),
+                new Assert\Regex(array(
+                    'pattern' => '/[^- A-Za-z0-9\']/',
+                    'match'   => false,
+                    'message' => 'Votre ville ne doit pas contenir de caractères spéciaux.'            
+                )),
+                new Assert\Regex(array(
+                    'pattern' => '/^[A-Za-z]/',
+                    'message' => 'Votre ville doit commencer par une lettre.'            
+                )),   
+                new Assert\Regex(array(
+                    'pattern' => '/[A-Za-z]$/',
+                    'message' => 'Votre ville doit finir par une lettre.'            
+                ))                      
             )
         ));   
 
 
         //////////////////// ROLE ////////////////////
         $builder->add('role', ChoiceType::class, array(
-            'label' => 'Qui êtes-vous ?*',           
-            'attr' => array(
-                'name' => 'role',
-                'id' => 'role'
-            ),                  
+            'label' => 'Qui êtes-vous ?*', 
+            'required' => true,                                       
             'choices' => array(
-                'un élève' => 'ROLE_USER',
-                'un recruteur' => 'ROLE_ADMIN',
+                'Un élève' => 'ROLE_USER',
+                'Un recruteur' => 'ROLE_EMPLOYER',
             )
         ));          
 
