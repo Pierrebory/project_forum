@@ -32,12 +32,15 @@
                   <!-- navigation -->
                   <nav class="pull-right nav-collapse collapse">
                     <ul id="menu-main" class="nav">
+
+                  
                       <li><a title="team" href="{{ path('annuaire') }}">Annuaire</a></li>
                       <li><a title="services" href="{{ path('forum') }}">Forum</a></li>
-                      <li><a title="works" href="">Offres d'emploi</a></li>
+                      <li><a title="works" href="{{ path('offresemploi') }}">Offres d'emploi</a></li>
                       <li><a title="blog" href="">Contact</a></li>
                       <li><a href="{{ path('login') }}">Connexion</a></li>
                       <li><a href="{{ path('inscription') }}">Inscription</a></li>
+
                       <!-- A MODIDIER FORMAT TWIG-->
                     </ul>
                   </nav>

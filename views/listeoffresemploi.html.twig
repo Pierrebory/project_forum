@@ -1,0 +1,68 @@
+{% extends "layout.html.twig" %}
+
+  {% block title %}Offres d'emploi{% endblock %}
+
+
+        {% block content %}
+
+		<div class="col-md-12 text-center">
+            
+            <blockquote class="blockquote text-center"><h1>Offres d'emploi</h1> </blockquote>
+            
+            
+		</div>
+
+<br>
+<br>
+
+<a href=""><button type="button" class="btn btn-info">Poster une offre d'emploi</button></a>
+
+
+
+
+
+
+<table class="table table-striped">
+  <thead>
+     
+    <tr>
+      <th scope="col">Date de l'offre</th>
+      <th scope="col">Poste</th>
+      <th scope="col">Ville</th>
+      <th scope="col">Détails</th>
+    
+    </tr>
+      	
+  </thead>
+    
+  <tbody>
+    <tr>
+         {% for offre in offres %}
+        
+      
+        
+      <td>{{ offre.date_offer }}</td>
+      <td>{{ offre.title }}</td>
+      <td>{{ offre.city }}</td>
+        <td><a href="{{ path('detailoffre', {id:offre.id}) }}">Détail du poste</a></td>
+        
+    </tr>
+      
+  {% endfor %} 
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {% endblock %} 
