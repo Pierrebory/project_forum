@@ -4,14 +4,64 @@
 
 
         {% block content %}
-
-		<div class="col-md-12">
-            <h2>Fiche détaillée</h2>
+<br>
+<br>
+<br>
+		<div class="col-md-12 text-center">
             
-           
-			<ul>
-				<li>{{ user.firstname }} {{ user.username }}</li>
-			</ul>
+            
+            <h1>Fiche détaillée</h1>
+            
+           <br>
+            
+            
+            
+         <p class="font-weight-bold">Vous avez changé de situation ?</p>
+            <br>
+          <a href=""><button type="button" class="btn btn-info">Modifiez votre fiche détaillée</button></a> 
+            
+            <br>
+            <br>
+            
+			
+				         <h2> <p class="bold">{{ user.avatar }} {{ user.firstname }} {{ user.username }}</p></h2>
+            
+            
+            <table class="table table-bordered table-hover table-responsive">
+                
+                <tbody>
+               
+            <tr><th scope="row">Promo</th> <td>{{ alumni.promo }}</td> </tr>
+            <tr><th scope="row">Ville</th> <td>{{ user.city }}</td></tr>
+            <tr><th scope="row">Brève présentation</th> <td>{{ alumni.presentation }}</td></tr> 
+            <tr><th scope="row">Compétences</th> <td>{{ alumni.skills }}</td></tr>
+            <tr><th scope="row">Statut</th> <td>{{ alumni.status }}</td> </tr>
+            <tr><th scope="row">Type de poste recherché</th> <td>{{ alumni.searchjob }}</td> </tr>
+            <tr><th scope="row">Temps de recherche d'emploi</th> <td>{{ alumni.searchtime }}</td> </tr>
+            <tr><th scope="row">Emploi actuel (si en poste)</th> <td>{{ alumni.job }}</td> </tr>
+            <tr><th scope="row">Type de contrat</th> <td>{{ alumni.contract }}</td> </tr>
+            <tr><th scope="row">Type d'entreprise</th> <td>{{ alumni.companytype }}</td> </tr>
+            <tr><th scope="row">Nom de l'entreprise</th> <td>{{ alumni.companyname }}</td> </tr>
+            <tr><th scope="row">Salaire</th> <td>{{ alumni.wage }}</td> </tr>
+            <tr><th scope="row">Lien vers LinkedIn</th> <td>{{ alumni.linkedinurl  }}</td> </tr>
+            <tr><th scope="row">Lien vers le CV</th> <td>{{ alumni.cv }}</td> </tr>
+            <tr><th scope="row">Parrainage</th> <td>{{ alumni.sponsorship  }}</td> </tr>
+            
+            
+            
+                </tbody>
+            </table>
+            
+            <br>
+            <br>
+            
+             <a href=""><button type="button" class="btn btn-info">Contacter</button></a> 
+
+            
+            
+            
+            
+		
             
 		
 

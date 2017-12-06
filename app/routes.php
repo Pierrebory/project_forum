@@ -21,15 +21,8 @@ $app->match('/annuaire/{id}', 'WF3\Controller\HomeController::getAlumniAction')
 $app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')->bind('forum');
 
 
-
-
-
-
 // formulaire d'inscription
 $app->match('/register', 'WF3\Controller\HomeController::registerAction')
     ->bind('register');
 
 
-$app->match('forum/subject/{id}', 'WF3\Controller\HomeController::subjectAction')
-->assert('id', '\d+')
-->bind('voirsubject');
