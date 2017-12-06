@@ -31,7 +31,7 @@ $app->match('forum/subject/responses', 'WF3\Controller\HomeController::subjectAc
 
 ->bind('forumsubject');
 
-->bind('forumsubject');
+
 
 
 ////////////AJAX///////////
