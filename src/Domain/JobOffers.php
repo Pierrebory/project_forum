@@ -144,7 +144,7 @@ class JobOffers
         $this->avatar = $avatar;
         return $this;
     }
-}
+
     
 
     public function getEmployer_id()
@@ -157,8 +157,7 @@ class JobOffers
         $this->employer_id = $employer_id;
         return $this;
     }
-    
-    
+
 
     }
     }
