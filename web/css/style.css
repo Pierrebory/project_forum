@@ -663,27 +663,16 @@ footer ul.social-networks li a:hover {
 	transition: all 0.4s ease-in-out;
 }
 
-footer ul.social-networks li i.icon-bgdark {
-	background:#414141;
-	color: #656565;
-}
-
-
-footer ul.social-networks li a i.icon-instagram:hover {
-	background: #ba7b3d;
-	color: #fff;
-}
-
 footer ul.social-networks li a i.icon-twitter:hover {
 	background: #5ad2eb;
 	color: #fff;
 }
 footer ul.social-networks li a i.icon-facebook:hover {
-	background: #f57b71;
+	background: #3B5998;
 	color: #fff;
 }
-footer ul.social-networks li a i.icon-pinterest:hover {
-	background: #d84848;
+footer ul.social-networks li a i.icon-linkedin:hover {
+	background: #007bb6;
 	color: #fff;
 }
 
