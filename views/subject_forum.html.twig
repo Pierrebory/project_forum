@@ -25,9 +25,9 @@
                             'class': 'form-control'
                         }}) }}
                     </div>
-                </div>
+                </div><br>
                 
-                <div class="form-group">
+                <div class="form-group" class="col-sm-12">
                     <input type="submit" class="btn btn-primary btn-lg" value="Send" />
                 </div>
             {{ form_end(subjectForm) }}
@@ -36,11 +36,11 @@
           
        {% for subject in subjects %}
 			<article>
-                <a href="{{ path('forumsubject', {id: subject.id}) }}"><h2>{{ subject.title }}</h2></a>
+                <a href="{{ path('forumsubject', {idSubject: subject.id}) }}"><h2>{{ subject.title }}</h2></a>
 				
 				<p>publié le {{ subject.date_message }}
 				par {{ subject.user_id.username }}</p>
-                <p>{{ subject.message }}</p>
+                <p>{{ subject.message }}</p><hr>
 			</article>
         {%endfor%}
 		{% endblock %}

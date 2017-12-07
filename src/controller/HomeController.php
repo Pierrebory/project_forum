@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use WF3\Domain\User;
 use WF3\Domain\Subjects;
 use WF3\Domain\Responses;
+use WF3\Form\Type\ConnectType;
 use WF3\Domain\Employer;
 use WF3\Domain\JobOffers;
 use WF3\Form\Type\RegisterType;
@@ -40,17 +41,21 @@ class HomeController{
     }
     
     //PAGE LISTE DES OFFRES D'EMPLOI
-    public function offresAction(Application $app){
+    public function offresAction(Application $app, $idemployer){
+        $employeur = $app['dao.employers']->find($idemployer); 
         $offres = $app['dao.joboffers']->findAll();  
-        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres)); 
+        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres,
+                                                                        'employeur' => $employeur)); 
     }
     
     
     //PAGE DE DETAIL DE L'OFFRE D'EMPLOI
-    public function detailOffreAction(Application $app, $id){
+    public function detailOffreAction(Application $app, $id, $idemployer){
         //je récupère l'id de l'offre d'emploi
         $detailoffre = $app['dao.joboffers']->getAllOffer($id);
-        return $app['twig']->render('detailoffre.html.twig', array('detailoffre' => $detailoffre)); 
+        $employeur = $app['dao.employers']->findEmployerById($idemployer);
+        return $app['twig']->render('detailoffre.html.twig', array('detailoffre' => $detailoffre,
+                                                                    'employeur' => $employeur)); 
 
     }
     
@@ -118,6 +123,7 @@ class HomeController{
 
 		/////////////// CONNEXION //////////////////
 	public function loginAction(Application $app, Request $request){
+
 		return $app['twig']->render('login.html.twig', array(
 			'error' => $app['security.last_error']($request), 
 			'last_username' => $app['session']->get('_security.last_username')
@@ -126,16 +132,16 @@ class HomeController{
     
     
      ///////////////////////PAGE REPONSE FORUM////////////////////////
-    public function subjectAction(Application $app, Request $request){
+    public function subjectAction(Application $app, Request $request, $idSubject){
         $response = new Responses();
         $responses =[];
         $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
         $responsesForm->handleRequest($request);
-                 $responses = $app['dao.response']->getResponses();
+                 $responses = $app['dao.response']->getResponses($idSubject);
 
         if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
         $response->setUser_id(1);
-            
+            $response->setSubject_id($idSubject);
             $response->setDate_message(date('Y-m-d H:i:s'));
 		 $app['dao.response']->insert($response);
 

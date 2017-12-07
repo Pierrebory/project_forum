@@ -15,6 +15,16 @@ class EmployersDao extends DAO
 	}
     
 
+    public function findEmployerById($idemployer){
+        $result = $this->bdd->prepare('SELECT * FROM employers INNER JOIN users ON employers.employer_id = users.id WHERE employers.employer_id = :id');
+        $result->bindValue(':id', $idemployer);
+        $result->execute();
+        return $result->fetch(\PDO::FETCH_ASSOC);
+        
+        
+    }
+    
+    
     
     
     //je réécris ma méthode buildObject 
