@@ -60,11 +60,11 @@ class RegisterType extends AbstractType
                 )),
                 new Assert\Regex(array(
                     'pattern' => '/^[A-Za-zéèàâêîôûäëïöüÿ]/',
-                    'message' => 'Votre nom doit commencer par une lettre.'            
+                    'message' => 'Votre nom doit commencer par une lettre minuscule ou sans caractères spéciaux.'    
                 )),   
                 new Assert\Regex(array(
                     'pattern' => '/[A-Za-zéèàâêîôûäëïöüÿ]$/',
-                    'message' => 'Votre nom doit finir par une lettre.'            
+                    'message' => 'Votre nom doit finir par une lettre minuscule ou sans caractères spéciaux.'         
                 ))          
             )
         ));
@@ -96,11 +96,11 @@ class RegisterType extends AbstractType
                 )),
                 new Assert\Regex(array(
                     'pattern' => '/^[A-Za-zéèàâêîôûäëïöüÿ]/',
-                    'message' => 'Votre prénom doit commencer par une lettre.'            
+                    'message' => 'Votre prénom doit commencer par une lettre minuscule ou sans caractères spéciaux.'            
                 )),   
                 new Assert\Regex(array(
                     'pattern' => '/[A-Za-zéèàâêîôûäëïöüÿ]$/',
-                    'message' => 'Votre prénom doit finir par une lettre.'            
+                    'message' => 'Votre prénom doit finir par une lettre minuscule ou sans caractères spéciaux.'      
                 ))                                                                                   
             )
         ));   
@@ -183,11 +183,11 @@ class RegisterType extends AbstractType
                 )),
                 new Assert\Regex(array(
                     'pattern' => '/^[A-Za-zéèàâêîôûäëïöüÿ]/',
-                    'message' => 'Votre ville doit commencer par une lettre.'            
+                    'message' => 'Votre ville doit commencer par une lettre minuscule ou sans caractères spéciaux.' 
                 )),   
                 new Assert\Regex(array(
                     'pattern' => '/[A-Za-zéèàâêîôûäëïöüÿ]$/',
-                    'message' => 'Votre ville doit finir par une lettre.'            
+                    'message' => 'Votre ville doit finir par une lettre minuscule ou sans caractères spéciaux.'      
                 ))                      
             )
         ));   

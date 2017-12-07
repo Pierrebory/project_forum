@@ -125,6 +125,39 @@ class HomeController{
 			'last_username' => $app['session']->get('_security.last_username')
 		));
 	}	
+
+    /////////////////////// RESET MOT DE PASSE ///////////////////////////
+    public function resetFormAction(Application $app, Request $request){
+    // on va vérifier que l'utilisateur est connecté
+
+    $contactForm = $app['form.factory']->create(ContactType::class);
+    // on envoie les paramètres de la requête à notre objet formulaire
+    $contactForm->handleRequest($request); 
+
+    if($contactForm->isSubmitted() && $contactForm->isValid()){
+        $data = $contactForm->getData();
+        $message = \Swift_Message::newInstance()
+                        ->setSubject($data['subject'])
+                        ->setFrom(array('promo5wf3@gmx.fr'))
+                        ->setTo(array('norman33@live.fr'))
+                        ->setBody($app['twig']->render('emailReset.html.twig', 
+                            array(
+                            'name' => $data['name'],
+                            'email' => $data['email'],
+                            'message' => $data['message']
+                        )
+                    ), 'text/html');
+            $app['mailer']->send($message);
+    }
+
+    // j'envoi le formulaire
+    return $app['twig']->render('reset.html.twig', array(
+        'title' => 'Contact Us',
+        'contactForm' => $contactForm->createView(),
+        'data' => $contactForm->getData()
+    ));         
+}   
+
     
     
      ///////////////////////PAGE REPONSE FORUM////////////////////////
