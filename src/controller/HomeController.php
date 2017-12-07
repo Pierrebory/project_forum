@@ -14,6 +14,7 @@ use WF3\Domain\JobOffers;
 use WF3\Form\Type\RegisterType;
 use WF3\Form\Type\SubjectType;
 use WF3\Form\Type\ResponsesType;
+use WF3\Form\Type\ContactType;
 
 
 class HomeController{
@@ -161,7 +162,35 @@ class HomeController{
     
     
     
-    
+    ///////////////////////PAGE CONTACT///////////////////
+	public function contactAction(Application $app, Request $request){
+        $contactForm = $app['form.factory']->create(ContactType::class);
+        $contactForm->handleRequest($request);
+        
+        if ($contactForm->isSubmitted() && $contactForm->isValid())
+        {
+            $data = $contactForm->getData();
+            $message = \Swift_Message::newInstance()
+                        ->setSubject($data['subject'])
+                        ->setFrom(array('promo5wf3@gmx.fr'))
+                        ->setTo(array('pier.bory@gmail.com'))
+                        ->setBody($app['twig']->render('contact.email.html.twig',
+                            array('name'=>$data['name'],
+                                   'email' => $data['email'],
+                                   'message' => $data['message']
+                            )
+                        ), 'text/html');
+
+            $app['mailer']->send($message);
+
+
+        }
+        return $app['twig']->render('contact.html.twig', array(
+            'title' => 'Contact Us',
+            'contactForm' => $contactForm->createView(),
+            'data' => $contactForm->getData()
+        ));
+	}
     
     
     

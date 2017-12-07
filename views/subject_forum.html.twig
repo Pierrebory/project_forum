@@ -1,6 +1,6 @@
 	{% extends "layout.html.twig" %}
 	
-	{% block title %}les sujet{% endblock %}
+	{% block title %}Forum{% endblock %}
 	
 	{% block content %}
 {{ form_start(subjectForm, { 'attr': {'class': 'form-horizontal'} }) }}
@@ -32,7 +32,7 @@
                 </div>
             {{ form_end(subjectForm) }}
 
-            <h2>Mon sujet</h2>
+            <h2>Les differents sujets du forum : </h2>
           
        {% for subject in subjects %}
 			<article>
