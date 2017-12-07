@@ -27,17 +27,20 @@
                   <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                   </a>
 
-                  <h1 class="brand"><a href="{{ path('home') }}"><img src="img/webforce3.png" alt="" /></a></h1>
 
-                  <div class="brand"><a href="index.html"><img src="img/webforce3.png" alt="Webforce3, l'école des développeurs"></a></div>
+         
+
+                  <div class="brand"><a href="{{ path('home') }}"><img src="img/icons/redim150.png" alt="Webforce3, l'école des développeurs"></a></div>
                   <!-- navigation -->
                   <nav class="pull-right nav-collapse collapse">
                     <ul id="menu-main" class="nav">
 
                   
                       <li><a title="team" href="{{ path('annuaire') }}">Annuaire</a></li>
-                      <li><a title="services" href="{{ path('forum') }}">Forum</a></li>
-                      <li><a title="works" href="{{ path('offresemploi') }}">Offres d'emploi</a></li>
+
+                      <li><a href="{{ path('forum') }}">Forum</a></li>
+                      <li><a title="works">Offres d'emploi</a></li>
+
                       <li><a title="blog" href="">Contact</a></li>
                       <li><a href="{{ path('login') }}">Connexion</a></li>
                       <li><a href="{{ path('inscription') }}">Inscription</a></li>
@@ -57,6 +60,7 @@
            
            {% block content %}{% endblock %}
         </div>
+            <!--footer-->
         <footer>
     <div class="container">
       <div class="row">
@@ -75,7 +79,8 @@
               <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>           
               <a href="https://bootstrapmade.com/"></a> 
             </div>
-          </p>
+          
+            </p>
         </div>
       </div>
     </div>
@@ -96,4 +101,3 @@
 </body>
 </html> 
 
-<i class="fa fa-facebook-square" aria-hidden="true"></i>

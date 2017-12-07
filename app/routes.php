@@ -28,7 +28,8 @@ $app->match('/detailoffre/{id}', 'WF3\Controller\HomeController::detailOffreActi
     ->bind('detailoffre');
 
 //page Forum
-$app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')->bind('forum');
+$app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')
+    ->bind('forum');
 
 
 // formulaire d'inscription
@@ -43,10 +44,9 @@ $app->match('/login', 'WF3\Controller\HomeController::loginAction')
 $app->match('/mdpoublie', 'WF3\Controller\HomeController::resetPassAction')
     ->bind('mdpoublie');
 
-
-
-$app->match('forum/subject/responses', 'WF3\Controller\HomeController::subjectAction')
+$app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeController::subjectAction')
     ->bind('forumsubject');
+
 
 
 
