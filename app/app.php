@@ -99,6 +99,12 @@ $app['dao.response'] = function($app){
 
 };
 
+$app['dao.resetpass'] = function($app){
+  $resetpassDAO = new WF3\DAO\ResetpassDAO($app['db'], 'resetpass', 'WF3\Domain\Reset');
+    $resetpassDAO->setUserDAO($app['dao.users']);
+    return $resetpassDAO;
+
+};
 
 
 

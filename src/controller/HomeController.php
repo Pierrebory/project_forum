@@ -11,7 +11,10 @@ use WF3\Domain\Responses;
 use WF3\Form\Type\ConnectType;
 use WF3\Domain\Employer;
 use WF3\Domain\JobOffers;
+use WF3\Domain\Resetpass;
 use WF3\Form\Type\RegisterType;
+use WF3\Form\Type\ResetType;
+use WF3\Form\Type\ResetpassType;
 use WF3\Form\Type\SubjectType;
 use WF3\Form\Type\ResponsesType;
 
@@ -131,24 +134,29 @@ class HomeController{
 	}	
 
     /////////////////////// RESET MOT DE PASSE ///////////////////////////
-    public function resetFormAction(Application $app, Request $request){
+    public function resetPassAction(Application $app, Request $request){
     // on va vérifier que l'utilisateur est connecté
 
-    $contactForm = $app['form.factory']->create(ContactType::class);
-    // on envoie les paramètres de la requête à notre objet formulaire
-    $contactForm->handleRequest($request); 
 
-    if($contactForm->isSubmitted() && $contactForm->isValid()){
-        $data = $contactForm->getData();
+
+    $resetForm = $app['form.factory']->create(ResetType::class);
+    // on envoie les paramètres de la requête à notre objet formulaire
+    $resetForm->handleRequest($request); 
+
+    if($resetForm->isSubmitted() && $resetForm->isValid()){
+        $data = $resetForm->getData();
+        $token = md5(uniqid(rand(), true));
+        $user = $app['dao.resetpass']->selectReset($data['email']);   
+        $app['dao.resetpass']->insertReset($token, $user['id']);        
         $message = \Swift_Message::newInstance()
-                        ->setSubject($data['subject'])
                         ->setFrom(array('promo5wf3@gmx.fr'))
-                        ->setTo(array('norman33@live.fr'))
+                        ->setTo(array($data['email']))
                         ->setBody($app['twig']->render('emailReset.html.twig', 
                             array(
-                            'name' => $data['name'],
+                            'username' => $user['username'],
+                            'id' => $user['id'],
                             'email' => $data['email'],
-                            'message' => $data['message']
+                            'token' => $token
                         )
                     ), 'text/html');
             $app['mailer']->send($message);
@@ -156,9 +164,45 @@ class HomeController{
 
     // j'envoi le formulaire
     return $app['twig']->render('reset.html.twig', array(
-        'title' => 'Contact Us',
-        'contactForm' => $contactForm->createView(),
-        'data' => $contactForm->getData()
+        'resetForm' => $resetForm->createView(),
+        'data' => $resetForm->getData(),
+    ));         
+}   
+
+    /////////////// FORMULAIRE RESET MOT DE PASSE ///////////////////////////
+    public function changePassAction(Application $app, Request $request, $id, $token){
+    // on va vérifier que l'utilisateur est connecté
+
+    $user = new User();
+    $resetForm = $app['form.factory']->create(ResetpassType::class, $user);
+    // on envoie les paramètres de la requête à notre objet formulaire
+    $resetForm->handleRequest($request); 
+
+    $resetId = $app['dao.users']->find($id);
+    $resetToken = $app['dao.resetpass']->find($token);
+
+    if($resetForm->isSubmitted() && $resetForm->isValid()){
+        $salt = substr(md5(time()), 0, 23);
+        $user->setSalt($salt);
+        //on récupère le mot de passe en clair (envoyé par l'utilisateur)
+        $plainPassword = $user->getPassword();
+        // on récupère l'encoder de silex
+        $encoder = $app['security.encoder.bcrypt'];
+        // on encode le mdp
+        $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+        //on remplace le mdp en clair par le mdp crypté
+        $user->setPassword($password);
+
+        $app['dao.users']->update($id, $user);               
+        $app['session']->getFlashBag()->add('success', 'Votre mot de passe a bien été modifié.');
+        return $app->redirect($app['url_generator']->generate('home'));     
+    }
+
+    // j'envoi le formulaire
+    return $app['twig']->render('resetForm.html.twig', array(
+        'resetForm' => $resetForm->createView(),
+        'resetId' => $resetId,
+        'resetToken' => $resetToken
     ));         
 }   
 

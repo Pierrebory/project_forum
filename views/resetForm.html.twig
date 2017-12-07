@@ -1,0 +1,50 @@
+	{% extends "layout.html.twig" %}
+	
+	{% block title %}Inscription{% endblock %}
+	
+	{% block content %}
+            <h2>Formulaire d'inscription</h2>
+
+            <p>Veillez remplir le formulaire ci-dessous pour vous inscrire. Vous recevrez une confirmation par email une fois que le formulaire sera validé.</p>
+            <p>Les champs marqués d'une * sont obligatoires.</p>
+ 
+
+            <div>
+            {{ form_start(resetForm, { 'attr': {'class': 'form-horizontal'} }) }}
+
+			    <div class="form-group">		    
+			        {{ form_label(resetForm.password.first, null, { 'label_attr':  {
+			            'class': 'col-sm-5 control-label'
+			        }}) }}
+                	{% if resetForm.password.first.vars.errors|length > 0 %}
+	                    <div class="alert alert-danger">
+						    {% for error in resetForm.password.first.vars.errors %}
+						        {{ error.message }}
+						    {% endfor %}
+	                    </div>
+	                {% endif %}				        
+			        <div class="col-sm-4">
+			            {{ form_widget(resetForm.password.first, { 'attr':  {
+			                'class': 'form-control'
+			            }}) }}
+			        </div>
+			    </div>
+			    <div class="form-group">
+			        {{ form_label(resetForm.password.second, null, { 'label_attr':  {
+			            'class': 'col-sm-5 control-label'
+			        }}) }}
+			        <div class="col-sm-4">
+			            {{ form_widget(resetForm.password.second, { 'attr':  {
+			                'class': 'form-control'
+			            }}) }}
+			        </div>
+			    </div>
+
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" />
+                </div>
+            {{ form_end(resetForm) }}
+        </div>
+
+		{% endblock %}
