@@ -6,41 +6,27 @@
   <h2 class="text-center">Login</h2>
          {% if error %}
          <div class="alert alert-danger">
-             <strong>Nom d'utilisateur ou mot de passe incorrect!</strong> {{ error }}
+             <strong>Nom d'utilisateur ou mot de passe incorrect!</strong> 
          </div>
          {% endif %}
-            {{ form_start(userForm, { 'attr': {'class': 'form-horizontal'} }) }}
-
-                <div class="form-group">
-                    {{ form_label(userForm.email, null) }}
-                    <div>
-                        {% if userForm.email.vars.errors|length > 0 %}
-                            <div class="alert alert-danger">
-                                {% for error in userForm.email.vars.errors %}
-                                    {{ error.message }}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                        {{ form_widget(userForm.email, { 'attr':  {
-                            'class': 'form-control'
-                        }}) }}
-                    </div>
-                </div>
-                <div class="form-group">            
-                    {{ form_label(userForm.password, null, { 'label_attr':  {
-                        'class': 'col-sm-5 control-label'
-                    }}) }}
-                    <div class="col-sm-4">
-                        {{ form_widget(userForm.password, { 'attr':  {
-                            'class': 'form-control'
-                        }}) }}
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" />
-                </div>
-            {{ form_end(userForm) }}
-        </div>
+         <div>
+             <form class="form-signin form-horizontal" role="form" action="{{ path('login_check') }}" method="post">
+                 <div class="form-group">
+                     <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                         <input type="text" name="_username" value="{{ last_username }}" class="form-control" required autofocus>
+                     </div>
+                 </div>
+                 <div class="form-group">
+                     <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                         <input type="password" name="_password" class="form-control" required>
+                     </div>
+                 </div>
+                 <a href="{{ path('mdpoublie') }}">Mot de passe oublié</a>
+                 <div class="form-group">
+                     <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                         <button type="submit" class="btn btn-default btn-primary">Se connecter</button>
+                     </div>
+                 </div>
+             </form>
+         </div>
   {% endblock %}

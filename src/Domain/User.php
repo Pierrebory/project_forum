@@ -9,6 +9,7 @@ class User implements UserInterface
    
     private $id;
     private $username;
+    private $lastname;
     private $firstname;
     private $email;
     private $password;
@@ -41,6 +42,19 @@ class User implements UserInterface
         }
     }
     
+
+    public function getLastname() {
+        return $this->username;
+    }
+
+    public function setLastname($lastname) {
+        if(!empty($lastname) AND is_string($lastname) AND mb_strlen($lastname) >= 2){
+        $this->lastname = $lastname;
+        return $this;
+        }
+    }
+    
+
     public function getFirstname() {
         return $this->firstname;
     }
