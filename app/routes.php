@@ -32,7 +32,8 @@ $app->get('/detailoffre/{id}/{idemployer}', 'WF3\Controller\HomeController::deta
     ->bind('detailoffre');
 
 //page Forum
-$app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')->bind('forum');
+$app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')
+    ->bind('forum');
 
 
 // formulaire d'inscription
