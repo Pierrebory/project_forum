@@ -44,7 +44,10 @@ class ContactType extends AbstractType
                     'placeholder' => 'Subject'
                 )
             ))                
-            ->add('message', TextareaType::class)
+            ->add('message', TextType::class, array(
+            'attr' => array(
+                    'placeholder' => 'Message'
+                )))
             ;
     }
 

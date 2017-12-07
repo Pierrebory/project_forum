@@ -12,20 +12,20 @@
             {% endfor %}
             
             <div class="contact_form"><br><br><br>
-                <h2>Nous contacter</h2>
+                <h1>Nous contacter</h1>
             {{ form_start(contactForm, { 'attr': {'class': 'form-horizontal'} }) }}
-                <div class="form-group">
+                <div class="form-group"><br>
                     {{ form_label(contactForm.email, null) }}
-                    <div>
+                    <h4>
                         {{ form_errors(contactForm.email) }}
                         {{ form_widget(contactForm.email, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
-                    </div>
+                    </h4>
                 </div>
                 <div class="form-group">
                     {{ form_label(contactForm.name, null) }}
-                    <div>
+                    <h4>
                     	{% if contactForm.name.vars.errors|length > 0 %}
 		                    <div class="alert alert-danger">
 							    {% for error in contactForm.name.vars.errors %}
@@ -36,25 +36,25 @@
                         {{ form_widget(contactForm.name, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
-                    </div>
+                    </h4>
                 </div>
                 <div class="form-group">
                     {{ form_label(contactForm.subject, null) }}
-                    <div>
+                    <h4>
                         {{ form_errors(contactForm.subject) }}
                         {{ form_widget(contactForm.subject, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
-                    </div>
+                    </h4>
                 </div>
                 <div class="form-group">
                     {{ form_label(contactForm.message, null) }}
-                    <div>
+                    <h4>
                         {{ form_errors(contactForm.message) }}
                         {{ form_widget(contactForm.message, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
-                    </div>
+                    </h4>
                 </div><br>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" />
