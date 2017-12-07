@@ -50,6 +50,10 @@ $app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeControlle
 $app->match('/contact/moi', 'WF3\Controller\HomeController::contactAction')->bind('contactezmoi');
 
 
+// formulaire d'inscription des alumnis
+$app->match('/inscription/alumni', 'WF3\Controller\HomeController::alumniAction')
+    ->bind('inscription/alumni');
+
 ////////////AJAX///////////
 
 /*$app->match('/ajax/recherche', 'WF3\Controller\AjaxController::AjaxActionForum')

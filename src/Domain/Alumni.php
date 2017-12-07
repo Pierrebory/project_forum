@@ -2,10 +2,7 @@
 
 namespace WF3\Domain;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
-class Alumni implements UserInterface
-{
+class Alumni{
    
     private $id;
     private $promo;
@@ -52,7 +49,7 @@ class Alumni implements UserInterface
         return $this->presentation;
     }
 
-    public function setFirstname($presentation) {
+    public function setPresentation($presentation) {
         if(!empty($presentation) AND is_string($presentation) AND mb_strlen($presentation) >= 10 AND mb_strlen($presentation) <=200){
         $this->presentation = $presentation;
         return $this;
