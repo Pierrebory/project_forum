@@ -18,17 +18,13 @@ $app->match('/annuaire/{id}', 'WF3\Controller\HomeController::getAlumniAction')
     ->bind('fichedetaillee');
 
 //pages liste des offres d'emploi
-
-// je ne sais pas s'il faut mettre l'id
-$app->get('/offresemploi/{id}', 'WF3\Controller\HomeController::offresAction')
-    ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
+$app->get('/offresemploi', 'WF3\Controller\HomeController::offresAction')
     ->bind('offresemploi');
 
 
 // PAGE DE DETAIL DE L'OFFRE D'EMPLOI
-$app->get('/detailoffre/{id}/{idemployer}', 'WF3\Controller\HomeController::detailOffreAction')
+$app->match('/detailoffre/{id}', 'WF3\Controller\HomeController::detailOffreAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
-    ->assert('idemployer', '\d+')
     ->bind('detailoffre');
 
 //page Forum
