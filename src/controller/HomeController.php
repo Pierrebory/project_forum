@@ -42,19 +42,18 @@ class HomeController{
     }
     
     //PAGE LISTE DES OFFRES D'EMPLOI
-    public function offresAction(Application $app, $idemployer){
-        $employeur = $app['dao.employers']->find($idemployer); 
+    public function offresAction(Application $app){
         $offres = $app['dao.joboffers']->findAll();  
-        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres,
-                                                                        'employeur' => $employeur)); 
+        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres)); 
     }
     
     
     //PAGE DE DETAIL DE L'OFFRE D'EMPLOI
-    public function detailOffreAction(Application $app, $id, $idemployer){
-        //je récupère l'id de l'offre d'emploi
-        $detailoffre = $app['dao.joboffers']->getAllOffer($id);
-        $employeur = $app['dao.employers']->findEmployerById($idemployer);
+    public function detailOffreAction(Application $app, $id){
+        $user = $app['dao.users']->find($id);
+        $employeur = $app['dao.employers']->find($id);
+        $detailoffre = $app['dao.joboffers']->getDetailOffer($id);
+       
         return $app['twig']->render('detailoffre.html.twig', array('detailoffre' => $detailoffre,
                                                                     'employeur' => $employeur)); 
 
@@ -130,6 +129,39 @@ class HomeController{
 			'last_username' => $app['session']->get('_security.last_username')
 		));
 	}	
+
+    /////////////////////// RESET MOT DE PASSE ///////////////////////////
+    public function resetFormAction(Application $app, Request $request){
+    // on va vérifier que l'utilisateur est connecté
+
+    $contactForm = $app['form.factory']->create(ContactType::class);
+    // on envoie les paramètres de la requête à notre objet formulaire
+    $contactForm->handleRequest($request); 
+
+    if($contactForm->isSubmitted() && $contactForm->isValid()){
+        $data = $contactForm->getData();
+        $message = \Swift_Message::newInstance()
+                        ->setSubject($data['subject'])
+                        ->setFrom(array('promo5wf3@gmx.fr'))
+                        ->setTo(array('norman33@live.fr'))
+                        ->setBody($app['twig']->render('emailReset.html.twig', 
+                            array(
+                            'name' => $data['name'],
+                            'email' => $data['email'],
+                            'message' => $data['message']
+                        )
+                    ), 'text/html');
+            $app['mailer']->send($message);
+    }
+
+    // j'envoi le formulaire
+    return $app['twig']->render('reset.html.twig', array(
+        'title' => 'Contact Us',
+        'contactForm' => $contactForm->createView(),
+        'data' => $contactForm->getData()
+    ));         
+}   
+
     
     
      ///////////////////////PAGE REPONSE FORUM////////////////////////

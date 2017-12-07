@@ -15,9 +15,9 @@ class JoboffersDAO extends DAO{
 
     
     //méthode pour accéder à une offfre d'emploi détaillée par son id
-    public function getAllOffer($id){
-      $result = $this->bdd->prepare('SELECT joboffers.id, title, city, date_offer, description, skills, advantages, contract, contractduration, timetable FROM joboffers INNER JOIN employers ON joboffers.employer_id = employers.id WHERE joboffers.id = :id');
-        $result->bindValue(':id', $id);
+    public function getDetailOffer($idoffre){
+        $result = $this->bdd->prepare('SELECT joboffers.id, title, city, date_offer, company, job, description, skills, advantages, contract, contractduration, timetable FROM joboffers INNER JOIN employers ON joboffers.employer_id = employers.id WHERE joboffers.id = :id');
+        $result->bindValue(':id', $idoffre);
         $result->execute();
         return $result->fetch(\PDO::FETCH_ASSOC);  
     }
