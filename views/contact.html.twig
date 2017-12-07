@@ -1,0 +1,65 @@
+{% extends "layout.html.twig" %}
+
+{% block title %} Contact {% endblock %}
+
+{% block content %}
+    
+        <div class="col-sm-6">
+            {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+            {% endfor %}
+            
+            <div class="contact_form"><br><br><br>
+                <h1>Nous contacter</h1>
+            {{ form_start(contactForm, { 'attr': {'class': 'form-horizontal'} }) }}
+                <div class="form-group"><br>
+                    {{ form_label(contactForm.email, null) }}
+                    <h4>
+                        {{ form_errors(contactForm.email) }}
+                        {{ form_widget(contactForm.email, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </h4>
+                </div>
+                <div class="form-group">
+                    {{ form_label(contactForm.name, null) }}
+                    <h4>
+                    	{% if contactForm.name.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in contactForm.name.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(contactForm.name, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </h4>
+                </div>
+                <div class="form-group">
+                    {{ form_label(contactForm.subject, null) }}
+                    <h4>
+                        {{ form_errors(contactForm.subject) }}
+                        {{ form_widget(contactForm.subject, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </h4>
+                </div>
+                <div class="form-group">
+                    {{ form_label(contactForm.message, null) }}
+                    <h4>
+                        {{ form_errors(contactForm.message) }}
+                        {{ form_widget(contactForm.message, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </h4>
+                </div><br>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" />
+                </div>
+            {{ form_end(contactForm) }}
+        </div>
+                                
+{% endblock %}

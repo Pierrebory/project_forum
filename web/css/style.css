@@ -663,27 +663,16 @@ footer ul.social-networks li a:hover {
 	transition: all 0.4s ease-in-out;
 }
 
-footer ul.social-networks li i.icon-bgdark {
-	background:#414141;
-	color: #656565;
-}
-
-
-footer ul.social-networks li a i.icon-instagram:hover {
-	background: #ba7b3d;
-	color: #fff;
-}
-
 footer ul.social-networks li a i.icon-twitter:hover {
 	background: #5ad2eb;
 	color: #fff;
 }
-footer ul.social-networks li a i.icon-dribbble:hover {
-	background: #f57b71;
+footer ul.social-networks li a i.icon-facebook:hover {
+	background: #3B5998;
 	color: #fff;
 }
-footer ul.social-networks li a i.icon-pinterest:hover {
-	background: #d84848;
+footer ul.social-networks li a i.icon-linkedin:hover {
+	background: #007bb6;
 	color: #fff;
 }
 
@@ -983,190 +972,7 @@ i.icon-white {
   border-radius: 0;
 }
 
-/* end size */
 
-.btn-primary {
-  color: #ffffff;
-  text-shadow: none;
-  background-color: #09828c;
-  *background-color: #09828c;
-  background-image: none;
-  border-color: none;
-  filter:none;
-}
-
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active,
-.btn-primary.active,
-.btn-primary.disabled,
-.btn-primary[disabled] {
-  color: #ffffff;
-  background: #065158;
-  *background-color: #065158;
-}
-
-.btn-primary:active,
-.btn-primary.active {
-  background-color: #065158 \9;
-}
-
-.btn-warning {
-  color: #ffffff;
-  text-shadow: none;
-  background-color: #ffe873;
-  *background-color: #ffe873;
-  background-image: none;
-  border-color: none;
-  filter:none;
-}
-
-.btn-warning:hover,
-.btn-warning:focus,
-.btn-warning:active,
-.btn-warning.active,
-.btn-warning.disabled,
-.btn-warning[disabled] {
-  color: #ffffff;
-  background: #b88f22;
-  *background: #b88f22;
-}
-
-.btn-warning:active,
-.btn-warning.active {
-  background: #b88f22 \9;
-}
-
-
-.btn-danger {
-  color: #ffffff;
-  text-shadow: none;
-  background-color: #f36f36;
-  *background-color: #f36f36;
-  background-image: none;
-  border-color: none;
-  filter:none;
-}
-
-.btn-danger:hover,
-.btn-danger:focus,
-.btn-danger:active,
-.btn-danger.active,
-.btn-danger.disabled,
-.btn-danger[disabled] {
-  color: #ffffff;
-  background: #db5f58;
-  *background: #db5f58;
-}
-
-.btn-danger:active,
-.btn-danger.active {
-  background: #db5f58 \9;
-}
-
-.btn-success {
-  color: #ffffff;
-  text-shadow: none;
-  background-color: #1bac91;
-  *background-color: #1bac91;
-  background-image: none;
-  border-color: none;
-  filter:none;
-}
-
-.btn-success:hover,
-.btn-success:focus,
-.btn-success:active,
-.btn-success.active,
-.btn-success.disabled,
-.btn-success[disabled] {
-  color: #ffffff;
-  background: #55ba93;
-  *background: #55ba93;
-}
-
-.btn-success:active,
-.btn-success.active {
-  background: #55ba93 \9;
-}
-
-.btn-info {
-  color: #ffffff;
-  text-shadow: none;
-  background-color: #4dbdc6;
-  *background-color: #4dbdc6;
-  background-image: none;
-  border-color: none;
-  filter:none;
-}
-
-.btn-info:hover,
-.btn-info:focus,
-.btn-info:active,
-.btn-info.active,
-.btn-info.disabled,
-.btn-info[disabled] {
-  color: #ffffff;
-  background: #6a9ad0;
-  *background: #6a9ad0;
-}
-
-.btn-info:active,
-.btn-info.active {
-  background: #6a9ad0 \9;
-}
-
-.btn-inverse {
-  color: #ffffff;
-  text-shadow: none;
-  background-color: #3c3c3c;
-  *background-color: #3c3c3c;
-  background-image: none;
-  border-color: none;
-  filter:none;
-}
-
-.btn-inverse:hover,
-.btn-inverse:focus,
-.btn-inverse:active,
-.btn-inverse.active,
-.btn-inverse.disabled,
-.btn-inverse[disabled] {
-  color: #ffffff;
-  background: #2b2a2a;
-  *background: #2b2a2a;
-}
-
-.btn-inverse:active,
-.btn-inverse.active {
-  background: #2b2a2a \9;
-}
-
-
-/* button flat */
-.btn-flat {
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-}
-
-/* button rounded */
-.btn-rounded {
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius: 20px;
-}
-.btn-large.btn-rounded {
-  -webkit-border-radius: 28px;
-  -moz-border-radius: 28px;
-  border-radius: 28px;
-}
-
-
-.navbar-inverse .btn-navbar {
-	width: auto;
-	height: auto;
-}
 
 /* =========================================================
 09. Media queries
@@ -1290,30 +1096,4 @@ i.icon-white {
  section#services h2, section#services ul {
  text-align: center;
 }
-		
-
-/* team */
-		
-#team .team-thumb {
- margin-right: auto;
- margin-left: auto;
- width: 150px;
- display: block;
- text-align:center
-}
- .job-position: {
- margin-bottom: 1.5em;
-}
- .navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
- margin-left: auto;
- margin-right: auto;
-}
-		
-/* Contact Form */
-	#contact-form {
-		overflow: hidden;
-	}
-	#contact-form input[type=submit] {
-		width: 100%;
-	}
-}
+	
