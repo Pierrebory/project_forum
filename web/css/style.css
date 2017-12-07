@@ -1,26 +1,4 @@
-/*
-    Theme Name: Maxim
-    Theme URL: https://bootstrapmade.com/maxim-free-onepage-bootstrap-theme/
-    Author: BootstrapMade.com
-    Author URL: https://bootstrapmade.com
-*/
 
-/*
-===========================
-CONTENTS:
-
-01 General
-02 Typography
-03 Non-semantic
-04 Navbar
-05 Page sections
-06 Footer
-07 Icons
-08 Buttons
-09 Media queries 
-===========================
-*/
-/* Import css */
 /* Google font */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 /* bootstrap */
@@ -42,7 +20,7 @@ CONTENTS:
 
 
 /* =========================================================
-01. General
+General
 ============================================================ */
 
 div, article, section, header, footer, nav, li {
@@ -57,7 +35,7 @@ div, article, section, header, footer, nav, li {
 }
 body {
 	background:#fff;
-	color: #444;
+	color: #ecf0f1;
 	font-size: 16px;
 	font-weight:300;
 	font-family:'Open Sans', Arial, sans-serif;
@@ -142,7 +120,7 @@ input, button, select, textarea {
 	font-family:'Open Sans', Arial, sans-serif;
 }
 /* =========================================================
-02. Typography
+Typography
 ============================================================ */
 
 p {
@@ -192,7 +170,7 @@ a:hover, a:active {
 }
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 400;
-	color: #312f2b;
+	color: #ecf0f1;
 	line-height:1.1em;
 	font-family:'Open Sans', Arial, sans-serif;
 }
@@ -248,7 +226,7 @@ h2.pagetitle {
 }
 
 /* =========================================================
-03. Misc
+Misc
 ============================================================ */
 
 .hide-text {
@@ -271,7 +249,7 @@ h2.pagetitle {
 }
 
 /* =========================================================
-04. Navigation
+Navigation
 ============================================================ */
 
 .navbar-fixed-top .container {
@@ -335,7 +313,7 @@ ul#menu-main > li > a:focus {
 
 
 /* =========================================================
-05. Page sections
+Page sections
 ============================================================ */
 
 /* === section header === */
@@ -461,14 +439,14 @@ section.inner {
 
 
 .section.orange h4 ,.section.green h4{
-	color: #fcfcfc;
+	color: #312f2b;
 }
 .section.orange p,.section.green p {
-	color: #f7f7f7;
+	color: #312f2b;
 }
 
 
-/* === section spacer === */
+/* === section fonctionnalité === */
 
 section.spacer {
 	padding:90px 0 70px;
@@ -476,25 +454,16 @@ section.spacer {
 }
 
 .spacer.green,.section.green {
-	background:#1bac91;
+	background:#ecf0f1;
 }
 
 .spacer.green,.section.green h4 {
 	color:#fff;
 }
 
-.spacer.yellow,.section.yellow  {
-	background:#ffe873;
-}
-.spacer.orange,.section.orange {
-	background:#47767F;
-}
 
-section.spacer.bg2 {
-	background: url(../img/bg/bg-2.jpg) 50% 0 no-repeat fixed;
-	width:100%;
-	height:auto;
-	margin:0;	
+.spacer.orange,.section.orange {
+	background:#f2f2f2;
 }
 
 section.spacer.bg3 {
@@ -512,12 +481,6 @@ section.spacer blockquote.large:before {
 section.spacer blockquote cite {
 	color:#555;
 }
-
-
-
-
-
-
 
 /* === section services === */
 
@@ -542,22 +505,22 @@ section#services .service-box {
 	transition: all 0.3s ease-in-out;
 }
 section#services .span3:hover {
-	background:#e3e3e3;
+	background:#ecf0f1;
 }
 
 section#services .service-box h2 {
-	color: #f7f7f7;
+	color: #312f2b;
 	font-weight: 700;
 }
 
 section#services.section.orange .service-box:hover {
-	background: #47767F;
+	background: #ffffff;
 }
 
-/* === section about === */
+/* === section équipe === */
 
 section#about {
-	background:#f2f2f2;
+	background:#466A80;
 }
 
 .people {
@@ -575,48 +538,9 @@ section#about {
 	text-align:center;
 }
 
-/* (spacer) latest tweet */
-#tweet{
-	text-align:center;
-	margin:20px 0 0;
-	font-size:20px;
-	color:#fff;
-}
-
-#tweet ul{
-	float:left;
-	width:100%;
-	text-align:center;
-	list-style:none;
-	margin:0;
-	padding:0;
-}
-
-#tweet ul li{
-	display: inline-block;
-	list-style:none;
-	margin:0 0 20px;
-	padding:0 0 0 34px;
-	font-size:20px;
-	line-height:1.5em;
-}
-
-#tweet ul li:before {
-	font-family: 'FontAwesome';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-	-webkit-font-smoothing: antialiased;
-	content: "\f099";
-	margin-right:20px;
-}
-
 
 /* =========================================================
-06. Footer
+Footer
 ============================================================ */
 
 footer {
@@ -680,7 +604,7 @@ footer ul.social-networks li a i.icon-linkedin:hover {
 
 
 /* =========================================================
-07. Icons
+Icons
 ============================================================ */
 
 /* bg */
@@ -880,102 +804,8 @@ i.icon-white {
   border-radius: 8px;
 }
 
-
-
 /* =========================================================
-08. Buttons
-============================================================ */
- 
-.btn {
-	color: #fff;
-	text-shadow: none;
-	font-size: 16px;
-	padding: 11px 19px;
-	letter-spacing: 0.05em;
-	border: 0;
-	text-transform: none;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	box-shadow: none;
-	-moz-box-shadow: none;
-	-webkit-box-shadow: none;
-  background-color: #545454;
-  border-color: none;
-  *background-color: #545454;
-  background-image: none;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-  filter: none;
-  border: none;
-  *border: 0;
-  border-bottom-color: none;
-}
-.btn:link, .btn:visited {
-	color: #fff;
-}
-.btn:hover {
-	background: #333 !important;
-}
-.btn:hover,
-.btn:focus,
-.btn:active,
-.btn.active,
-.btn.disabled,
-.btn[disabled] {
-  color: #fff;
-  background-color: #333;
-  *background-color: #333;
-}
-
-
-.btn.btn-theme:hover {
-	background: #333 !important;
-}
-
-/* size */
-.btn-large {
-  padding: 18px 25px;
-  font-size: 24px;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-}
-
-.btn-large [class^="icon-"],
-.btn-large [class*=" icon-"] {
-  margin-top: 4px;
-}
-
-.btn-small {
-  padding: 6px 13px;
-  font-size: 11.9px;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-}
-
-.btn-small [class^="icon-"],
-.btn-small [class*=" icon-"] {
-  margin-top: 0;
-}
-
-.btn-mini [class^="icon-"],
-.btn-mini [class*=" icon-"] {
-  margin-top: -1px;
-}
-
-.btn-mini {
-  padding: 0 6px;
-  font-size: 10.5px;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-}
-
-
-
-/* =========================================================
-09. Media queries
+Media queries
 ============================================================ */
 
 
@@ -1059,17 +889,14 @@ i.icon-white {
 	#team .team-thumb {
 		 margin-right: auto;
 		 margin-left: auto;
-		 width: 150px;
+		 width: 50px;
 		 display: block;
 		 text-align:center;
 	}
 
-	#portfolio-wrap .grid {
-		width: 50%;
-	}
+	
 
-}
-    
+  
     /* Smartphones (portrait and landscape) ----------- */
 @media only screen  and (min-device-width : 320px)  and (max-device-width : 480px) {
 
