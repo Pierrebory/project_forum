@@ -679,8 +679,7 @@ footer ul.social-networks li a i.icon-twitter:hover {
 	color: #fff;
 }
 footer ul.social-networks li a i.icon-facebook:hover {
-	background: #3b5998
-;
+	background: #f57b71;
 	color: #fff;
 }
 footer ul.social-networks li a i.icon-pinterest:hover {
@@ -748,6 +747,240 @@ i.icon-square.icon-5x{
 	width: 120px !important;
 	height: 120px !important;
 	line-height: 120px !important;
+}
+
+/* rounded */
+i.icon-rounded {
+	display: inline-block;
+	border-radius: 6px !important;
+	-moz-border-radius: 6px !important;
+	-webkit-border-radius: 6px !important;
+	-o-border-radius: 6px !important;
+	-ms-border-radius: 6px !important;
+	text-align: center;
+	width: 24px !important;
+	height: 24px !important;
+	line-height: 24px !important;
+}
+
+.icon-rounded.icon-2x{
+	width: 48px !important;
+	height: 48px !important;
+	line-height: 48px !important;
+}
+.icon-rounded.icon-3x{
+	width: 72px !important;
+	height: 72px !important;
+	line-height: 72px !important;
+	border-radius: 8px !important;
+	-moz-border-radius: 8px !important;
+	-webkit-border-radius: 8px !important;
+	-o-border-radius: 8px !important;
+	-ms-border-radius: 8px !important;
+}
+.icon-rounded.icon-4x{
+	width: 96px !important;
+	height: 96px !important;
+	line-height: 96px !important;
+	border-radius: 10px !important;
+	-moz-border-radius: 10px !important;
+	-webkit-border-radius: 10px !important;
+	-o-border-radius: 10px !important;
+	-ms-border-radius: 10px !important;
+}
+.icon-rounded.icon-5x{
+	width: 120px !important;
+	height: 120px !important;
+	line-height: 120px !important;
+	border-radius: 12px !important;
+	-moz-border-radius: 12px !important;
+	-webkit-border-radius: 12px !important;
+	-o-border-radius: 12px !important;
+	-ms-border-radius: 12px !important;
+}
+
+
+/* circled */
+i.icon-circled {
+	display: inline-block;
+	border-radius: 1000px !important;
+	-moz-border-radius: 1000px !important;
+	-webkit-border-radius: 1000px !important;
+	-o-border-radius: 1000px !important;
+	-ms-border-radius: 1000px !important;
+	text-align: center;
+	width: 24px !important;
+	height: 24px !important;
+	line-height: 24px !important;
+}
+
+.icon-circled.icon-2x{
+	width: 48px !important;
+	height: 48px !important;
+	line-height: 48px !important;
+}
+.icon-circled.icon-3x{
+	width: 72px !important;
+	height: 72px !important;
+	line-height: 72px !important;
+}
+.icon-circled.icon-4x{
+	width: 96px !important;
+	height: 96px !important;
+	line-height: 96px !important;
+}
+.icon-circled.icon-5x{
+	width: 120px !important;
+	height: 120px !important;
+	line-height: 120px !important;
+}
+
+i.icon-white {
+	color:#fff;
+}
+
+
+/* more icon sizes for font-awesome icons */
+
+.icon-6x {
+  font-size: 6em;
+}
+.icon-6x.icon-border {
+  border-width: 6px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+
+.icon-7x {
+  font-size: 7em;
+}
+.icon-6x.icon-border {
+  border-width: 6px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+
+.icon-8x {
+  font-size: 8em;
+}
+.icon-6x.icon-border {
+  border-width: 6px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+
+.icon-9x {
+  font-size: 9em;
+}
+.icon-6x.icon-border {
+  border-width: 6px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+.icon-10x {
+  font-size: 10em;
+}
+.icon-6x.icon-border {
+  border-width: 6px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+
+
+
+/* =========================================================
+08. Buttons
+============================================================ */
+ 
+.btn {
+	color: #fff;
+	text-shadow: none;
+	font-size: 16px;
+	padding: 11px 19px;
+	letter-spacing: 0.05em;
+	border: 0;
+	text-transform: none;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+  background-color: #545454;
+  border-color: none;
+  *background-color: #545454;
+  background-image: none;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: none;
+  border: none;
+  *border: 0;
+  border-bottom-color: none;
+}
+.btn:link, .btn:visited {
+	color: #fff;
+}
+.btn:hover {
+	background: #333 !important;
+}
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn.active,
+.btn.disabled,
+.btn[disabled] {
+  color: #fff;
+  background-color: #333;
+  *background-color: #333;
+}
+
+
+.btn.btn-theme:hover {
+	background: #333 !important;
+}
+
+/* size */
+.btn-large {
+  padding: 18px 25px;
+  font-size: 24px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+.btn-large [class^="icon-"],
+.btn-large [class*=" icon-"] {
+  margin-top: 4px;
+}
+
+.btn-small {
+  padding: 6px 13px;
+  font-size: 11.9px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+.btn-small [class^="icon-"],
+.btn-small [class*=" icon-"] {
+  margin-top: 0;
+}
+
+.btn-mini [class^="icon-"],
+.btn-mini [class*=" icon-"] {
+  margin-top: -1px;
+}
+
+.btn-mini {
+  padding: 0 6px;
+  font-size: 10.5px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
 }
 
 
@@ -874,5 +1107,4 @@ i.icon-square.icon-5x{
  section#services h2, section#services ul {
  text-align: center;
 }
-		
-
+	
