@@ -12,9 +12,9 @@
             {% endfor %}
             
             <div class="contact_form"><br><br><br>
-                <h1 style="color: black">Nous contacter</h1>
+                <h1 style="text-align: center">Nous contacter : </h1>
             {{ form_start(contactForm, { 'attr': {'class': 'form-horizontal'} }) }}
-                <div class="form-group"><br>
+                <div class="form-group" class="col-sm-12" style="margin-left: 40em; margin-right: 40em">
                     {{ form_label(contactForm.email, null) }}
                     <h4>
                         {{ form_errors(contactForm.email) }}
@@ -23,7 +23,7 @@
                         }}) }}
                     </h4>
                 </div>
-                <div class="form-group">
+                <div class="form-group" class="col-sm-12" style="margin-left: 40em; margin-right: 40em">
                     {{ form_label(contactForm.name, null) }}
                     <h4>
                     	{% if contactForm.name.vars.errors|length > 0 %}
@@ -38,7 +38,7 @@
                         }}) }}
                     </h4>
                 </div>
-                <div class="form-group">
+                <div class="form-group" class="col-sm-12" style="margin-left: 40em; margin-right: 40em">
                     {{ form_label(contactForm.subject, null) }}
                     <h4>
                         {{ form_errors(contactForm.subject) }}
@@ -47,7 +47,7 @@
                         }}) }}
                     </h4>
                 </div>
-                <div class="form-group">
+                <div class="form-group" class="col-sm-12" style="margin-left: 40em; margin-right: 40em">
                     {{ form_label(contactForm.message, null) }}
                     <h4>
                         {{ form_errors(contactForm.message) }}
@@ -56,7 +56,7 @@
                         }}) }}
                     </h4>
                 </div><br>
-                <div class="form-group">
+                <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
                     <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" />
                 </div>
             {{ form_end(contactForm) }}

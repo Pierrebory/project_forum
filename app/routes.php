@@ -61,6 +61,13 @@ $app->match('/contact/moi', 'WF3\Controller\HomeController::contactAction')->bin
 $app->match('/inscription/alumni', 'WF3\Controller\HomeController::alumniAction')
     ->bind('inscription/alumni');
 
+
+$app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
+    ->bind('rechercheParUsername');
+
+
+
+
 ////////////AJAX///////////
 
 /*$app->match('/ajax/recherche', 'WF3\Controller\AjaxController::AjaxActionForum')

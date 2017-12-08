@@ -18,6 +18,7 @@ use WF3\Form\Type\ResponsesType;
 use WF3\Form\Type\ContactType;
 use WF3\Form\Type\JoboffersType;
 use WF3\Form\Type\AlumniType;
+use WF3\Form\Type\RechercheUsernameType;
 
 
 class HomeController{
@@ -331,6 +332,26 @@ class HomeController{
 		));		
 	}
     
+    
+    
+    public function rechercheParUsername(Application $app, Request $request){
+        
+        $user =[];
+        $rechercheForm = $app['form.factory']->create(RechercheUsernameType::class);
+        $rechercheForm->handleRequest($request);
+        if($rechercheForm->isSubmitted() AND $rechercheForm->isValid()){
+            //le formulaire a été envoyé
+            //$request->request est égal à $_POST
+            //$request->query est égal à $_GET
+            $post = $request->request->get('search_engine');
+            $user = $app['dao.users']->getUsernameLike($post['name']);
+        }
+        return $app['twig']->render('recherche.username.html.twig', array(
+            'form'=>$rechercheForm->createView(),
+            'user'=>$user//,
+            //'test'=>$request->files->get('search_engine')['attachment']->getOriginalName()
+        ));
+    }
     
     
     
