@@ -9,3 +9,8 @@
                 <p>{{ response.message }}</p><hr>
 			</article>
         {%endfor%}-->
+{% for users in user%}
+<article>
+    <p>{{ users.username }}</p>
+</article>
+{% endfor %}

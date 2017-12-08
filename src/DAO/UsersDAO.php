@@ -11,7 +11,9 @@ use WF3\Domain\User;
 class UsersDAO extends DAO implements UserProviderInterface
 {
     
-
+    public function setUsersDAO(UsersDAO $usersDAO){
+		$this->UsersDAO = $userDAO;
+	}
     
     //méthode pour afficher les avatars, prénoms, noms, ville et la promo de tous les anciens
     public function displayName(){
@@ -67,6 +69,19 @@ class UsersDAO extends DAO implements UserProviderInterface
     }
 
     
+    
+    public function getUsernameLike($name){
+        $result = $this->bdd->prepare('SELECT username FROM users  WHERE username LIKE :name');
+        $result->bindValue(':name', '%'.$name.'%');
+        $result->execute();
+        $rows =  $result->fetchALL(\PDO::FETCH_ASSOC);
+        $user = [];
+        foreach($rows as $row){
+            $users = $this->buildobject($row);
+            $user[$row['username']] = $users;
+        }
+        return $user;
+    }
 
     
 }

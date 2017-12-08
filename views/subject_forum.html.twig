@@ -4,7 +4,7 @@
 	
 	{% block content %}
 {{ form_start(subjectForm, { 'attr': {'class': 'form-horizontal'} }) }}
-                <div class="form-group">
+                <div class="form-group" style="padding: 5em; padding-bottom: 0;  margin-left: 20em; margin-right: 20em">
                     {{ form_label(subjectForm.title, null) }}
                     <div>
                         {{ form_errors(subjectForm.title) }}
@@ -13,7 +13,7 @@
                         }}) }}
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-left: 25em; margin-right: 25em">
                     {{ form_label(subjectForm.message, null) }}
                     <div>
                         {%if not subjectForm.vars.valid %}
@@ -27,16 +27,16 @@
                     </div>
                 </div><br>
                 
-                <div class="form-group" class="col-sm-12">
+                <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
                     <input type="submit" class="btn btn-primary btn-lg" value="Send" />
                 </div>
             {{ form_end(subjectForm) }}
 
-            <h2>Les differents sujets du forum : </h2>
+            <h2 style="text-align: center">Les differents sujets du forum : </h2>
           
        {% for subject in subjects %}
-			<article>
-                <a href="{{ path('forumsubject', {idSubject: subject.id}) }}"><h2>{{ subject.title }}</h2></a>
+			<article style="text-align: center">
+                <a href="{{ path('forumsubject', {idSubject: subject.id}) }}"><h2>{{ subject.title }} :</h2></a>
 				
 				<p>publié le {{ subject.date_message }}
 				par {{ subject.user_id.username }}</p>
