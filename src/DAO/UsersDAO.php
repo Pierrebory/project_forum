@@ -33,7 +33,6 @@ class UsersDAO extends DAO implements UserProviderInterface
 
     //méthode pour afficher la fiche complète d'un ancien élève 
     public function findEmails(){
-
         $result = $this->bdd->query('SELECT email FROM users');
         return $result->fetchAll(\PDO::FETCH_ASSOC);   
     }    
