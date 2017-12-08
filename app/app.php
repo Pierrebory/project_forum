@@ -82,8 +82,12 @@ $app['swiftmailer.options'] = array(
 //on enregistre un nouveau service :
 //on pourra ainsi accéder à notre classe UsersDAO grâce à $app['dao.users'] 
 $app['dao.users'] = function($app){
+    
 	return new WF3\DAO\UsersDAO($app['db'], 'users', 'WF3\Domain\User');
 };
+
+
+
 
 $app['dao.subject'] = function($app){
 	$subjectDAO = new WF3\DAO\SubjectDAO($app['db'], 'forum_subjects', 'WF3\Domain\Subjects');
@@ -116,18 +120,11 @@ $app['dao.alumni'] = function($app){
 
 
 $app['dao.joboffers'] = function($app){
-    $joboffersDAO = new WF3\DAO\joboffersDAO($app['db'], 'joboffers', 'WF3\Domain\JobOffers');
-    $joboffersDAO->setEmployersDAO($app['dao.employers']);
+    $joboffersDAO = new WF3\DAO\JoboffersDAO($app['db'], 'joboffers', 'WF3\Domain\JobOffers');
     return $joboffersDAO;
 };
 
 
-$app['dao.employers'] = function($app){
-    $employersDAO = new WF3\DAO\employersDAO($app['db'], 'employers', 'WF3\Domain\Employer');
-    $employersDAO->setUserDAO($app['dao.users']);
-    return $employersDAO;
-    
-};
 
 
 

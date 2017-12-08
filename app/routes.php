@@ -18,18 +18,21 @@ $app->match('/annuaire/{id}', 'WF3\Controller\HomeController::getAlumniAction')
     ->bind('fichedetaillee');
 
 //pages liste des offres d'emploi
-
-// je ne sais pas s'il faut mettre l'id
-$app->get('/offresemploi/{id}', 'WF3\Controller\HomeController::offresAction')
-    ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
+$app->get('/offresemploi', 'WF3\Controller\HomeController::offresAction')
     ->bind('offresemploi');
 
 
 // PAGE DE DETAIL DE L'OFFRE D'EMPLOI
-$app->get('/detailoffre/{id}/{idemployer}', 'WF3\Controller\HomeController::detailOffreAction')
+$app->match('/detailoffre/{id}', 'WF3\Controller\HomeController::detailOffreAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
-    ->assert('idemployer', '\d+')
     ->bind('detailoffre');
+
+//PAGE FORMULAIRE POUR POSTER UNE OFFRE D'EMPLOI
+$app->match('/formulaireemploi', 'WF3\Controller\HomeController::formulaireOffreAction')
+    ->bind('formulaireemploi');
+
+
+
 
 //page Forum
 $app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')
@@ -56,6 +59,17 @@ $app->match('/mdpoublie/resetform/{id}/{token}', 'WF3\Controller\HomeController:
 
 $app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeController::subjectAction')
     ->bind('forumsubject');
+
+$app->match('/contact/moi', 'WF3\Controller\HomeController::contactAction')->bind('contactezmoi');
+
+
+// formulaire d'inscription des alumnis
+$app->match('/inscription/alumni', 'WF3\Controller\HomeController::alumniAction')
+    ->bind('inscription/alumni');
+
+
+$app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
+    ->bind('rechercheParUsername');
 
 
 

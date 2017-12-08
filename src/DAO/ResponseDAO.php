@@ -12,7 +12,7 @@ class ResponseDAO extends DAO{
     public function getResponses($idSubject){
 
 
-		$result = $this->bdd->prepare('SELECT forum_responses.id, forum_responses.message, forum_responses.date_message, forum_responses.date_edit, subject_id, forum_responses.user_id, forum_subjects.id AS idSubject FROM forum_responses INNER JOIN forum_subjects ON forum_responses.subject_id = forum_subjects.id WHERE subject_id = :idSubject ORDER BY forum_responses.date_message DESC');
+		$result = $this->bdd->prepare('SELECT forum_responses.id, forum_responses.message, forum_responses.date_message, forum_responses.date_edit, subject_id, forum_responses.user_id, forum_subjects.id AS idSubject, forum_subjects.title FROM forum_responses INNER JOIN forum_subjects ON forum_responses.subject_id = forum_subjects.id WHERE subject_id = :idSubject ORDER BY forum_responses.date_message ASC');
         $result->bindValue(':idSubject', $idSubject);
         $result->execute();
 		$rows = $result->fetchALL(\PDO::FETCH_ASSOC);

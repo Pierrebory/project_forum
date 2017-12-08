@@ -7,20 +7,32 @@
 
 		<div class="col-md-12 text-center">
             
+            <br>
+            <br>
+            
             <blockquote class="blockquote text-center"><h1>Annuaire des anciens élèves de Webforce3</h1> </blockquote>
             
             
 		</div>
 
 <br>
+
+
+<a href="{{ path('inscription') }}"><button type="button" class="btn btn-info blockquote text-center">Inscrivez-vous pour figurer dans l'annuaire</button></a>
+
+<a href="{{ path('login') }}"><button type="button" class="btn btn-info blockquote text-center">Connectez-vous pour accéder à l'annuaire détaillé</button></a>
+
+<a href="{{ path('inscription/alumni') }}"><button type="button" class="btn btn-info blockquote text-center">Si vous etes deja inscrit, remplissez votre fiche détaillé</button></a><br><br>
+<form action="{{ path('rechercheParUsername')}}">
+    <input type="text" name="name" placeholder="name">
+    <button type="submit">Rechercher</button>
+</form>
+
+
+
+
 <br>
-
-<a href="{{ path('inscription') }}"><button type="button" class="btn btn-info">Inscrivez-vous pour figurer dans l'annuaire</button></a>
-
-
-
-
-
+<br>
 
 <table class="table table-striped">
   <thead>

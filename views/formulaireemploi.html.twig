@@ -1,0 +1,234 @@
+{% extends "layout.html.twig" %}
+
+
+
+		{% block title %}Formulaire d'envoi d'une offre d'emploi{% endblock %}
+
+
+		{% block content %}
+
+
+
+
+            <h1>Poster une offre d'emploi</h1>
+
+            <p>Merci de remplir le formulaire ci-dessous pour envoyer une offre d'emploi.</p>
+            <p>Les champs marqués d'un * sont obligatoires.</p>
+ 
+
+			{% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+
+            {{ form_start(offerForm)}}
+            	
+
+
+
+
+
+
+            	<div class="form-group">
+                     {{ form_label(offerForm.title, null) }}
+                    
+            	{# affichage des éventuelles erreurs pour le champ titre #}
+            	{{ form_errors(offerForm.title) }}
+                    
+            	{# customisation du champ titre #}
+            	{{ form_widget(offerForm.title,
+            		{
+            			'attr': {
+            				'class': 'form-control'
+            				
+            			}
+            		}
+            	)}}
+            	</div>
+
+
+
+            	<div class="form-group">
+                    
+                     {{ form_label(offerForm.company, null) }}
+            		
+            		{{ form_errors(offerForm.company) }}
+                    
+        
+                    {{ form_widget(offerForm.company, 
+                    	{ 
+                    		'attr':  {
+                        		'rows': '1',
+                        		'class': 'form-control'
+                        		
+                    }}) }}
+            	</div>
+
+
+
+                <div class="form-group">
+                    
+                    {{ form_label(offerForm.city, null) }}
+            		
+            		{{ form_errors(offerForm.city) }}
+                    
+        
+                    {{ form_widget(offerForm.city, 
+                    	{ 
+                    		'attr':  {
+                        		'rows': '1',
+                        		'class': 'form-control'
+                        		
+                    }}) }}
+            	</div>
+
+
+
+
+
+                <div class="form-control" rows="20">
+                    
+                    {{ form_label(offerForm.description, null) }}
+            		
+            		{{ form_errors(offerForm.description) }}
+                    
+        
+                    {{ form_widget(offerForm.description, 
+                    	{ 
+                    		'attr':  {
+                        		'rows': '30',
+                        		'class': 'form-control'
+                        		
+                    }}) }}
+            	</div>
+
+
+                <div class="form-group">
+                    
+                    {{ form_label(offerForm.skills, null) }}
+            		
+            		{{ form_errors(offerForm.skills) }}
+                    
+        
+                    {{ form_widget(offerForm.skills, 
+                    	{ 
+                    		'attr':  {
+                        		'rows': '10',
+                        		'class': 'form-control'
+                        		
+                    }}) }}
+            	</div>
+
+
+
+                <div class="form-group">
+            		
+                    
+                    {{ form_label(offerForm.advantages, null) }}
+                    
+            		{{ form_errors(offerForm.advantages) }}
+                    
+        
+                    {{ form_widget(offerForm.advantages, 
+                    	{ 
+                    		'attr':  {
+                        		'rows': '6',
+                        		'class': 'form-control'
+                        		
+                    }}) }}
+            	</div>
+
+
+
+                <div class="form-group">
+                    
+                    {{ form_label(offerForm.contract, null) }}
+            		
+            		{{ form_errors(offerForm.contract) }}
+                    
+        
+                    {{ form_widget(offerForm.contract, 
+                    	{ 
+                    		'attr':  {
+                        		'rows': '1',
+                        		'class': 'form-control'
+                        		
+                    }}) }}
+            	</div>
+
+
+                <div class="form-group">
+            		
+                    {{ form_label(offerForm.contractduration, null) }}
+                    
+            		{{ form_errors(offerForm.contractduration) }}
+                    
+        
+                    {{ form_widget(offerForm.contractduration, 
+                    	{ 
+                    		'attr':  {
+                        		'rows': '1',
+                        		'class': 'form-control'
+                        		
+                    }}) }}
+            	</div>
+
+
+
+                <div class="form-group">
+            		
+                    {{ form_label(offerForm.timetable, null) }}
+                    
+            		{{ form_errors(offerForm.timetable) }}
+                    
+        
+                    {{ form_widget(offerForm.timetable, 
+                    	{ 
+                    		'attr':  {
+                        		'rows': '1',
+                        		'class': 'form-control'
+                        		
+                    }}) }}
+            	</div>
+
+
+                <div class="form-group">
+                    
+            		{{ form_label(offerForm.recruitername, null) }}
+                    
+            		{{ form_errors(offerForm.recruitername) }}
+                    
+        
+                    {{ form_widget(offerForm.recruitername, 
+                    	{ 
+                    		'attr':  {
+                        		'rows': '1',
+                        		'class': 'form-control'
+                        		
+                    }}) }}
+            	</div>
+
+
+                <div class="form-group">
+                    
+                    {{ form_label(offerForm.recruitercontact, null) }}
+            		
+            		{{ form_errors(offerForm.recruitercontact) }}
+                    
+        
+                    {{ form_widget(offerForm.recruitercontact, 
+                    	{ 
+                    		'attr':  {
+                        		'rows': '1',
+                        		'class': 'form-control'
+                        		
+                    }}) }}
+            	</div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-info" value="Envoyer" />
+                </div>
+
+			{{ form_end(offerForm)}}
+		{% endblock %}

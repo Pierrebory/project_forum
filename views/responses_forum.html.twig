@@ -8,8 +8,20 @@
 <br>
 
 
+        <h2 style="text-align: center">Mon sujet</h2>
+          
+            {% for response in responses %}
+			 <article style="text-align: center; border: ridge;  background-color: #f5f5f5; margin-left: 50em; margin-right: 50em; margin-bottom: 2em; box-shadow: 6px 6px 6px #d6d5d5;   word-wrap: break-word">
+                
+				
+				<p>Message publié le {{ response.date_message }}
+				par {{ response.user_id.username }}</p>
+                <p style="padding: 1em;">{{ response.message }}</p>
+			</article>
+        {%endfor%}
+
 {{ form_start(responsesForm, { 'attr': {'class': 'form-horizontal'} }) }}
-                <div class="form-group">
+                <div class="form-group" style="margin-left: 25em; margin-right: 25em">
                     {{ form_label(responsesForm.message, null) }}
                     <div>
                         {%if not responsesForm.vars.valid %}
@@ -23,7 +35,7 @@
                     </div>
                 </div>
                 <br>
-                <div class="form-group">
+                <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
                     <input type="submit" class="btn btn-primary btn-lg" value="Send" />
                 </div><br>
 
@@ -31,17 +43,5 @@
 
 
             {{ form_end(responsesForm) }}
-        <h2>Mon sujet</h2>
-          
-            {% for response in responses %}
-			 <article>
-                
-				
-				<p>publié le {{ response.date_message }}
-				par {{ response.user_id.username }}</p>
-                <p>{{ response.message }}</p><hr>
-			</article>
-        {%endfor%}
-
 
 {% endblock %}

@@ -4,6 +4,7 @@ namespace WF3\Domain;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 class User implements UserInterface
 {
    

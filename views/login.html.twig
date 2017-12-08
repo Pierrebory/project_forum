@@ -4,11 +4,24 @@
   {% block content %}
 
   <h2 class="text-center">Login</h2>
+
+<br>
+
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+        {% endfor %}
+
+
+
          {% if error %}
          <div class="alert alert-danger">
              <strong>Nom d'utilisateur ou mot de passe incorrect!</strong> 
          </div>
          {% endif %}
+
+
          <div>
              <form class="form-signin form-horizontal" role="form" action="{{ path('login_check') }}" method="post">
                  <div class="form-group">
