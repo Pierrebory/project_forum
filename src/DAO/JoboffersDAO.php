@@ -6,7 +6,11 @@ use WF3\Domain\JobOffers;
 
 class JoboffersDAO extends DAO{
 
-	
+	private $userDAO;
+	//le setter associé
+	public function setUserDAO(UsersDAO $userDAO){
+		$this->userDAO = $userDAO;
+	}
     
     
     //méthode pour accéder à une offfre d'emploi détaillée par son id
