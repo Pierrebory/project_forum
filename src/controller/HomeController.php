@@ -125,7 +125,7 @@ class HomeController{
                  $subjects = $app['dao.subject']->getSubjects();
 
         if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
-        $subject->setUser_id(1);
+            $subject->setUser_id(1);
              $subject->setDate_message(date('Y-m-d H:i:s'));
 
 		 $app['dao.subject']->insert($subject);
@@ -135,7 +135,7 @@ class HomeController{
         return $app['twig']->render('subject_forum.html.twig', array(
             'subjectForm'=>$subjectForm->createView(),
             'subject'=>$subject,
-        'subjects'=>$subjects));
+            'subjects'=>$subjects));
    
 
     }
