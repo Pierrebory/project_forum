@@ -198,7 +198,7 @@ class HomeController{
     public function resetPassAction(Application $app, Request $request){
     // on va vérifier que l'utilisateur est connecté
 
-
+    $emailTest = $app['dao.users']->findEmails();
 
     $resetForm = $app['form.factory']->create(ResetType::class);
     // on envoie les paramètres de la requête à notre objet formulaire
@@ -206,6 +206,11 @@ class HomeController{
 
     if($resetForm->isSubmitted() && $resetForm->isValid()){
         $data = $resetForm->getData();
+
+/*        if($data['email'] != $emailTest[]){
+            throw new AccessDeniedHttpException();
+        }    */
+
         $token = md5(uniqid(rand(), true));
         $user = $app['dao.resetpass']->selectReset($data['email']);   
         $app['dao.resetpass']->insertReset($token, $user['id']);        
@@ -227,6 +232,7 @@ class HomeController{
     return $app['twig']->render('reset.html.twig', array(
         'resetForm' => $resetForm->createView(),
         'data' => $resetForm->getData(),
+        'emailTest' => $emailTest      
     ));         
 }   
 
