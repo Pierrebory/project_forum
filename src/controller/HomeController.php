@@ -4,7 +4,7 @@ namespace WF3\Controller;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
-//cette ligne nous permet d'utiliser le service fourni par symfony pour gérer 
+
 use WF3\Domain\User;
 use WF3\Domain\Subjects;
 use WF3\Domain\Responses;
@@ -70,10 +70,10 @@ class HomeController{
         //}
         
         //on récupère le token si l'utilisateur est connecté
-        $token = $app['security.token_storage']->getToken();
-        if(NULL !== $token){
-            $user = $token->getUser();
-        }
+        //$token = $app['security.token_storage']->getToken();
+        //if(NULL !== $token){
+            //$user = $token->getUser();
+        //}
 
     	//je crée un objet offre vide
     	$offer = new JobOffers();
@@ -90,7 +90,6 @@ class HomeController{
     			'title'=>$offer->getTitle(),
     			'company'=>$offer->getCompany(),
     			'city'=>$offer->getCity(),
-                'date_offer'=>$offer->getDate_offer(),
                 'description'=>$offer->getDescription(),
                 'skills'=>$offer->getSkills(),
                 'advantages'=>$offer->getAdvantages(),
@@ -168,11 +167,11 @@ class HomeController{
 	        $user->setPassword($password);
 
 		    $app['dao.users']->insert($user);				
-		    $app['session']->getFlashBag()->add('success', 'vous êtes bien enregistré');
-		    return $app->redirect($app['url_generator']->generate('home'));			
+		    $app['session']->getFlashBag()->add('success', 'Vous êtes bien enregistré(e). Vous pouvez à présent vous connecter.');
+		    		
 		}
 
-		// j'envoi le formulaire
+		// j'envoie le formulaire
 		return $app['twig']->render('register.html.twig', array(
 			'userForm' => $userForm->createView(),
 		));		
@@ -181,9 +180,12 @@ class HomeController{
 		/////////////// CONNEXION //////////////////
 	public function loginAction(Application $app, Request $request){
 
-		return $app['twig']->render('login.html.twig', array(
-			'error' => $app['security.last_error']($request), 
-			'last_username' => $app['session']->get('_security.last_username')
+	       return $app['twig']->render('login.html.twig', array(
+            'error' => $app['security.last_error']($request),
+            'last_username' => $app['session']->get('_security.last_username'),
+             $app['session']->getFlashBag()->add('success', 'Vous êtes bien connecté(e). Vous pouvez remplir votre fiche détaillée dans l\'annuaire et/ou poster une offre d\'emploi.'),
+         
+			
 		));
 	}	
 
