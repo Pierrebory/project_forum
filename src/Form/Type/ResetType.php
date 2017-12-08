@@ -13,19 +13,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 
-class ResetType extends AbstractType
+class ResetType extends RegisterType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        //on liste les champs qu'on veut rajouter
-        $builder
-            ->add('email', TextType::class, array(
-                'attr' => array(
-                    'placeholder' => 'Votre adresse email'
-                ),
-                'constraints' => new Assert\Email()
-            ));
-        }
+        parent::buildform($builder, $options);
+        $builder->remove('username')->remove('lastname')->remove('firstname')->remove('password')->remove('phone')->remove('city')->remove('role')->remove('date_register');   
+    }
 
     //à rajouter mais pour l'instant on s'en occupe pas
     public function getName()
