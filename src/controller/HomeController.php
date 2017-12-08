@@ -11,11 +11,14 @@ use WF3\Domain\Responses;
 use WF3\Form\Type\ConnectType;
 use WF3\Domain\Employer;
 use WF3\Domain\JobOffers;
+use WF3\Domain\Alumni;
 use WF3\Form\Type\RegisterType;
 use WF3\Form\Type\SubjectType;
 use WF3\Form\Type\ResponsesType;
 use WF3\Form\Type\ContactType;
 use WF3\Form\Type\JoboffersType;
+use WF3\Form\Type\AlumniType;
+
 
 class HomeController{
 
@@ -218,7 +221,33 @@ class HomeController{
     
     
      ///////////////////////PAGE REPONSE FORUM////////////////////////
+     /* public function subjectAction(Application $app, Request $request, $idSubject, $idUser){
+        
+        $response = new Responses();
+        $responses =[];
+        $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
+        $responsesForm->handleRequest($request);
+                 $responses = $app['dao.response']->getResponses($idSubject, $idUser);
+
+        if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
+        $response->setUser_id($idUser);
+         $response->setSubject_id($idSubject);
+        $response->setDate_message(date('Y-m-d H:i:s'));
+		 $app['dao.response']->insert($response);
+
+	 	
+	   }
+        return $app['twig']->render('responses_forum.html.twig', array(
+            'responsesForm'=>$responsesForm->createView(),
+            'response'=>$response,
+        'responses'=>$responses));
+   
+
+    }*/
+    
+    /////////////////////////////PAGE REPONSE FORUM////////////////////////////
     public function subjectAction(Application $app, Request $request, $idSubject){
+        
         $response = new Responses();
         $responses =[];
         $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
@@ -226,9 +255,9 @@ class HomeController{
                  $responses = $app['dao.response']->getResponses($idSubject);
 
         if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
-        $response->setUser_id(1);
-            $response->setSubject_id($idSubject);
-            $response->setDate_message(date('Y-m-d H:i:s'));
+        $response->setUser_id(3);
+         $response->setSubject_id($idSubject);
+        $response->setDate_message(date('Y-m-d H:i:s'));
 		 $app['dao.response']->insert($response);
 
 	 	
@@ -280,17 +309,25 @@ class HomeController{
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    	public function alumniAction(Application $app, Request $request){
+        $alumni = new Alumni();
+		$alumniForm = $app['form.factory']->create(AlumniType::class, $alumni);
+		// on envoie les paramètres de la requête à notre objet formulaire
+		$alumniForm->handleRequest($request); 
+		// si le formulaire a été envoyé
+		if($alumniForm->isSubmitted() && $alumniForm->isValid()){
+
+
+		    $app['dao.alumni']->insert($alumni);				
+		    $app['session']->getFlashBag()->add('success', 'vous êtes bien enregistré');
+		    return $app->redirect($app['url_generator']->generate('home'));			
+		}
+
+		// j'envoi le formulaire
+		return $app['twig']->render('alumni.html.twig', array(
+			'alumniForm' => $alumniForm->createView(),
+		));		
+	}
     
     
     

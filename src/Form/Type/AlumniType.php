@@ -12,12 +12,13 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
-class RegisterType extends AbstractType
+class AlumniType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
-        $builder->add('promo', TextType::class, array(
+        $builder
+            ->add('promo', TextType::class, array(
             'label' => 'Numéro de promo*',
             'attr' => array(
                 'placeholder' => '1 chiffre'
@@ -27,8 +28,8 @@ class RegisterType extends AbstractType
                 new Assert\NotBlank(),
                 new Assert\Length(array(
                     'min' => 1,
-                    'max' => 2,
-                    'Message' => 'La promo est un numéro.'
+                    'max' => 2
+               
                 ))      
             )
         ));
@@ -71,14 +72,14 @@ class RegisterType extends AbstractType
                 'en recherche d\'emploi' => 'en recherche d\'emploi',
                 'en emploi' => 'en emploi',
                 'en formation' => 'en formation',
-                'en auto-entrepreneur' =>'auto-entrepreneur'
+                'en auto-entrepreneur' =>'auto-entrepreneur',
                 'autre' => 'autre'
             )
         ));  
         
         
         $builder->add('searchjob', TextType::class, array(
-            'label' => 'Si vous êtes en recherche d\'emploi, quel type de poste recherchez-vous ?'
+            'label' => 'Si vous êtes en recherche d\'emploi, quel type de poste recherchez-vous ?',
             'attr' => array(
                 'placeholder' => 'poste recherché'
             ),     
@@ -88,7 +89,7 @@ class RegisterType extends AbstractType
 
       
         $builder->add('searchtime', TextType::class, array( 
-            'label' => 'Si vous avez trouvé un emploi, combien de temps avez-vous cherché ?'
+            'label' => 'Si vous avez trouvé un emploi, combien de temps avez-vous cherché ?',
             'attr' => array(
                 'placeholder' => 'préciser le nombre de mois de recherche'
             ),     
@@ -98,7 +99,7 @@ class RegisterType extends AbstractType
         
         
         $builder->add('job', TextType::class, array(
-            'label' => 'Si vous avez trouvé un emploi, quel est l\'intitulé de votre poste ?'
+            'label' => 'Si vous avez trouvé un emploi, quel est l\'intitulé de votre poste ?',
             'required' => false, 
             'attr' => array(
                 'placeholder' => '90 caractères maximum'
@@ -111,7 +112,7 @@ class RegisterType extends AbstractType
         
         $builder->add('contract', ChoiceType::class, array(
             'label' => 'Type de contrat', 
-            'required' => false,                                       
+            'required' => true,                                       
             'choices' => array(
                 'CDI' => 'CDI',
                 'CDD' => 'CDD',
@@ -126,7 +127,7 @@ class RegisterType extends AbstractType
         
         $builder->add('companytype', ChoiceType::class, array(
             'label' => 'Type d\'entreprise', 
-            'required' => false,                                       
+            'required' => true,                                       
             'choices' => array(
                 'ESN' => 'ESN',
                 'Agence digitale/communication' => 'Agence digitale/communication',
@@ -140,7 +141,7 @@ class RegisterType extends AbstractType
         
          $builder->add('wage', ChoiceType::class, array(
             'label' => 'Cochez votre tranche de salaire annuel brut', 
-            'required' => false,                                       
+            'required' => true,                                       
             'choices' => array(
                 'moins de 25k€' => 'moins de 25k€',
                 'entre 25k€ et 35 k€' =>  'entre 25k€ et 35 k€',
@@ -153,7 +154,7 @@ class RegisterType extends AbstractType
         
         
         $builder->add('companyname', TextType::class, array(
-            'label' => 'Si vous avez trouvé un emploi, quel est l\'intitulé de votre poste ?'
+            'label' => 'Si vous avez trouvé un emploi, quel est le nom de votre societé ?',
             'required' => false, 
             'attr' => array(
                 'placeholder' => '90 caractères maximum'
@@ -164,7 +165,7 @@ class RegisterType extends AbstractType
 
         
         $builder->add('linkedinurl', UrlType::class, array(
-            'label' => 'Lien vers votre page LinkedIn'
+            'label' => 'Lien vers votre page LinkedIn',
             'required' => false, 
             'attr' => array(
                 'placeholder' => 'lien URL'
@@ -174,7 +175,7 @@ class RegisterType extends AbstractType
         
         
         $builder->add('cv', UrlType::class, array(
-            'label' => 'Lien vers votre Cv en ligne'
+            'label' => 'Lien vers votre Cv en ligne',
             'required' => false, 
             'attr' => array(
                 'placeholder' => 'lien URL'
