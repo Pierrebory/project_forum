@@ -27,6 +27,13 @@ $app->match('/detailoffre/{id}', 'WF3\Controller\HomeController::detailOffreActi
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
     ->bind('detailoffre');
 
+//PAGE FORMULAIRE POUR POSTER UNE OFFRE D'EMPLOI
+$app->match('/formulaireemploi', 'WF3\Controller\HomeController::formulaireOffreAction')
+    ->bind('formulaireemploi');
+
+
+
+
 //page Forum
 $app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')
     ->bind('forum');

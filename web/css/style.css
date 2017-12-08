@@ -494,6 +494,7 @@ section#services .service-box {
 	-o-transition: all 0.3s ease-in-out;
 	-ms-transition: all 0.3s ease-in-out;
 	transition: all 0.3s ease-in-out;
+
 }
 section#services .span3:hover {
 	background:#ecf0f1;

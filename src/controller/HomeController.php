@@ -16,6 +16,7 @@ use WF3\Form\Type\RegisterType;
 use WF3\Form\Type\SubjectType;
 use WF3\Form\Type\ResponsesType;
 use WF3\Form\Type\ContactType;
+use WF3\Form\Type\JoboffersType;
 use WF3\Form\Type\AlumniType;
 use WF3\Form\Type\RechercheUsernameType;
 
@@ -53,14 +54,67 @@ class HomeController{
     
     //PAGE DE DETAIL DE L'OFFRE D'EMPLOI
     public function detailOffreAction(Application $app, $id){
-        $user = $app['dao.users']->find($id);
-        $employeur = $app['dao.employers']->find($id);
         $detailoffre = $app['dao.joboffers']->getDetailOffer($id);
-       
-        return $app['twig']->render('detailoffre.html.twig', array('detailoffre' => $detailoffre,
-                                                                    'employeur' => $employeur)); 
+        return $app['twig']->render('detailoffre.html.twig', array('detailoffre' => $detailoffre)); 
 
     }
+    
+    
+    //PAGE FORMULAIRE POUR POSTER UNE OFFRE D'EMPLOI
+    public function formulaireOffreAction(Application $app, Request $request){
+        //on va vérifier que l'utilisateur est connecté
+    	//if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            //return $app->redirect($app['url_generator']->generate('home'));
+            //throw new AccessDeniedHttpException();
+        //}
+        
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+
+    	//je crée un objet offre vide
+    	$offer = new JobOffers();
+    	//je crée mon objet formulaire à partir de la classe JoboffersType
+    	$offerForm = $app['form.factory']->create(JoboffersType::class, $offer);
+    	//on envoie les paramètres de la requête à notre objet formulaire
+    	$offerForm->handleRequest($request);
+    	//on vérifie si le formulaire a été envoyé
+    	//et si les données envoyées sont valides
+    	if($offerForm->isSubmitted() && $offerForm->isValid()){
+    		
+    		//on insère dans la base les éléments de l'offre
+    		$app['dao.joboffers']->insert(array(
+    			'title'=>$offer->getTitle(),
+    			'company'=>$offer->getCompany(),
+    			'city'=>$offer->getCity(),
+                'date_offer'=>$offer->getDate_offer(),
+                'description'=>$offer->getDescription(),
+                'skills'=>$offer->getSkills(),
+                'advantages'=>$offer->getAdvantages(),
+                'contract'=>$offer->getContract(),
+                'contractduration'=>$offer->getContractduration(),
+                'timetable'=>$offer->getTimetable(),
+                'recruitername'=>$offer->getRecruitername(),
+                'recruitercontact'=>$offer->getRecruitercontact(),
+                            
+    		));
+    		//on stocke en session un message de réussite
+    		$app['session']->getFlashBag()->add('success', 'Offre d\'emploi bien reçue. Merci !');
+
+    	}
+
+    	//j'envoie à la vue le formulaire grâce à $offerForm->createView() 
+    	return $app['twig']->render('formulaireemploi.html.twig', array(
+    			'offerForm' => $offerForm->createView()
+    	));
+    }
+    
+  
+        
+        
     
  
     ///////////////////////PAGE SUJET FORUM////////////////////////
