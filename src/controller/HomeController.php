@@ -11,14 +11,19 @@ use WF3\Domain\Responses;
 use WF3\Form\Type\ConnectType;
 use WF3\Domain\Employer;
 use WF3\Domain\JobOffers;
+use WF3\Domain\Resetpass;
 use WF3\Domain\Alumni;
 use WF3\Form\Type\RegisterType;
+use WF3\Form\Type\ResetType;
+use WF3\Form\Type\ResetpassType;
 use WF3\Form\Type\SubjectType;
 use WF3\Form\Type\ResponsesType;
 use WF3\Form\Type\ContactType;
 use WF3\Form\Type\JoboffersType;
 use WF3\Form\Type\AlumniType;
 use WF3\Form\Type\RechercheUsernameType;
+
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 
 class HomeController{
@@ -125,7 +130,7 @@ class HomeController{
                  $subjects = $app['dao.subject']->getSubjects();
 
         if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
-        $subject->setUser_id(1);
+            $subject->setUser_id(1);
              $subject->setDate_message(date('Y-m-d H:i:s'));
 
 		 $app['dao.subject']->insert($subject);
@@ -135,7 +140,7 @@ class HomeController{
         return $app['twig']->render('subject_forum.html.twig', array(
             'subjectForm'=>$subjectForm->createView(),
             'subject'=>$subject,
-        'subjects'=>$subjects));
+            'subjects'=>$subjects));
    
 
     }
@@ -190,24 +195,29 @@ class HomeController{
 	}	
 
     /////////////////////// RESET MOT DE PASSE ///////////////////////////
-    public function resetFormAction(Application $app, Request $request){
+    public function resetPassAction(Application $app, Request $request){
     // on va vérifier que l'utilisateur est connecté
 
-    $contactForm = $app['form.factory']->create(ContactType::class);
-    // on envoie les paramètres de la requête à notre objet formulaire
-    $contactForm->handleRequest($request); 
 
-    if($contactForm->isSubmitted() && $contactForm->isValid()){
-        $data = $contactForm->getData();
+
+    $resetForm = $app['form.factory']->create(ResetType::class);
+    // on envoie les paramètres de la requête à notre objet formulaire
+    $resetForm->handleRequest($request); 
+
+    if($resetForm->isSubmitted() && $resetForm->isValid()){
+        $data = $resetForm->getData();
+        $token = md5(uniqid(rand(), true));
+        $user = $app['dao.resetpass']->selectReset($data['email']);   
+        $app['dao.resetpass']->insertReset($token, $user['id']);        
         $message = \Swift_Message::newInstance()
-                        ->setSubject($data['subject'])
                         ->setFrom(array('promo5wf3@gmx.fr'))
-                        ->setTo(array('norman33@live.fr'))
+                        ->setTo(array($data['email']))
                         ->setBody($app['twig']->render('emailReset.html.twig', 
                             array(
-                            'name' => $data['name'],
+                            'username' => $user['username'],
+                            'id' => $user['id'],
                             'email' => $data['email'],
-                            'message' => $data['message']
+                            'token' => $token
                         )
                     ), 'text/html');
             $app['mailer']->send($message);
@@ -215,9 +225,48 @@ class HomeController{
 
     // j'envoi le formulaire
     return $app['twig']->render('reset.html.twig', array(
-        'title' => 'Contact Us',
-        'contactForm' => $contactForm->createView(),
-        'data' => $contactForm->getData()
+        'resetForm' => $resetForm->createView(),
+        'data' => $resetForm->getData(),
+    ));         
+}   
+
+    /////////////// FORMULAIRE RESET MOT DE PASSE ///////////////////////////
+    public function changePassAction(Application $app, Request $request, $id, $token){
+    // on va vérifier que l'utilisateur est connecté
+
+    $user = new User();
+    $resetForm = $app['form.factory']->create(ResetpassType::class, $user);
+    // on envoie les paramètres de la requête à notre objet formulaire
+    $resetForm->handleRequest($request); 
+
+    $token = $request->attributes->get('token');
+    $test = $app['dao.resetpass']->findToken($id);
+
+    if($token != $test['token']){
+        throw new AccessDeniedHttpException();
+    }    
+   
+
+    if($resetForm->isSubmitted() && $resetForm->isValid()){
+        $salt = substr(md5(time()), 0, 23);
+        $user->setSalt($salt);
+        //on récupère le mot de passe en clair (envoyé par l'utilisateur)
+        $plainPassword = $user->getPassword();
+        // on récupère l'encoder de silex
+        $encoder = $app['security.encoder.bcrypt'];
+        // on encode le mdp
+        $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+        //on remplace le mdp en clair par le mdp crypté
+        $user->setPassword($password);
+
+        $app['dao.resetpass']->updatePassword($id, $token, $user->getPassword(), $user->getSalt() );
+        $app['session']->getFlashBag()->add('success', 'Votre mot de passe a bien été modifié.');
+        return $app->redirect($app['url_generator']->generate('home'));     
+    }
+
+    // j'envoi le formulaire
+    return $app['twig']->render('resetForm.html.twig', array(
+        'resetForm' => $resetForm->createView()
     ));         
 }   
 
