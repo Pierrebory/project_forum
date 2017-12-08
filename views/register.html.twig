@@ -20,16 +20,16 @@
             {% endif %}
 
 
-            <h2>Formulaire d'inscription</h2>
+            <h2 style="text-align: center">Formulaire d'inscription</h2>
 
-            <p>Veillez remplir le formulaire ci-dessous pour vous inscrire. Vous recevrez une confirmation par email une fois que le formulaire sera validé.</p>
-            <p>Les champs marqués d'une * sont obligatoires.</p>
+            <p style="text-align: center">Veillez remplir le formulaire ci-dessous pour vous inscrire. Vous recevrez une confirmation par email une fois que le formulaire sera validé.</p>
+            <p style="text-align: center">Les champs marqués d'une * sont obligatoires.</p>
  
 
             <div>
             {{ form_start(userForm, { 'attr': {'class': 'form-horizontal'} }) }}
 
-                <div class="form-group">
+                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
                     {{ form_label(userForm.username, null) }}
                     <div>
                     	{% if userForm.username.vars.errors|length > 0 %}
@@ -47,7 +47,7 @@
                 
                 
                 
-                <div class="form-group">
+                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
                     {{ form_label(userForm.lastname, null) }}
                     <div>
                     	{% if userForm.lastname.vars.errors|length > 0 %}
@@ -65,7 +65,7 @@
                 
                 
                 
-                <div class="form-group">
+                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
                     {{ form_label(userForm.firstname, null) }}
                     <div>
                     	{% if userForm.firstname.vars.errors|length > 0 %}
@@ -80,7 +80,7 @@
                         }}) }}
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
                     {{ form_label(userForm.email, null) }}
                     <div>
                     	{% if userForm.email.vars.errors|length > 0 %}
@@ -95,7 +95,7 @@
                         }}) }}
                     </div>
                 </div>
-			    <div class="form-group">		    
+                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
 			        {{ form_label(userForm.password.first, null, { 'label_attr':  {
 			            'class': 'col-sm-5 control-label'
 			        }}) }}
@@ -112,7 +112,7 @@
 			            }}) }}
 			        </div>
 			    </div>
-			    <div class="form-group">
+                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
 			        {{ form_label(userForm.password.second, null, { 'label_attr':  {
 			            'class': 'col-sm-5 control-label'
 			        }}) }}
@@ -122,7 +122,7 @@
 			            }}) }}
 			        </div>
 			    </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
                     {{ form_label(userForm.phone, null) }}
                     <div>
                     	{% if userForm.phone.vars.errors|length > 0 %}
@@ -137,7 +137,7 @@
                         }}) }}
                     </div>
                 </div>     
-                <div class="form-group">
+                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
                     {{ form_label(userForm.city, null) }}
                     <div>
                     	{% if userForm.city.vars.errors|length > 0 %}
@@ -152,7 +152,7 @@
                         }}) }}
                     </div>
                 </div>  
-                <div class="form-group">
+                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
                     {{ form_label(userForm.role, null) }}
                     <div>
                     	{% if userForm.role.vars.errors|length > 0 %}
@@ -168,7 +168,7 @@
                     </div>
                 </div>   
 
-                <div class="form-group">
+                <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em; margin-top: 2em;">
                     <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" />
                 </div>
             {{ form_end(userForm) }}
