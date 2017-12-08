@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('css/bootstrap-responsive.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
   <link href="color/default.css" rel="stylesheet">
@@ -32,15 +33,21 @@
                   <nav class="pull-right nav-collapse collapse">
                     <ul id="menu-main" class="nav">
 
-                  
+                        
+                                        <li><a href="{{ path('home') }}">Accueil</a></li>
+
                       <li><a title="team" href="{{ path('annuaire') }}">Annuaire</a></li>
 
                       <li><a href="{{ path('forum') }}">Forum</a></li>
                       <li><a href="{{ path('offresemploi')}}">Offres d'emploi</a></li>
 
                       <li><a href="{{ path('contactezmoi') }}">Contact</a></li>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li><a href="{{ path('logout') }}">déconnexion</a></li>
+				{% else %}
                       <li><a href="{{ path('login') }}">Connexion</a></li>
                       <li><a href="{{ path('inscription') }}">Inscription</a></li>
+                        {% endif %}
 
                       <!-- A MODIDIER FORMAT TWIG-->
                     </ul>
