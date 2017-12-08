@@ -39,7 +39,7 @@ class Alumni{
     }
 
     public function setPromo($promo) {
-        if(!empty($promo) AND is_int($promo)){
+        if(!empty($promo) AND is_numeric($promo)){
         $this->promo = $promo;
         return $this;
         }
@@ -189,7 +189,7 @@ class Alumni{
     }
 
     public function setSponsorship($sponsorship) {
-        if(!empty($sponsorship) AND is_string($sponsorship)){
+        if(!empty($sponsorship)){
         $this->sponsorship = $sponsorship;
         return $this;
     }
@@ -201,7 +201,7 @@ class Alumni{
     }
 
     public function setAlertjob($alertjob) {
-        if(!empty($alertjob) AND is_string($alertjob)){
+        if(!empty($alertjob)){
         $this->alertjob = $alertjob;
         return $this;
     }
@@ -213,7 +213,7 @@ class Alumni{
     }
 
     public function setAlumni_id($alumni_id) {
-        if(!empty($alumni_id) AND is_int($alumni_id)){
+        if(!empty($alumni_id) AND is_numeric($alumni_id)){
         $this->alumni_id = $alumni_id;
         return $this;
     }
