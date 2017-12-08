@@ -27,6 +27,13 @@ $app->match('/detailoffre/{id}', 'WF3\Controller\HomeController::detailOffreActi
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
     ->bind('detailoffre');
 
+//PAGE FORMULAIRE POUR POSTER UNE OFFRE D'EMPLOI
+$app->match('/formulaireemploi', 'WF3\Controller\HomeController::formulaireOffreAction')
+    ->bind('formulaireemploi');
+
+
+
+
 //page Forum
 $app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')
     ->bind('forum');
@@ -44,6 +51,12 @@ $app->match('/login', 'WF3\Controller\HomeController::loginAction')
 $app->match('/mdpoublie', 'WF3\Controller\HomeController::resetPassAction')
     ->bind('mdpoublie');
 
+// modifier le mot de passe
+$app->match('/mdpoublie/resetform/{id}/{token}', 'WF3\Controller\HomeController::changePassAction')
+    ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
+    ->assert('token', '[a-z0-9]{32}')
+    ->bind('mdpoublie/resetform');    
+
 $app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeController::subjectAction')
     ->bind('forumsubject');
 
@@ -53,6 +66,13 @@ $app->match('/contact/moi', 'WF3\Controller\HomeController::contactAction')->bin
 // formulaire d'inscription des alumnis
 $app->match('/inscription/alumni', 'WF3\Controller\HomeController::alumniAction')
     ->bind('inscription/alumni');
+
+
+$app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
+    ->bind('rechercheParUsername');
+
+
+
 
 ////////////AJAX///////////
 

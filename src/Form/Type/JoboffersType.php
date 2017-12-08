@@ -5,10 +5,7 @@ namespace WF3\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -17,36 +14,152 @@ class JoboffersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
-        $builder->add('promo', TextType::class, array(
-            'label' => 'Numéro de promo*',
+        $builder->add('title', TextType::class, array(
+            'label' => 'Intitulé du poste',
             'attr' => array(
-                'placeholder' => '1 chiffre'
+                'placeholder' => '100 caractères maximum'
             ),
             'required' => true,                      
             'constraints' => array(
                 new Assert\NotBlank(),
                 new Assert\Length(array(
-                    'min' => 1,
-                    'max' => 2,
-                    'Message' => 'La promo est un numéro.'
+                    'min' => 5,
+                    'max' => 100,
+                    
                 ))      
             )
         ));
         
      
-       
+       $builder->add('company', TextType::class, array(
+            'label' => 'Société',
+            'attr' => array(
+                'placeholder' => '90 caractères maximum'
+            ),
+            'required' => true,                      
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Length(array(
+                    'min' => 2,
+                    'max' => 90,
+                    
+                ))      
+            )
+        ));
 
+        
+        
+        
+        $builder->add('city', TextType::class, array(
+            'label' => 'Ville',
+            'attr' => array(
+                'placeholder' => 'Indiquez la ville et le département entre paranthèses'
+            ),
+            'required' => true,                      
+            'constraints' => array(
+                new Assert\NotBlank(),
+                ))      
+            );
+      
+        
+        
+        
+        $builder->add('description', TextType::class, array(
+            'label' => 'Description',
+            'attr' => array(
+                'placeholder' => 'Décrire le poste'
+            ),
+            'required' => true,                      
+            'constraints' => array(
+                new Assert\NotBlank(),
+                ))      
+            );
+      
+        
+        
+        
+        $builder->add('skills', TextType::class, array(
+            'label' => 'Compétences demandées',
+            'attr' => array(
+                'placeholder' => 'Compétences demandées'
+            ),
+            'required' => true,                      
+            'constraints' => array(
+                new Assert\NotBlank(),
+                ))      
+            );
+      
+        
+        
+        $builder->add('advantages', TextType::class, array(
+            'label' => 'Salaire et avantages',
+            'attr' => array(
+                'placeholder' => 'Salaire et avantages'
+            ),
+            'required' => false,                      
+            'constraints' => array(
+                new Assert\NotBlank(),
+                ))      
+            );
+      
     
-         $builder->add('skills', ChoiceType::class, array(
-            'label' => 'Domaine(s) de prédilection*', 
-            'required' => true,                                       
+         $builder->add('contract', ChoiceType::class, array(
+            'label' => 'Type de contrat', 
+            'required' => false,                                       
             'choices' => array(
-                'Front-end' => 'front-end',
-                'back-end' => 'back-end',
-                'full-stack' => 'full-stack'
+                'CDI' => 'CDI',
+                'CDD' => 'CDD',
+                'indépendant' => 'indépendant',
             )
         ));   
 
+       
+        $builder->add('contractduration', TextType::class, array(
+            'label' => 'si CDD, durée du CDD',
+            'attr' => array(
+                'placeholder' => 'durée du CDD en mois'
+            ),
+            'required' => false,                      
+            'constraints' => array(
+                new Assert\NotBlank(),
+                ))      
+            );
+        
+        
+        $builder->add('timetable', ChoiceType::class, array(
+            'label' => 'Durée hebdomadaire de temps de travail', 
+            'required' => false,                                       
+            'choices' => array(
+                'Temps plein' => 'Temps plein',
+                'Temps partiel' => 'Temps partiel',
+            )
+        )); 
+        
+        
+        
+        $builder->add('recruitername', TextType::class, array(
+            'label' => 'Nom du recruteur',
+            'attr' => array(
+                'placeholder' => 'Nom du recruteur'
+            ),
+            'required' => true,                      
+            'constraints' => array(
+                new Assert\NotBlank(),
+                ))      
+            );
+        
+        
+        $builder->add('recruitercontact', TextType::class, array(
+            'label' => 'Contact du recruteur',
+            'attr' => array(
+                'placeholder' => 'Email du recruteur'
+            ),
+            'required' => true,                      
+            'constraints' => array(
+                new Assert\NotBlank(),
+                ))      
+            );
+        
         
           
     }

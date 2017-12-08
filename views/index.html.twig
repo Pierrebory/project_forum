@@ -41,12 +41,14 @@
   <!-- spacer section -->
 
   <!-- section équipe -->
-  <section id="about" class="section">
+  <section id="about" class="section" style="color: white">
     <div class="container">
+
       <h4 id="oui">Webforce3: La formation pour devenir Intégrateur &<br><br><br> Développeur Web</h4>
+      <h4>Webforce3: La formation pour devenir Intégrateur &<br><br><br> Développeur Web</h4>
       <div class="row">
         <div class="span4 offset1">
-          <div>
+          <div style="font-size: 1.15em">
             <h2><strong>L'avenir</strong></h2>
             <p>
              WebForce3 propose une <strong>formation de 3 mois appliquée et rapide</strong>.
@@ -64,7 +66,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div style="font-size: 1.15em" class="row">
         <div class="span2 offset1 flyIn">
           <div class="people">
             <img class="team-thumb img-circle" src="img/wf3/html.png" alt="" />
@@ -105,7 +107,7 @@
           </div>
         </div>
       </div>
-             <p style="margin-left: 7em;"> pour en savoir plus, vous pouvez vous rendre sur le site de webforce3 en cliquant sur le lien <a href="http://www.wf3.fr/" style="color: #180D75">webforce3</a></p> 
+             <p style="margin-left: 7em;"> Pour en savoir plus, vous pouvez vous rendre sur le site de WebForce3 en cliquant sur le lien <a href="http://www.wf3.fr/" style="color: #180D75">WebForce3</a>.</p> 
     </div>
     <!-- /.container -->
   </section>
@@ -119,17 +121,18 @@
           <div class="service-box">
             <img src="img/icons/marto.png" alt="" />
             <h2>Forum</h2>
-            <p>
+            <p><a href="{{ path('forum') }}">Forum
               Communiquez avec d'autres développeurs pour obtenir leur aide !
-            </p>
+            </a></p>
           </div>
         </div>
         <div class="span3 animated flyIn">
           <div class="service-box">
             <img src="img/icons/bulle.png">
-            <h2>Communication directe avec les anciens élèves</h2>
-            <p>
+            <h2>Annuaire</h2>
+            <p><a title="team" href="{{ path('annuaire') }}">
               Parlez avec les élèves des anciennes promotions pour avoir un vrai ressenti de votre futur métier de développeur !
+
             </p>
           </div>
         </div>
@@ -139,10 +142,10 @@
             <h2 id="oui">Obtenez des informations sur la formation</h2>
             <p><a href="{{ path('contactezmoi') }}">
               Après tout, vous êtes aussi là pour ça.
+
             </a></p>
-              
           </div>
-        </div>
+        </div>        
         <div class="span3 animated-slow flyIn">
           <div class="service-box">
             <img src="img/icons/ordi.png" alt="" />
@@ -152,12 +155,21 @@
             </p>
           </div>
         </div>
+        <div class="span3 animated-fast flyIn">
+          <div class="service-box">
+            <img src="img/icons/i.png">
+            <h2>Contactez nous !</h2>
+            <p><a href='{{ path("contactezmoi") }}'>
+              Vous pouvez également nous contacter si vous avez des questions.
+            </a></p>
+          </div>
+        </div>
       </div>
     </div>
   </section>  
   
   <!-- section équipe -->
-  <section id="about" class="section">
+  <section id="about" class="section" style="color: white">
     <div class="container">
       <h4>Qui sommes-nous ?</h4>
       <div class="row">

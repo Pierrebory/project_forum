@@ -10,6 +10,7 @@ class JobOffers
    
     private $id;
     private $title;
+    private $company;
     private $city;
     private $date_offer;
     private $description;
@@ -18,7 +19,9 @@ class JobOffers
     private $contract;
     private $contractduration;
     private $timetable;
-    private $employer_id;
+    private $recruitername;
+    private $recruitercontact;
+    private $users_id;
 
 
     public function getId() {
@@ -42,6 +45,24 @@ class JobOffers
         return $this;
         }
     }
+    
+    
+    
+    public function getCompany() {
+        return $this->company;
+    }
+
+    public function setCompany($company) {
+        if(!empty($company) AND is_string($company)){
+        $this->company = $company;
+        return $this;
+        }
+    }
+    
+    
+    
+    
+    
     
     public function getCity() {
         return $this->city;
@@ -133,7 +154,35 @@ class JobOffers
     }
     }
 
+    
+    
+    
+    public function getRecruitername() {
+        return $this->recruitername;
+    }
 
+    public function setRecruitername($recruitername) {
+        if(!empty($recruitername) AND is_numeric($recruitername)){
+        $this->recruitername = $recruitername;
+        return $this;
+        }
+    }
+    
+    
+    public function getRecruitercontact() {
+        return $this->recruitercontact;
+    }
+
+    public function setRecruitercontact($recruitercontact) {
+        if(!empty($recruitercontact) AND is_numeric($recruitercontact)){
+        $this->recruitercontact = $recruitercontact;
+        return $this;
+        }
+    }
+    
+    
+    
+    
     
     public function getAvatar() {
         return $this->avatar;
@@ -147,14 +196,14 @@ class JobOffers
 
     
 
-    public function getEmployer_id()
+    public function getUsers_id()
     {
-        return $this->employer_id;
+        return $this->users_id;
     }
 
-    public function setEmployer_id($employer_id) {
-        if(!empty($employer_id) AND is_numeric($employer_id)){
-        $this->employer_id = $employer_id;
+    public function setUsers_id($users_id) {
+        if(!empty($users_id) AND is_numeric($users_id)){
+        $this->users_id = $users_id;
         return $this;
     }
 

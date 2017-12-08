@@ -154,13 +154,16 @@
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tr>
                                 <td class="padding" align="center">
-                                   Message from : {{ name ~ ' -- ' ~ email }}
-                                </td>
+                                   Changement de mot de passe
+                                </td> 
                             </tr>
                             <tr>
                                 <td>
-                                    {{ message }}
+                                    Bonjour {{ username }}, veuillez cliquer <a href="http://localhost/project_forum/web/mdpoublie/resetform/{{ id }}/{{ token }}">ICI</a> pour modifier votre mot de passe. 
                                 </td>
+                                <td>
+                                    Si vous n'avez pas fait de demande de changement de mot de passe alors quelqu'un a essayé de le modifier. 
+                                </td>                                
                             </tr>
                             <tr>
                                 <td align="center">
