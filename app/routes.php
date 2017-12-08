@@ -51,7 +51,7 @@ $app->match('/mdpoublie', 'WF3\Controller\HomeController::resetPassAction')
 // modifier le mot de passe
 $app->match('/mdpoublie/resetform/{id}/{token}', 'WF3\Controller\HomeController::changePassAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
-    ->assert('token', '[a-z0-9]+')
+    ->assert('token', '[a-z0-9]{32}')
     ->bind('mdpoublie/resetform');    
 
 $app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeController::subjectAction')

@@ -31,4 +31,35 @@ class ResetpassDAO extends DAO{
         return $result->execute();    
     }
 
+    public function findToken($idUser){
+        $result = $this->bdd->query('SELECT token, user_id FROM resetpass WHERE user_id = ' . $idUser);            
+        return $result->fetch(\PDO::FETCH_ASSOC);   
+    }   
+
+    public function updatePassword($id, $token, $password, $salt){
+/*      $result = $this->bdd->prepare('UPDATE users SET password = :password , salt = :salt WHERE id = :id');            
+        return $result->execute();    */
+
+        
+
+        
+               
+        $update = $this->bdd->prepare('UPDATE users INNER JOIN resetpass ON users.id = resetpass.user_id SET password = :password, salt = :salt WHERE users.id = :id AND token = :token');
+    
+
+        $update->bindvalue(':password', $password);         
+        $update->bindvalue(':salt', $salt); 
+        $update->bindvalue(':token', $token);        
+        $update->bindvalue(':id', $id, \PDO::PARAM_INT);
+        
+        if($update->execute()){
+            return true;
+            }
+         
+            return false;
+    
+        
+        
+    }
+
 }

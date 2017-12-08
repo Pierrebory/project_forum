@@ -18,6 +18,8 @@ use WF3\Form\Type\ResetpassType;
 use WF3\Form\Type\SubjectType;
 use WF3\Form\Type\ResponsesType;
 
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+
 
 class HomeController{
 
@@ -178,8 +180,13 @@ class HomeController{
     // on envoie les paramètres de la requête à notre objet formulaire
     $resetForm->handleRequest($request); 
 
-    $resetId = $app['dao.users']->find($id);
-    $resetToken = $app['dao.resetpass']->find($token);
+    $token = $request->attributes->get('token');
+    $test = $app['dao.resetpass']->findToken($id);
+
+    if($token != $test['token']){
+        throw new AccessDeniedHttpException();
+    }    
+   
 
     if($resetForm->isSubmitted() && $resetForm->isValid()){
         $salt = substr(md5(time()), 0, 23);
@@ -193,16 +200,14 @@ class HomeController{
         //on remplace le mdp en clair par le mdp crypté
         $user->setPassword($password);
 
-        $app['dao.users']->update($id, $user);               
+        $app['dao.resetpass']->updatePassword($id, $token, $user->getPassword(), $user->getSalt() );
         $app['session']->getFlashBag()->add('success', 'Votre mot de passe a bien été modifié.');
         return $app->redirect($app['url_generator']->generate('home'));     
     }
 
     // j'envoi le formulaire
     return $app['twig']->render('resetForm.html.twig', array(
-        'resetForm' => $resetForm->createView(),
-        'resetId' => $resetId,
-        'resetToken' => $resetToken
+        'resetForm' => $resetForm->createView()
     ));         
 }   
 

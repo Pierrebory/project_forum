@@ -15,7 +15,7 @@ class ResetpassType extends RegisterType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildform($builder, $options);
-        $builder->remove('username')->remove('lastname')->remove('firstname')->remove('email')->remove('phone')->remove('city')->remove('role');   
+        $builder->remove('username')->remove('lastname')->remove('firstname')->remove('email')->remove('phone')->remove('city')->remove('role')->remove('date_register');   
 
 /*        $builder->remove('lastname');     
         $builder->remove('firstname');     
