@@ -40,9 +40,7 @@ class ResetpassDAO extends DAO{
 /*      $result = $this->bdd->prepare('UPDATE users SET password = :password , salt = :salt WHERE id = :id');            
         return $result->execute();    */
 
-        
 
-        
                
         $update = $this->bdd->prepare('UPDATE users INNER JOIN resetpass ON users.id = resetpass.user_id SET password = :password, salt = :salt WHERE users.id = :id AND token = :token');
     
@@ -56,10 +54,13 @@ class ResetpassDAO extends DAO{
             return true;
             }
          
-            return false;
-    
+            return false;        
         
-        
+    }
+
+    public function deleteToken($idUser){
+        $delete = $this->bdd->query('DELETE FROM resetpass WHERE user_id = ' . $idUser);
+        return $delete->execute();
     }
 
 }

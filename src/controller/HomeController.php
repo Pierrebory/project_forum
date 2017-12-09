@@ -28,11 +28,11 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class HomeController{
 
-	//page d'accueil qui affiche tout les articles
-	public function homePageAction(Application $app){
+    //page d'accueil qui affiche tout les articles
+    public function homePageAction(Application $app){
 
-	 	return $app['twig']->render('index.html.twig');
-	}
+        return $app['twig']->render('index.html.twig');
+    }
     
     
     //page Annuaire qui affiche uniquement les noms des anciens élèves
@@ -68,7 +68,7 @@ class HomeController{
     //PAGE FORMULAIRE POUR POSTER UNE OFFRE D'EMPLOI
     public function formulaireOffreAction(Application $app, Request $request){
         //on va vérifier que l'utilisateur est connecté
-    	//if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+        //if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
             //je peux rediriger l'utilisateur non authentifié
             //return $app->redirect($app['url_generator']->generate('home'));
             //throw new AccessDeniedHttpException();
@@ -80,21 +80,21 @@ class HomeController{
             //$user = $token->getUser();
         //}
 
-    	//je crée un objet offre vide
-    	$offer = new JobOffers();
-    	//je crée mon objet formulaire à partir de la classe JoboffersType
-    	$offerForm = $app['form.factory']->create(JoboffersType::class, $offer);
-    	//on envoie les paramètres de la requête à notre objet formulaire
-    	$offerForm->handleRequest($request);
-    	//on vérifie si le formulaire a été envoyé
-    	//et si les données envoyées sont valides
-    	if($offerForm->isSubmitted() && $offerForm->isValid()){
-    		
-    		//on insère dans la base les éléments de l'offre
-    		$app['dao.joboffers']->insert(array(
-    			'title'=>$offer->getTitle(),
-    			'company'=>$offer->getCompany(),
-    			'city'=>$offer->getCity(),
+        //je crée un objet offre vide
+        $offer = new JobOffers();
+        //je crée mon objet formulaire à partir de la classe JoboffersType
+        $offerForm = $app['form.factory']->create(JoboffersType::class, $offer);
+        //on envoie les paramètres de la requête à notre objet formulaire
+        $offerForm->handleRequest($request);
+        //on vérifie si le formulaire a été envoyé
+        //et si les données envoyées sont valides
+        if($offerForm->isSubmitted() && $offerForm->isValid()){
+            
+            //on insère dans la base les éléments de l'offre
+            $app['dao.joboffers']->insert(array(
+                'title'=>$offer->getTitle(),
+                'company'=>$offer->getCompany(),
+                'city'=>$offer->getCity(),
                 'description'=>$offer->getDescription(),
                 'skills'=>$offer->getSkills(),
                 'advantages'=>$offer->getAdvantages(),
@@ -104,16 +104,16 @@ class HomeController{
                 'recruitername'=>$offer->getRecruitername(),
                 'recruitercontact'=>$offer->getRecruitercontact(),
                             
-    		));
-    		//on stocke en session un message de réussite
-    		$app['session']->getFlashBag()->add('success', 'Offre d\'emploi bien reçue. Merci !');
+            ));
+            //on stocke en session un message de réussite
+            $app['session']->getFlashBag()->add('success', 'Offre d\'emploi bien reçue. Merci !');
 
-    	}
+        }
 
-    	//j'envoie à la vue le formulaire grâce à $offerForm->createView() 
-    	return $app['twig']->render('formulaireemploi.html.twig', array(
-    			'offerForm' => $offerForm->createView()
-    	));
+        //j'envoie à la vue le formulaire grâce à $offerForm->createView() 
+        return $app['twig']->render('formulaireemploi.html.twig', array(
+                'offerForm' => $offerForm->createView()
+        ));
     }
     
   
@@ -133,10 +133,10 @@ class HomeController{
             $subject->setUser_id(1);
              $subject->setDate_message(date('Y-m-d H:i:s'));
 
-		 $app['dao.subject']->insert($subject);
+         $app['dao.subject']->insert($subject);
 
-	 	
-	   }
+        
+       }
         return $app['twig']->render('subject_forum.html.twig', array(
             'subjectForm'=>$subjectForm->createView(),
             'subject'=>$subject,
@@ -151,52 +151,51 @@ class HomeController{
    
 
 
-	//////////// FORMULAIRE INSCRIPTION ////////////
+    //////////// FORMULAIRE INSCRIPTION ////////////
     public function registerAction(Application $app, Request $request){
-		$user = new User();
-		$userForm = $app['form.factory']->create(RegisterType::class, $user);
-		// on envoie les paramètres de la requête à notre objet formulaire
-		$userForm->handleRequest($request); 
-		// si le formulaire a été envoyé
-		if($userForm->isSubmitted() && $userForm->isValid()){
+        $user = new User();
+        $userForm = $app['form.factory']->create(RegisterType::class, $user);
+        // on envoie les paramètres de la requête à notre objet formulaire
+        $userForm->handleRequest($request); 
+        // si le formulaire a été envoyé
+        if($userForm->isSubmitted() && $userForm->isValid()){
 
-	        $salt = substr(md5(time()), 0, 23);
-	        $user->setSalt($salt);
-	        //on récupère le mot de passe en clair (envoyé par l'utilisateur)
-	        $plainPassword = $user->getPassword();
-	        // on récupère l'encoder de silex
-	        $encoder = $app['security.encoder.bcrypt'];
-	        // on encode le mdp
-	        $password = $encoder->encodePassword($plainPassword, $user->getSalt());
-	        //on remplace le mdp en clair par le mdp crypté
-	        $user->setPassword($password);
+            $salt = substr(md5(time()), 0, 23);
+            $user->setSalt($salt);
+            //on récupère le mot de passe en clair (envoyé par l'utilisateur)
+            $plainPassword = $user->getPassword();
+            // on récupère l'encoder de silex
+            $encoder = $app['security.encoder.bcrypt'];
+            // on encode le mdp
+            $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+            //on remplace le mdp en clair par le mdp crypté
+            $user->setPassword($password);
 
-		    $app['dao.users']->insert($user);				
-		    $app['session']->getFlashBag()->add('success', 'Vous êtes bien enregistré(e). Vous pouvez à présent vous connecter.');
-		    		
-		}
+            $app['dao.users']->insert($user);               
+            $app['session']->getFlashBag()->add('success', 'Vous êtes bien enregistré(e). Vous pouvez à présent vous connecter.');
+                    
+        }
 
-		// j'envoie le formulaire
-		return $app['twig']->render('register.html.twig', array(
-			'userForm' => $userForm->createView(),
-		));		
-	}
+        // j'envoie le formulaire
+        return $app['twig']->render('register.html.twig', array(
+            'userForm' => $userForm->createView(),
+        ));     
+    }
 
-		/////////////// CONNEXION //////////////////
-	public function loginAction(Application $app, Request $request){
+        /////////////// CONNEXION //////////////////
+    public function loginAction(Application $app, Request $request){
 
-	       return $app['twig']->render('login.html.twig', array(
+           return $app['twig']->render('login.html.twig', array(
             'error' => $app['security.last_error']($request),
             'last_username' => $app['session']->get('_security.last_username'),
              $app['session']->getFlashBag()->add('success', 'Vous êtes bien connecté(e). Vous pouvez remplir votre fiche détaillée dans l\'annuaire et/ou poster une offre d\'emploi.'),
          
-			
-		));
-	}	
+            
+        ));
+    }   
 
     /////////////////////// RESET MOT DE PASSE ///////////////////////////
     public function resetPassAction(Application $app, Request $request){
-    // on va vérifier que l'utilisateur est connecté
 
 
     $emailTest = $app['dao.users']->findEmails();
@@ -208,14 +207,12 @@ class HomeController{
     if($resetForm->isSubmitted() && $resetForm->isValid()){
         $data = $resetForm->getData();
 
-        if(!in_array($data['email'], $emailTest)){
-            throw new AccessDeniedHttpException();
-        }    
-
-        $token = md5(uniqid(rand(), true));
-        $user = $app['dao.resetpass']->selectReset($data['email']);   
-        $app['dao.resetpass']->insertReset($token, $user['id']);        
-        $message = \Swift_Message::newInstance()
+        if(in_array($data, $emailTest)){
+            $user = $app['dao.resetpass']->selectReset($data['email']); 
+            $app['dao.resetpass']->deleteToken($user['id']);  
+            $token = md5(uniqid(rand(), true));  
+            $app['dao.resetpass']->insertReset($token, $user['id']);        
+            $message = \Swift_Message::newInstance()
                         ->setFrom(array('promo5wf3@gmx.fr'))
                         ->setTo(array($data['email']))
                         ->setBody($app['twig']->render('emailReset.html.twig', 
@@ -227,13 +224,22 @@ class HomeController{
                         )
                     ), 'text/html');
             $app['mailer']->send($message);
+            $app['session']->getFlashBag()->add('success', 'Un email vous a été transmis pour réinitialiser votre mot de passe.');            
+        }
+        else{
+            $app['session']->getFlashBag()->add('error', 'Cette adresse email ne correspond à aucun utilisateur.');
+        }
     }
+
+/*    if(!in_array($data['email'], $emailTest)){
+        throw new AccessDeniedHttpException();
+    }        */
 
     // j'envoi le formulaire
     return $app['twig']->render('reset.html.twig', array(
         'resetForm' => $resetForm->createView(),
         'data' => $resetForm->getData(),
-        'emailTest' => $emailTest      
+        'emailTest' => $emailTest   
     ));         
 }   
 
@@ -267,7 +273,7 @@ class HomeController{
         $user->setPassword($password);
 
         $app['dao.resetpass']->updatePassword($id, $token, $user->getPassword(), $user->getSalt() );
-        $app['dao.resetpass']->delete($id);        
+        $app['dao.resetpass']->deleteToken($id);        
         $app['session']->getFlashBag()->add('success', 'Votre mot de passe a bien été modifié.');
         return $app->redirect($app['url_generator']->generate('home'));     
     }
@@ -293,10 +299,10 @@ class HomeController{
         $response->setUser_id($idUser);
          $response->setSubject_id($idSubject);
         $response->setDate_message(date('Y-m-d H:i:s'));
-		 $app['dao.response']->insert($response);
+         $app['dao.response']->insert($response);
 
-	 	
-	   }
+        
+       }
         return $app['twig']->render('responses_forum.html.twig', array(
             'responsesForm'=>$responsesForm->createView(),
             'response'=>$response,
@@ -318,10 +324,10 @@ class HomeController{
         $response->setUser_id(3);
          $response->setSubject_id($idSubject);
         $response->setDate_message(date('Y-m-d H:i:s'));
-		 $app['dao.response']->insert($response);
+         $app['dao.response']->insert($response);
 
-	 	
-	   }
+        
+       }
         return $app['twig']->render('responses_forum.html.twig', array(
             'responsesForm'=>$responsesForm->createView(),
             'response'=>$response,
@@ -337,7 +343,7 @@ class HomeController{
     
     
     ///////////////////////PAGE CONTACT///////////////////
-	public function contactAction(Application $app, Request $request){
+    public function contactAction(Application $app, Request $request){
         $contactForm = $app['form.factory']->create(ContactType::class);
         $contactForm->handleRequest($request);
         
@@ -364,30 +370,30 @@ class HomeController{
             'contactForm' => $contactForm->createView(),
             'data' => $contactForm->getData()
         ));
-	}
+    }
     
     
     
     
-    	public function alumniAction(Application $app, Request $request){
+        public function alumniAction(Application $app, Request $request){
         $alumni = new Alumni();
-		$alumniForm = $app['form.factory']->create(AlumniType::class, $alumni);
-		// on envoie les paramètres de la requête à notre objet formulaire
-		$alumniForm->handleRequest($request); 
-		// si le formulaire a été envoyé
-		if($alumniForm->isSubmitted() && $alumniForm->isValid()){
+        $alumniForm = $app['form.factory']->create(AlumniType::class, $alumni);
+        // on envoie les paramètres de la requête à notre objet formulaire
+        $alumniForm->handleRequest($request); 
+        // si le formulaire a été envoyé
+        if($alumniForm->isSubmitted() && $alumniForm->isValid()){
 
 
-		    $app['dao.alumni']->insert($alumni);				
-		    $app['session']->getFlashBag()->add('success', 'vous êtes bien enregistré');
-		    return $app->redirect($app['url_generator']->generate('home'));			
-		}
+            $app['dao.alumni']->insert($alumni);                
+            $app['session']->getFlashBag()->add('success', 'vous êtes bien enregistré');
+            return $app->redirect($app['url_generator']->generate('home'));         
+        }
 
-		// j'envoi le formulaire
-		return $app['twig']->render('alumni.html.twig', array(
-			'alumniForm' => $alumniForm->createView(),
-		));		
-	}
+        // j'envoi le formulaire
+        return $app['twig']->render('alumni.html.twig', array(
+            'alumniForm' => $alumniForm->createView(),
+        ));     
+    }
     
     
     
