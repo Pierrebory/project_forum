@@ -97,70 +97,71 @@ class DAO implements DB{
     }
  
     
-    
     public function insert($data){
-        
-        if(is_object($data)){
+       
+       if(is_object($data)){
 
-           //on va transformer l'objet en tableau php        
-           $dataArray = [];
+          //on va transformer l'objet en tableau php        
+          $dataArray = [];
 
-           //on crée un tableau qui contient les noms des méthodes de notre objet
-           $methods = get_class_methods($data);
+          //on crée un tableau qui contient les noms des méthodes de notre objet
+          $methods = get_class_methods($data);
 
-           //je fais une boucle sur mes méthodes
-           foreach($methods as $method){
-               //si ma méthode est un setter (commence par set)
-               //et que le getter correspondant existe
-               if(preg_match('#^set#', $method) AND method_exists($data, str_replace('set', 'get', $method))){
-                   //je récupère le getter
-                   $getter = str_replace('set', 'get', $method);
-                   //je rempli mon tableau avec en clé le nom de l'attribut (donc on enlève set et on met en minuscules)
-                   //en valuer , le résultat de mon appel au getter
-                   $dataArray[strtolower(str_replace('set', '', $method))] = $data->$getter();
-               }
-           }
+          //je fais une boucle sur mes méthodes
+          foreach($methods as $method){
+              //si ma méthode est un setter (commence par set)
+              //et que le getter correspondant existe
+              if(preg_match('#^set#', $method) AND method_exists($data, str_replace('set', 'get', $method))){
+                  //je récupère le getter
+                  $getter = str_replace('set', 'get', $method);
+                  //je rempli mon tableau avec en clé le nom de l'attribut (donc on enlève set et on met en minuscules)
+                  //en valuer , le résultat de mon appel au getter
+                  $dataArray[strtolower(str_replace('set', '', $method))] = $data->$getter();
+              }
+          }
 
-           $data = $dataArray;
+          $data = $dataArray;
 
+      }
+       
+
+       
+       //création de la requête INSERT INTO nomdelatable
+       $sql = 'INSERT INTO ' .$this->tableName . ' (';
+
+       foreach($data as $key=>$value){
+       //on rajoute à la suite de sql avec .=
+       $sql .= $key . ', ';
        }
-        
+       //on supprime les deux derniers caractères (on veut supprimer la virgule)
+       $sql = substr($sql, 0, -2);
+       $sql .= ') VALUES (';
 
-        
-        //création de la requête INSERT INTO nomdelatable
-        $sql = 'INSERT INTO ' .$this->tableName . ' (';
-
-        foreach($data as $key=>$value){
-        //on rajoute à la suite de sql avec .=
-        $sql .= $key . ', ';
-        }
-        //on supprime les deux derniers caractères (on veut supprimer la virgule)
-        $sql = substr($sql, 0, -2);
-        $sql .= ') VALUES (';
-
-        // on écrit les marqueurs
-        foreach($data as $key=>$value){
-        //on rajoute à la suite de sql avec .=
-        $sql .= ':' . $key . ', ';
-        }
-        $sql = substr($sql, 0, -2);
-        //on ferme la parenthèse
-        $sql .= ')';
-        
-    
-        
-        $add = $this->bdd->prepare($sql);
-        foreach($data as $key=>$value){
-            //on va créer les lignes bindvalue correspondantes
-            $add->bindvalue(':' . $key, strip_tags($value));
-        }
-        if($add->execute()){
-            return true;
-            }
-         
-            return false;
-    
+       // on écrit les marqueurs
+       foreach($data as $key=>$value){
+       //on rajoute à la suite de sql avec .=
+       $sql .= ':' . $key . ', ';
+       }
+       $sql = substr($sql, 0, -2);
+       //on ferme la parenthèse
+       $sql .= ')';
+       
+   
+       
+       $add = $this->bdd->prepare($sql);
+       foreach($data as $key=>$value){
+           //on va créer les lignes bindvalue correspondantes
+           $add->bindvalue(':' . $key, strip_tags($value));
+       }
+       if($add->execute()){
+           return true;
+           }
+       
+           return false;
+   
 }
+     
+    
     
     
     public function update($id, $data){
@@ -190,9 +191,7 @@ class DAO implements DB{
 
        }
         
-        
-        
-        
+
         
         $sql = 'UPDATE ' . $this->tableName . ' SET ' ;
         

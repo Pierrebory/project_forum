@@ -35,20 +35,36 @@ class HomeController{
     }
     
     
-    //page Annuaire qui affiche uniquement les noms des anciens élèves
+    //page Annuaire (liste des anciens élèves) qui affiche uniquement les noms des anciens élèves
     public function annuaireAction(Application $app){
         $users = $app['dao.users']->findAll();
         return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
     }
     
 
-  //page détaillée d'un ancien élève
+  //PAGE DE DETAIL D'UNE FICHE D'UN ANCIEN ELEVE
     public function getAlumniAction(Application $app, $id){
+        //on va vérifier que l'utilisateur est connecté
+    	if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            return $app->redirect($app['url_generator']->generate('login'));
+            throw new AccessDeniedHttpException();
+        }
+        
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
         $user = $app['dao.users']->find($id);
         $alumni = $app['dao.alumni']->findAlumniByUser($id);
         return $app['twig']->render('fichedetaillealumni.html.twig', array('user' => $user,
                                                                            'alumni' => $alumni)); 
     }
+    
+    
+    
+    
     
     //PAGE LISTE DES OFFRES D'EMPLOI
     public function offresAction(Application $app){
@@ -59,6 +75,19 @@ class HomeController{
     
     //PAGE DE DETAIL DE L'OFFRE D'EMPLOI
     public function detailOffreAction(Application $app, $id){
+         //on va vérifier que l'utilisateur est connecté
+    	if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            return $app->redirect($app['url_generator']->generate('login'));
+            throw new AccessDeniedHttpException();
+        }
+        
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        
         $detailoffre = $app['dao.joboffers']->getDetailOffer($id);
         return $app['twig']->render('detailoffre.html.twig', array('detailoffre' => $detailoffre)); 
 
@@ -68,17 +97,18 @@ class HomeController{
     //PAGE FORMULAIRE POUR POSTER UNE OFFRE D'EMPLOI
     public function formulaireOffreAction(Application $app, Request $request){
         //on va vérifier que l'utilisateur est connecté
+    	if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
         //if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
             //je peux rediriger l'utilisateur non authentifié
-            //return $app->redirect($app['url_generator']->generate('home'));
-            //throw new AccessDeniedHttpException();
-        //}
+            return $app->redirect($app['url_generator']->generate('login'));
+            throw new AccessDeniedHttpException();
+        }
         
         //on récupère le token si l'utilisateur est connecté
-        //$token = $app['security.token_storage']->getToken();
-        //if(NULL !== $token){
-            //$user = $token->getUser();
-        //}
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
 
         //je crée un objet offre vide
         $offer = new JobOffers();
@@ -103,6 +133,7 @@ class HomeController{
                 'timetable'=>$offer->getTimetable(),
                 'recruitername'=>$offer->getRecruitername(),
                 'recruitercontact'=>$offer->getRecruitercontact(),
+                'users_id'=>$offer->getUsers_id()
                             
             ));
             //on stocke en session un message de réussite
@@ -116,9 +147,40 @@ class HomeController{
         ));
     }
     
+  //page de suppression d'une offre d'emploi
+    public function deleteOfferAction(Application $app, $id){
+        //on va vérifier que l'utilisateur est connecté
+        if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            return $app->redirect($app['url_generator']->generate('login'));
+            throw new AccessDeniedHttpException();
+        }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        //on va chercher les infos sur l'offre d'emploi
+        $joboffer = $app['dao.joboffers']->find($id);
+        //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
+        if($user->getId() != $joboffer->getJoboffer()){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            throw new AccessDeniedHttpException();
+        }
+        
+        $joboffer = $app['dao.joboffers']->delete($id);
+        //on crée un message de réussite dans la session
+        $app['session']->getFlashBag()->add('success', 'Offre d\'emploi bien supprimée');
+        //on redirige vers la page des offres d'emploi
+        return $app->redirect($app['url_generator']->generate('offresemploi'));
+    }
+        
   
-        
-        
+    
+    
+    
+    
     
  
     ///////////////////////PAGE SUJET FORUM////////////////////////
@@ -399,6 +461,27 @@ class HomeController{
     
     
     
+
+    //PAGE D'INSCRIPTION ANNUAIRE ANCIENS ELEVES
+    	public function alumniAction(Application $app, Request $request){
+        $alumni = new Alumni();
+		$alumniForm = $app['form.factory']->create(AlumniType::class, $alumni);
+		// on envoie les paramètres de la requête à notre objet formulaire
+		$alumniForm->handleRequest($request); 
+		// si le formulaire a été envoyé
+		if($alumniForm->isSubmitted() && $alumniForm->isValid()){
+
+
+		    $app['dao.alumni']->insert($alumni);				
+		    $app['session']->getFlashBag()->add('success', 'vous êtes bien enregistré');		
+		}
+
+		// j'envoie le formulaire
+		return $app['twig']->render('alumni.html.twig', array(
+			'alumniForm' => $alumniForm->createView(),
+		));		
+	}
+
     
         public function alumniAction(Application $app, Request $request){
         $alumni = new Alumni();
@@ -419,6 +502,7 @@ class HomeController{
             'alumniForm' => $alumniForm->createView(),
         ));     
     }
+
     
     
     
