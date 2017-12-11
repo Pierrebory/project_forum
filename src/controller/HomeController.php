@@ -470,12 +470,27 @@ class HomeController{
         }
 
         $userForm = $app['form.factory']->create(UpdateUserType::class, $user);
-
         $userForm->handleRequest($request); 
 
-        if($userForm->isSubmitted() && $userForm->isValid()){
+        $uniqueTest = $app['dao.users']->findOtherValues($id);
+        $data = $userForm->getData();
+        $error = false;
 
-            $app['dao.user']->updateUser($id, $user);   
+        if(array_search($data->getEmail(), array_column($uniqueTest, 'email')) !== false) {
+            $app['session']->getFlashBag()->add('emailNotUnique', 'Cette adresse email est déjà attribuée à un autre utilisateur.');
+            $error = true;
+        }
+
+        if(array_search($data->getPhone(), array_column($uniqueTest, 'phone')) !== false && $data->getPhone() != null) {
+            $app['session']->getFlashBag()->add('phoneNotUnique', 'Ce numéro de téléphone est déjà attribué à un autre utilisateur.');
+            $error = true;
+        }        
+
+
+
+        if($userForm->isSubmitted() && $userForm->isValid() && $error === false){
+
+            $app['dao.users']->updateUser($id, $user);   
             $app['session']->getFlashBag()->add('success', 'Vos informations ont bien été modifiées');          
         }
         
