@@ -257,7 +257,13 @@ class HomeController{
     }
         
   
-    
+    //RECHERCHE D'UNE OFFRE D'EMPLOI PAR SON TITRE
+    public function searchOfferAction(Application $app, Request $request){
+        $joboffers = $app['dao.joboffers']->findOffersByTitle($request->query->get('title'));
+       
+        return $app['twig']->render('resultoffers.html.twig', array('joboffers' => $joboffers));
+        
+    }
     
     
     
