@@ -3,7 +3,7 @@
 {% block content %}
     
 
-  <body>
+  <body id="corps">
   
 <!--début du petit slider -->
   <div id="header-wrapper" class="header-slider">
@@ -43,6 +43,7 @@
   <!-- section équipe -->
   <section id="about" class="section" style="color: white">
     <div class="container">
+
       <h4>Webforce3: La formation pour devenir Intégrateur &<br><br><br> Développeur Web</h4>
       <div class="row">
         <div class="span4 offset1">
@@ -130,16 +131,20 @@
             <h2>Annuaire</h2>
             <p><a title="team" href="{{ path('annuaire') }}">
               Parlez avec les élèves des anciennes promotions pour avoir un vrai ressenti de votre futur métier de développeur !
-            </a></p>
+
+            </p>
           </div>
-        </div>        
-        <div class="span3 animated-slow flyIn">
+        </div> 
+
+        </div>
+               
+         <div class="span3 animated-slow flyIn">
           <div class="service-box">
             <img src="img/icons/ordi.png" alt="" />
             <h2>Offres d'emploi</h2>
-            <p>
+            <p><a href="{{ path('offresemploi')}}">
               Trouvez des offres d'emploi correspondant à votre profil !
-            </p>
+                </a></p>
           </div>
         </div>
         <div class="span3 animated-fast flyIn">
