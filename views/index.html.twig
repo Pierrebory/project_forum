@@ -3,8 +3,11 @@
 {% block content %}
     
 
-  <body id="corps">
-  
+  <body>  
+
+  <div class="bloc-principal">
+    <div class="site-header">
+      <main class="contenu">
 <!--début du petit slider -->
   <div id="header-wrapper" class="header-slider">
     <header class="clearfix">
@@ -39,7 +42,6 @@
     </header>
   </div>
   <!-- spacer section -->
-
   <!-- section équipe -->
   <section id="about" class="section" style="color: white">
     <div class="container">
@@ -56,7 +58,6 @@
               <br>
               Cette formation vous offre des perspectives d'emploi en tant que développeur Junior avec près de <strong>20 000 postes</strong> de développeur web à pourvoir aujourd’hui en France.
             </p>
-
           </div>
         </div>
         <div class="span6">
@@ -132,13 +133,15 @@
             <p><a title="team" href="{{ path('annuaire') }}">
               Parlez avec les élèves des anciennes promotions pour avoir un vrai ressenti de votre futur métier de développeur !
                 </a>
-            </p>
+             </p>
           </div>
         </div> 
 
+
  
-               
-         <div class="span3 animated-slow flyIn">
+    
+        <div class="span3 animated-slow flyIn">
+
           <div class="service-box">
             <img src="img/icons/ordi.png" alt="" />
             <h2>Offres d'emploi</h2>
@@ -158,8 +161,7 @@
         </div>
       </div>
     </div>
-  </section>  
-  
+  </section> 
   <!-- section équipe -->
   <section id="about" class="section" style="color: white">
     <div class="container">
@@ -171,7 +173,6 @@
             <p>
               Anciens élèves de la formation WebForce3, nous proposons une manière simple et efficace de communiquer avec les anciens élèves de Webforce3 afin d'avoir des informations concernant le métier d'intégrateur/développeur web.
             </p>
-
           </div>
         </div>
         <div class="span6">
@@ -198,8 +199,7 @@
               Développeur Back-end
             </p>
           </div>
-        </div>
-        
+        </div>        
         <div class="span2 flyIn">
           <div class="people">
             <img class="team-thumb img-circle" src="img/team/pierre.jpg" alt="" />
@@ -223,9 +223,6 @@
     <!-- /.container -->
   </section>
   <!-- fin section équipe -->
- 
-
-  
   <script src="js/jquery.js"></script>
   <script src="js/jquery.scrollTo.js"></script>
   <script src="js/jquery.nav.js"></script>
@@ -238,7 +235,9 @@
   <script src="js/animate.js"></script>
   <script src="js/custom.js"></script>
   <script src="contactform/contactform.js"></script>
-
+</main>
+</div>
+</div>
 </body>
 {% endblock %}
     {# commentaires #}

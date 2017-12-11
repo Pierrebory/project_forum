@@ -126,7 +126,12 @@ $app['dao.joboffers'] = function($app){
 };
 
 
-
+$app['dao.privatemessage'] = function($app){
+    $privatemessageDAO = new WF3\DAO\PrivatemessageDAO($app['db'], 'privatemessage', 'WF3\Domain\PrivateMessage');
+    $privatemessageDAO->setUserDAO($app['dao.users']);
+    return $privatemessageDAO;
+    
+};
 
 
 

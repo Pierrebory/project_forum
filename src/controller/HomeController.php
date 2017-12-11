@@ -13,6 +13,7 @@ use WF3\Domain\Employer;
 use WF3\Domain\JobOffers;
 use WF3\Domain\Resetpass;
 use WF3\Domain\Alumni;
+use WF3\Domain\PrivateMessage;
 use WF3\Form\Type\RegisterType;
 use WF3\Form\Type\ResetType;
 use WF3\Form\Type\ResetpassType;
@@ -22,6 +23,8 @@ use WF3\Form\Type\ContactType;
 use WF3\Form\Type\JoboffersType;
 use WF3\Form\Type\AlumniType;
 use WF3\Form\Type\RechercheUsernameType;
+use WF3\Form\Type\PrivatemessageType;
+
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -74,7 +77,69 @@ class HomeController{
 
     
     
+    ///////////////////////PAGE MESSAGERIE PRIVEE///////////////////
+    public function messageriePriveeAction(Application $app, Request $request){
+        //on va vérifier que l'utilisateur est connecté
+    	if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            return $app->redirect($app['url_generator']->generate('login'));
+            throw new AccessDeniedHttpException();
+        }
+        
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        
+        $error = false;
+        
+        $privatemessage = new PrivateMessage();
+        $privatemessageForm = $app['form.factory']->create(PrivatemessageType::class, $privatemessage);
+        $privatemessageForm->handleRequest($request);
+        
+        if ($privatemessageForm->isSubmitted() && $privatemessageForm->isValid())
+        {
+            
+            
+            $receiverid = $request->attributes->get('id');
+            
+            $privatemessage = $app['dao.privatemessage']->insert(array(
+                'sender_id'=>$user->getId(),
+                'receiver_id'=>$receiverid,
+                'message'=>$privatemessage->getMessage()
+            ));
+            
+            
+            $app['session']->getFlashBag()->add('success', 'Votre message a bien été envoyé.');
+           
+        }
+        
+        
+        // j'envoie le formulaire
+         return $app['twig']->render('privatemessage.html.twig', array(
+                         'privatemessageForm' => $privatemessageForm->createView()
+                        
+         )); 
+        
+    }
     
+    
+    /*if($articleForm->isSubmitted() AND $articleForm->isValid()){
+            $app['dao.article']->insert(array(
+                'title'=>$article->getTitle(),
+                'content'=>$article->getContent(),
+                'author'=>$app['user']->getId()
+            ));*/
+    
+    
+    
+    
+    
+    
+    
+    
+
     //PAGE LISTE DES OFFRES D'EMPLOI
     public function offresAction(Application $app){
         $offres = $app['dao.joboffers']->findAll();  
@@ -147,6 +212,7 @@ class HomeController{
             ));
             //on stocke en session un message de réussite
             $app['session']->getFlashBag()->add('success', 'Offre d\'emploi bien reçue. Merci !');
+            
 
         }
 
@@ -155,6 +221,11 @@ class HomeController{
                 'offerForm' => $offerForm->createView()
         ));
     }
+    
+    
+    
+    
+    
     
   //page de suppression d'une offre d'emploi
     public function deleteOfferAction(Application $app, $id){
@@ -288,7 +359,7 @@ class HomeController{
            return $app['twig']->render('login.html.twig', array(
             'error' => $app['security.last_error']($request),
             'last_username' => $app['session']->get('_security.last_username'),
-             $app['session']->getFlashBag()->add('success', 'Vous êtes bien connecté(e). Vous pouvez remplir votre fiche détaillée dans l\'annuaire et/ou poster une offre d\'emploi.'),
+             
          
             
         ));
@@ -472,26 +543,43 @@ class HomeController{
     
 
     //PAGE D'INSCRIPTION ANNUAIRE ANCIENS ELEVES
-    	public function alumniAction(Application $app, Request $request){
+
+        public function alumniAction(Application $app, Request $request){
+        //on va vérifier que l'utilisateur est connecté
+        if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            return $app->redirect($app['url_generator']->generate('login'));
+            throw new AccessDeniedHttpException();
+        }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        
+            
         $alumni = new Alumni();
-		$alumniForm = $app['form.factory']->create(AlumniType::class, $alumni);
-		// on envoie les paramètres de la requête à notre objet formulaire
-		$alumniForm->handleRequest($request); 
-		// si le formulaire a été envoyé
-		if($alumniForm->isSubmitted() && $alumniForm->isValid()){
+        $alumniForm = $app['form.factory']->create(AlumniType::class, $alumni);
+        // on envoie les paramètres de la requête à notre objet formulaire
+        $alumniForm->handleRequest($request); 
+        // si le formulaire a été envoyé
+        if($alumniForm->isSubmitted() && $alumniForm->isValid()){
 
 
-		    $app['dao.alumni']->insert($alumni);				
-		    $app['session']->getFlashBag()->add('success', 'vous êtes bien enregistré');		
-		}
+            $app['dao.alumni']->insert($alumni);                
+            $app['session']->getFlashBag()->add('success', 'vous êtes bien enregistré');
+            return $app->redirect($app['url_generator']->generate('home'));         
+        }
 
-		// j'envoie le formulaire
-		return $app['twig']->render('alumni.html.twig', array(
-			'alumniForm' => $alumniForm->createView(),
-		));		
-	}
+        // j'envoi le formulaire
+        return $app['twig']->render('alumni.html.twig', array(
+            'alumniForm' => $alumniForm->createView(),
+        ));     
+    }
 
-    
+    	
+
     
     
     public function rechercheParUsername(Application $app, Request $request){

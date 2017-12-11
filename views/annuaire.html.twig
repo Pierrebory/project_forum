@@ -5,41 +5,36 @@
 
         {% block content %}
 
-		<div class="col-md-12 text-center">
-            
-            <br>
-            <br>
-            
-            <blockquote class="blockquote text-center"><h1>Annuaire des anciens élèves de Webforce3</h1> </blockquote>
+		<div class="col-md-12 text-center" style="margin-bottom:5em;">            
+                             
+            <blockquote class="blockquote text-center"><h1 style="margin-top: 1em;">Annuaire des anciens élèves de Webforce3</h1> </blockquote>
             
             
 		</div>
 
-<br>
+<p><a href="{{ path('inscription') }}"><button type="button" class="btn btn-info blockquote text-center" style="margin-left:1em; width:390px">Inscrivez-vous pour figurer dans l'annuaire</button></a></p>
+
+<p><a href="{{ path('login') }}"><button type="button" class="btn btn-info blockquote text-center" style="margin-left:1em; width:390px">Connectez-vous pour accéder à l'annuaire détaillé</button></a> </p>
 
 
-<p><a href="{{ path('inscription') }}"><button type="button" class="btn btn-info blockquote text-center">Inscrivez-vous pour figurer dans l'annuaire</button></a></p>
-
-<p><a href="{{ path('login') }}"><button type="button" class="btn btn-info blockquote text-center">Connectez-vous pour accéder à l'annuaire détaillé</button></a> </p>
 
 <p><a href="{{ path('inscription/alumni') }}"><button type="button" class="btn btn-info blockquote text-center">Si vous etes deja inscrit, remplissez votre fiche détaillé</button></a><br><br></p>
 
           <a href="{{ path('updateAlumniAction', {id: button}) }}"><button type="button" class="btn btn-info">Modifiez votre fiche détaillée</button></a> 
 
           <a href="{{ path('deleteUserAction', {id: button})}}"><button type="button" class="btn btn-info">Supprimer son compte</button></a> 
+
+
 <br><br>
 <form action="{{ path('rechercheParUsername')}}">
-    <input type="text" name="name" placeholder="name">
-    <button type="submit">Rechercher</button>
+    <input style="margin-left:1em; margin-bottom: 1em; width:390px;" type="text" name="name" placeholder="nom"><br>
+    <button type="submit" style="margin-left:1em; ">Rechercher</button>
 </form>
 
-
-
-
 <br>
 <br>
 
-<table class="table table-striped">
+<table style="margin-left:1em; width:1900px;" class="table table-striped"  >
   <thead>
      
     <tr>
@@ -47,10 +42,13 @@
       <th scope="col">Nom</th>
       <th scope="col">Ville</th>
       <th scope="col">Détails</th>
+    <th scope="col">Contact</th>
    
     </tr>
       	
   </thead>
+
+  <p><a href="{{ path('inscription/alumni') }}"><button type="button" class="btn btn-info blockquote text-center" style="margin-left:1em; width:390px">Si vous êtes deja inscrit, remplissez votre fiche détaillée</button></a></p>
     
   <tbody>
     <tr>
@@ -60,13 +58,17 @@
       <td>{{ user.username }}</td>
       <td>{{ user.city }}</td>
         <td><a href="{{ path('fichedetaillee', {id: user.id}) }}">Fiche détaillée</a></td>
-        
+        <td><a href="{{ path('contacter', {id: user.id}) }}">Contacter</a></td>
     </tr>
+
       
   {% endfor %} 
   </tbody>
 </table>
 
+
+
+<a href="{{ path('deleteUserAction', {id: button})}}"><button type="button" class="btn btn-info" style="margin-bottom:2em; margin-left: 1em; width:390px">Supprimer son compte</button></a> 
 
 
 
