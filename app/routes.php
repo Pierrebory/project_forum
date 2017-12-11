@@ -17,6 +17,13 @@ $app->match('/annuaire/{id}', 'WF3\Controller\HomeController::getAlumniAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
     ->bind('fichedetaillee');
 
+//page de messagerie privée pour contacter un ancien élève ou un recruteur
+$app->match('/contacter/{id}', 'WF3\Controller\HomeController::messageriePriveeAction')
+    ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
+    ->bind('contacter');
+
+
+
 //pages liste des offres d'emploi
 $app->get('/offresemploi', 'WF3\Controller\HomeController::offresAction')
     ->bind('offresemploi');

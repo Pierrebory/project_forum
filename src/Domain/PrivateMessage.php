@@ -8,7 +8,7 @@ class PrivateMessage{
     private $receiver_id;
     private $message;
     private $date_message;
-    private user_id;
+  
 
     
     public function getId(){
@@ -32,9 +32,7 @@ class PrivateMessage{
     }
     
     
-    public function getuser_id(){
-        return $this->user_id;
-    }
+
     
         //setters
     public function setId($id){
@@ -47,13 +45,13 @@ class PrivateMessage{
 
     
     public function setSender_id($sender_id){
-        if(!empty($sender_id) AND is_string($sender_id)){
+        if(!empty($sender_id) AND is_numeric($sender_id)){
             $this->sender_id = $sender_id; 
         }
     }
     
     public function setReceiver_id($receiver_id){
-        if(!empty($receiver_id) AND is_string($receiver_id)){
+        if(!empty($receiver_id) AND is_numeric($receiver_id)){
             $this->receiver_id = $receiver_id; 
         }
     }
@@ -71,10 +69,5 @@ class PrivateMessage{
     }
 
 
-    public function setUser_id($user_id){  
-        if(!empty($user_id) AND is_numeric($user_id)){
-            $this->user_id = $user_id;         
-    }
     
-}
 }
