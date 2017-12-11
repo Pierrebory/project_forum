@@ -443,6 +443,31 @@ class HomeController{
     
     
     
-    
+    public function deleteAlumniAction(Application $app, $id){
+        //on va vérifier que l'utilisateur est connecté
+        if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            //return $app->redirect($app['url_generator']->generate('home'));
+            throw new AccessDeniedHttpException();
+        }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        //on va chercher les infos sur cet article
+        $alumni = $app['dao.alumni']->find($id);
+        //on vérifie que cet utlisateur est bien l'auteur de l'article
+        if($user->getId() != $alumni->getUsername()){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            throw new AccessDeniedHttpException();
+        }
+		$alumni = $app['dao.alumni']->delete($id);
+        //on crée un message de réussite dans la session
+        $app['session']->getFlashBag()->add('success', 'fiche bien supprimé');
+        //on redirige vers la page d'accueil
+        return $app->redirect($app['url_generator']->generate('home'));
+	}
     
 }
