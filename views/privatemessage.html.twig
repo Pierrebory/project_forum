@@ -1,0 +1,45 @@
+{% extends "layout.html.twig" %}
+
+{% block title %} Messagerie privée {% endblock %}
+
+{% block content %}
+    
+        <div class="col-sm-6">
+            {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+        </div>
+            {% endfor %}
+            
+            <div class="privatemessage_form"><br><br><br>
+                <h1 style="text-align: center">Messagerie privée</h1>
+                
+                
+               {{ form_start(privatemessageForm, { 'attr': {'class': 'form-horizontal'} }) }}
+                
+        
+                <div class="form-group" class="col-sm-6" style="margin-left: 40em; margin-right: 40em">
+                    
+                {{ form_label(privatemessageForm.message, null) }}
+                    
+
+                        {{ form_errors(privatemessageForm.message) }}
+                        {{ form_widget(privatemessageForm.message, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    
+                </div>
+                
+                
+                <br>
+                <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
+                    
+                    <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" />
+                </div>
+                
+            {{ form_end(privatemessageForm) }}
+                
+                
+        </div>
+                                
+{% endblock %}

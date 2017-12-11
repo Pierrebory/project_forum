@@ -13,6 +13,7 @@ use WF3\Domain\Employer;
 use WF3\Domain\JobOffers;
 use WF3\Domain\Resetpass;
 use WF3\Domain\Alumni;
+use WF3\Domain\PrivateMessage;
 use WF3\Form\Type\RegisterType;
 use WF3\Form\Type\ResetType;
 use WF3\Form\Type\ResetpassType;
@@ -23,6 +24,8 @@ use WF3\Form\Type\JoboffersType;
 use WF3\Form\Type\AlumniType;
 use WF3\Form\Type\RechercheUsernameType;
 use WF3\Form\Type\UpdateUserType;
+use WF3\Form\Type\PrivatemessageType;
+
 
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -37,21 +40,108 @@ class HomeController{
     }
     
     
-    //page Annuaire qui affiche uniquement les noms des anciens élèves
+    //page Annuaire (liste des anciens élèves) qui affiche uniquement les noms des anciens élèves
     public function annuaireAction(Application $app){
         $users = $app['dao.users']->findAll();
-        return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
+        
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        
+        $button = $user->getId();
+        return $app['twig']->render('annuaire.html.twig', array('users' => $users, 'button' => $button)); 
     }
     
 
-  //page détaillée d'un ancien élève
+  //PAGE DE DETAIL D'UNE FICHE D'UN ANCIEN ELEVE
     public function getAlumniAction(Application $app, $id){
+        //on va vérifier que l'utilisateur est connecté
+    	if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            return $app->redirect($app['url_generator']->generate('login'));
+            throw new AccessDeniedHttpException();
+        }
+        
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        
         $user = $app['dao.users']->find($id);
         $alumni = $app['dao.alumni']->findAlumniByUser($id);
         return $app['twig']->render('fichedetaillealumni.html.twig', array('user' => $user,
                                                                            'alumni' => $alumni)); 
     }
     
+
+    
+    
+    ///////////////////////PAGE MESSAGERIE PRIVEE///////////////////
+    public function messageriePriveeAction(Application $app, Request $request){
+        //on va vérifier que l'utilisateur est connecté
+    	if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            return $app->redirect($app['url_generator']->generate('login'));
+            throw new AccessDeniedHttpException();
+        }
+        
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        
+        $error = false;
+        
+        $privatemessage = new PrivateMessage();
+        $privatemessageForm = $app['form.factory']->create(PrivatemessageType::class, $privatemessage);
+        $privatemessageForm->handleRequest($request);
+        
+        if ($privatemessageForm->isSubmitted() && $privatemessageForm->isValid())
+        {
+            
+            
+            $receiverid = $request->attributes->get('id');
+            
+            $privatemessage = $app['dao.privatemessage']->insert(array(
+                'sender_id'=>$user->getId(),
+                'receiver_id'=>$receiverid,
+                'message'=>$privatemessage->getMessage()
+            ));
+            
+            
+            $app['session']->getFlashBag()->add('success', 'Votre message a bien été envoyé.');
+           
+        }
+        
+        
+        // j'envoie le formulaire
+         return $app['twig']->render('privatemessage.html.twig', array(
+                         'privatemessageForm' => $privatemessageForm->createView()
+                        
+         )); 
+        
+    }
+    
+    
+    /*if($articleForm->isSubmitted() AND $articleForm->isValid()){
+            $app['dao.article']->insert(array(
+                'title'=>$article->getTitle(),
+                'content'=>$article->getContent(),
+                'author'=>$app['user']->getId()
+            ));*/
+    
+    
+    
+    
+    
+    
+    
+    
+
     //PAGE LISTE DES OFFRES D'EMPLOI
     public function offresAction(Application $app){
         $offres = $app['dao.joboffers']->findAll();  
@@ -61,6 +151,19 @@ class HomeController{
     
     //PAGE DE DETAIL DE L'OFFRE D'EMPLOI
     public function detailOffreAction(Application $app, $id){
+         //on va vérifier que l'utilisateur est connecté
+    	if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            return $app->redirect($app['url_generator']->generate('login'));
+            throw new AccessDeniedHttpException();
+        }
+        
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        
         $detailoffre = $app['dao.joboffers']->getDetailOffer($id);
         return $app['twig']->render('detailoffre.html.twig', array('detailoffre' => $detailoffre)); 
 
@@ -70,17 +173,18 @@ class HomeController{
     //PAGE FORMULAIRE POUR POSTER UNE OFFRE D'EMPLOI
     public function formulaireOffreAction(Application $app, Request $request){
         //on va vérifier que l'utilisateur est connecté
+    	if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
         //if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
             //je peux rediriger l'utilisateur non authentifié
-            //return $app->redirect($app['url_generator']->generate('home'));
-            //throw new AccessDeniedHttpException();
-        //}
+            return $app->redirect($app['url_generator']->generate('login'));
+            throw new AccessDeniedHttpException();
+        }
         
         //on récupère le token si l'utilisateur est connecté
-        //$token = $app['security.token_storage']->getToken();
-        //if(NULL !== $token){
-            //$user = $token->getUser();
-        //}
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
 
         //je crée un objet offre vide
         $offer = new JobOffers();
@@ -105,10 +209,12 @@ class HomeController{
                 'timetable'=>$offer->getTimetable(),
                 'recruitername'=>$offer->getRecruitername(),
                 'recruitercontact'=>$offer->getRecruitercontact(),
+                'users_id'=>$offer->getUsers_id()
                             
             ));
             //on stocke en session un message de réussite
             $app['session']->getFlashBag()->add('success', 'Offre d\'emploi bien reçue. Merci !');
+            
 
         }
 
@@ -118,9 +224,51 @@ class HomeController{
         ));
     }
     
+    
+    
+    
+    
+    
+  //page de suppression d'une offre d'emploi
+    public function deleteOfferAction(Application $app, $id){
+        //on va vérifier que l'utilisateur est connecté
+        if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            return $app->redirect($app['url_generator']->generate('login'));
+            throw new AccessDeniedHttpException();
+        }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        //on va chercher les infos sur l'offre d'emploi
+        $joboffer = $app['dao.joboffers']->find($id);
+        //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
+        if($user->getId() != $joboffer->getJoboffer()){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            throw new AccessDeniedHttpException();
+        }
+        
+        $joboffer = $app['dao.joboffers']->delete($id);
+        //on crée un message de réussite dans la session
+        $app['session']->getFlashBag()->add('success', 'Offre d\'emploi bien supprimée');
+        //on redirige vers la page des offres d'emploi
+        return $app->redirect($app['url_generator']->generate('offresemploi'));
+    }
+        
   
+    //RECHERCHE D'UNE OFFRE D'EMPLOI PAR SON TITRE
+    public function searchOfferAction(Application $app, Request $request){
+        $joboffers = $app['dao.joboffers']->findOffersByTitle($request->query->get('title'));
+       
+        return $app['twig']->render('resultoffers.html.twig', array('joboffers' => $joboffers));
         
-        
+    }
+    
+    
+    
     
  
     ///////////////////////PAGE SUJET FORUM////////////////////////
@@ -213,7 +361,7 @@ class HomeController{
            return $app['twig']->render('login.html.twig', array(
             'error' => $app['security.last_error']($request),
             'last_username' => $app['session']->get('_security.last_username'),
-             $app['session']->getFlashBag()->add('success', 'Vous êtes bien connecté(e). Vous pouvez remplir votre fiche détaillée dans l\'annuaire et/ou poster une offre d\'emploi.'),
+             
          
             
         ));
@@ -429,8 +577,24 @@ class HomeController{
     
     
     
-    
+
+    //PAGE D'INSCRIPTION ANNUAIRE ANCIENS ELEVES
+
         public function alumniAction(Application $app, Request $request){
+        //on va vérifier que l'utilisateur est connecté
+        if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            return $app->redirect($app['url_generator']->generate('login'));
+            throw new AccessDeniedHttpException();
+        }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        
+            
         $alumni = new Alumni();
         $alumniForm = $app['form.factory']->create(AlumniType::class, $alumni);
         // on envoie les paramètres de la requête à notre objet formulaire
@@ -449,7 +613,9 @@ class HomeController{
             'alumniForm' => $alumniForm->createView(),
         ));     
     }
-    
+
+    	
+
     
     
     public function rechercheParUsername(Application $app, Request $request){
@@ -472,4 +638,37 @@ class HomeController{
     }
     
     
+<<<<<<< HEAD
+=======
+    
+    public function deleteUserAction(Application $app, $id){
+        //on va vérifier que l'utilisateur est connecté
+        if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            //return $app->redirect($app['url_generator']->generate('home'));
+            throw new AccessDeniedHttpException();
+        }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        //on va chercher les infos sur cet article
+        
+        $users = $app['dao.users']->displayAlumni($id);
+        //on vérifie que cet utlisateur est bien l'auteur de l'article
+        if($user->getId() != $users['id']){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            throw new AccessDeniedHttpException();
+        }
+		$users = $app['dao.users']->delete($id);
+        //on crée un message de réussite dans la session
+        $app['session']->getFlashBag()->add('success', 'fiche bien supprimé');
+        //on redirige vers la page d'accueil
+        return $app->redirect($app['url_generator']->generate('home'));
+	}
+    
+    
+>>>>>>> 06bd757677a6f0aa5c5f1814d21276de7a1d2a06
 }

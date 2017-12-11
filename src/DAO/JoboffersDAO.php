@@ -33,7 +33,7 @@ class JoboffersDAO extends DAO{
     
 	//méthode de recherche d'une offre d'emploi par le titre
 	 public function findOffersByTitle($title){
-        $result = $this->bdd->prepare('SELECT joboffers.id AS idJoboffers, title, description, skills, advantages, contract, contractduration, timetable FROM joboffers WHERE title LIKE :title');
+        $result = $this->bdd->prepare('SELECT id, title, company, city, date_offer, description, skills, advantages, contract, contractduration, timetable, recruitername, recruitercontact FROM joboffers WHERE title LIKE :title');
         $result->bindValue(':title', '%' . $title . '%');
         $result->execute();
         return $result->fetchALL(\PDO::FETCH_ASSOC);
@@ -59,11 +59,25 @@ class JoboffersDAO extends DAO{
 	}
     
     
-    
+    //je réécris ma méthode buildObject 
+    public function buildObject($row){
+    	//j'exécute le code de buildObject dans DAO
+    	//qui me renvoie un objet $article de la classe Article
+    	$joboffers = parent::buildObject($row);
+    	//getAuthor() renvoie l'id de l'auteur de l'offre d'emploi
+    	$iduser = $joboffers->getUsers_id();
+    	//on utilise l'attribut userDAo qui contient l'instance de la classe UserDAO 
+    	//pour aller chercher dans la table users les infos de l'utilisateur correspondant
+    	if(array_key_exists('users_id', $row) AND is_numeric($row['users_id'])){
+        	$user = $this->userDAO->find($iduser);
+        }
+        //on remplace l'id de l'auteur par l'objet $auteur de la classe User qui contient les infos sur l'auteur
+        $joboffers->setUsers_id($user);
+        //on renvoie l'article
+        return $joboffers;
+    }
    
-   
-    
-    
+
     
     
     

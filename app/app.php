@@ -121,11 +121,17 @@ $app['dao.alumni'] = function($app){
 
 $app['dao.joboffers'] = function($app){
     $joboffersDAO = new WF3\DAO\JoboffersDAO($app['db'], 'joboffers', 'WF3\Domain\JobOffers');
+    $joboffersDAO->setUserDAO($app['dao.users']);
     return $joboffersDAO;
 };
 
 
-
+$app['dao.privatemessage'] = function($app){
+    $privatemessageDAO = new WF3\DAO\PrivatemessageDAO($app['db'], 'privatemessage', 'WF3\Domain\PrivateMessage');
+    $privatemessageDAO->setUserDAO($app['dao.users']);
+    return $privatemessageDAO;
+    
+};
 
 
 

@@ -34,7 +34,7 @@
             <tr><th scope="row">Durée du contrat</th> <td>{{ detailoffre.contractduration }}</td> </tr>        
             <tr><th scope="row">Temps de travail</th> <td>{{ detailoffre.timetable}}</td></tr>
             <tr><th scope="row">Nom du recruteur</th> <td>{{ detailoffre.recruitername}}</td></tr>
-            <tr><th scope="row">Nom du recruteur</th> <td>{{ detailoffre.recruitercontact}}</td></tr>       
+            <tr><th scope="row">Email du recruteur</th> <td>{{ detailoffre.recruitercontact}}</td></tr>       
                     
                     
                 </tbody>
@@ -42,8 +42,9 @@
             
             <br>
             <br>
-            
-             <a href=""><button type="button" class="btn btn-info">Contacter le recruteur</button></a> 
+    
+              
+            <a href="{{ path('suppressionoffre', {id: detailoffre.id} ) }}"><button type="button" class="btn btn-info">Supprimer cette offre</button></a> 
             
             <br>
             <br>

@@ -17,6 +17,12 @@ $app->match('/annuaire/{id}', 'WF3\Controller\HomeController::getAlumniAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
     ->bind('fichedetaillee');
 
+//page de messagerie privée pour contacter un ancien élève ou un recruteur
+$app->match('/contacter/{id}', 'WF3\Controller\HomeController::messageriePriveeAction')
+    ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
+    ->bind('contacter');
+
+
 //pages liste des offres d'emploi
 $app->get('/offresemploi', 'WF3\Controller\HomeController::offresAction')
     ->bind('offresemploi');
@@ -32,6 +38,15 @@ $app->match('/formulaireemploi', 'WF3\Controller\HomeController::formulaireOffre
     ->bind('formulaireemploi');
 
 
+//page qui suuprime une offre d'emploi
+$app->get('/detailoffre/suppression/{id}', 'WF3\Controller\HomeController::deleteOfferAction')
+->assert('id', '\d+')
+->bind('suppressionoffre');
+
+
+//page de résultats de recherche en ajax
+$app->match('/ajax/recherchepartitre', 'WF3\Controller\AjaxController::rechercheOffreparTitreAction')
+    ->bind('rechercheajaxpartitre');
 
 
 //page Forum
@@ -76,6 +91,9 @@ $app->match('/inscription/alumni', 'WF3\Controller\HomeController::alumniAction'
 $app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
     ->bind('rechercheParUsername');
 
+$app->get('/user/delete/{id}', 'WF3\Controller\HomeController::deleteUserAction')
+->assert('id', '\d+')
+->bind('deleteUserAction');
 
 
 
