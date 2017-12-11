@@ -38,7 +38,15 @@ class HomeController{
     //page Annuaire (liste des anciens élèves) qui affiche uniquement les noms des anciens élèves
     public function annuaireAction(Application $app){
         $users = $app['dao.users']->findAll();
-        return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
+        
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        
+        $button = $user->getId();
+        return $app['twig']->render('annuaire.html.twig', array('users' => $users, 'button' => $button)); 
     }
     
 
@@ -56,13 +64,14 @@ class HomeController{
         if(NULL !== $token){
             $user = $token->getUser();
         }
+        
         $user = $app['dao.users']->find($id);
         $alumni = $app['dao.alumni']->findAlumniByUser($id);
         return $app['twig']->render('fichedetaillealumni.html.twig', array('user' => $user,
                                                                            'alumni' => $alumni)); 
     }
     
-    
+
     
     
     
@@ -483,27 +492,6 @@ class HomeController{
 	}
 
     
-        public function alumniAction(Application $app, Request $request){
-        $alumni = new Alumni();
-        $alumniForm = $app['form.factory']->create(AlumniType::class, $alumni);
-        // on envoie les paramètres de la requête à notre objet formulaire
-        $alumniForm->handleRequest($request); 
-        // si le formulaire a été envoyé
-        if($alumniForm->isSubmitted() && $alumniForm->isValid()){
-
-
-            $app['dao.alumni']->insert($alumni);                
-            $app['session']->getFlashBag()->add('success', 'vous êtes bien enregistré');
-            return $app->redirect($app['url_generator']->generate('home'));         
-        }
-
-        // j'envoi le formulaire
-        return $app['twig']->render('alumni.html.twig', array(
-            'alumniForm' => $alumniForm->createView(),
-        ));     
-    }
-
-    
     
     
     public function rechercheParUsername(Application $app, Request $request){
@@ -527,7 +515,7 @@ class HomeController{
     
     
     
-    public function deleteAlumniAction(Application $app, $id){
+    public function deleteUserAction(Application $app, $id){
         //on va vérifier que l'utilisateur est connecté
         if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
             //je peux rediriger l'utilisateur non authentifié
@@ -541,17 +529,19 @@ class HomeController{
             $user = $token->getUser();
         }
         //on va chercher les infos sur cet article
-        $alumni = $app['dao.alumni']->find($id);
+        
+        $users = $app['dao.users']->displayAlumni($id);
         //on vérifie que cet utlisateur est bien l'auteur de l'article
-        if($user->getId() != $alumni->getUsername()){
+        if($user->getId() != $users['id']){
             //si l'utilisateur n'est pas l'auteur: accès interdit
             throw new AccessDeniedHttpException();
         }
-		$alumni = $app['dao.alumni']->delete($id);
+		$users = $app['dao.users']->delete($id);
         //on crée un message de réussite dans la session
         $app['session']->getFlashBag()->add('success', 'fiche bien supprimé');
         //on redirige vers la page d'accueil
         return $app->redirect($app['url_generator']->generate('home'));
 	}
+    
     
 }
