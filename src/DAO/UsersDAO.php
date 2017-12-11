@@ -12,8 +12,8 @@ class UsersDAO extends DAO implements UserProviderInterface
 {
     
     public function setUsersDAO(UsersDAO $usersDAO){
-		$this->UsersDAO = $userDAO;
-	}
+        $this->UsersDAO = $userDAO;
+    }
     
     //méthode pour afficher les avatars, prénoms, noms, ville et la promo de tous les anciens
     public function displayName(){
@@ -31,13 +31,17 @@ class UsersDAO extends DAO implements UserProviderInterface
         return $result->fetch(\PDO::FETCH_ASSOC);   
     }
 
-    //méthode pour afficher la fiche complète d'un ancien élève 
+    //liste des emails
     public function findEmails(){
         $result = $this->bdd->query('SELECT email FROM users');
         return $result->fetchAll(\PDO::FETCH_ASSOC);   
     }    
     
-    
+    //liste des infos qui ne peuvent pas être en plusieurs exemplaires
+    public function findUniqueValues(){
+        $result = $this->bdd->query('SELECT username, email, phone FROM users');
+        return $result->fetchAll(\PDO::FETCH_ASSOC);   
+    }       
     
     /**
      * {@inheritDoc}

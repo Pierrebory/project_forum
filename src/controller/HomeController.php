@@ -157,9 +157,33 @@ class HomeController{
         $userForm = $app['form.factory']->create(RegisterType::class, $user);
         // on envoie les paramètres de la requête à notre objet formulaire
         $userForm->handleRequest($request); 
+
+        $uniqueTest = $app['dao.users']->findUniqueValues();
+
+        $data = $userForm->getData();
+        $error = false;
+
+        if(array_search($data->getUsername(), array_column($uniqueTest, 'username')) !== false) {
+            $app['session']->getFlashBag()->add('usernameNotUnique', 'Ce nom d\'utilisateur est déjà attribué à un autre utilisateur.');
+            $error = true;
+        }
+
+        if(array_search($data->getEmail(), array_column($uniqueTest, 'email')) !== false) {
+            $app['session']->getFlashBag()->add('emailNotUnique', 'Cette adresse email est déjà attribuée à un autre utilisateur.');
+            $error = true;
+        }
+
+        if(array_search($data->getPhone(), array_column($uniqueTest, 'phone')) !== false) {
+            $app['session']->getFlashBag()->add('phoneNotUnique', 'Ce numéro de téléphone est déjà attribué à un autre utilisateur.');
+            $error = true;
+        }
+
         // si le formulaire a été envoyé
         if($userForm->isSubmitted() && $userForm->isValid()){
 
+
+
+            if($error === false){
             $salt = substr(md5(time()), 0, 23);
             $user->setSalt($salt);
             //on récupère le mot de passe en clair (envoyé par l'utilisateur)
@@ -173,12 +197,17 @@ class HomeController{
 
             $app['dao.users']->insert($user);               
             $app['session']->getFlashBag()->add('success', 'Vous êtes bien enregistré(e). Vous pouvez à présent vous connecter.');
+            }
+
+
                     
         }
 
         // j'envoie le formulaire
         return $app['twig']->render('register.html.twig', array(
             'userForm' => $userForm->createView(),
+            'test' => $data->getEmail(),
+            'error' => $error
         ));     
     }
 
@@ -231,9 +260,6 @@ class HomeController{
         }
     }
 
-/*    if(!in_array($data['email'], $emailTest)){
-        throw new AccessDeniedHttpException();
-    }        */
 
     // j'envoi le formulaire
     return $app['twig']->render('reset.html.twig', array(
@@ -245,7 +271,6 @@ class HomeController{
 
     /////////////// FORMULAIRE RESET MOT DE PASSE ///////////////////////////
     public function changePassAction(Application $app, Request $request, $id, $token){
-    // on va vérifier que l'utilisateur est connecté
 
     $user = new User();
     $resetForm = $app['form.factory']->create(ResetpassType::class, $user);
