@@ -41,7 +41,47 @@ class UsersDAO extends DAO implements UserProviderInterface
     public function findUniqueValues(){
         $result = $this->bdd->query('SELECT username, email, phone FROM users');
         return $result->fetchAll(\PDO::FETCH_ASSOC);   
-    }       
+    }      
+
+
+    // update les infos de l'utilisateur (sauf password et avatar) 
+    public function updateUser($id, $data){
+
+
+        if(is_object($data)){
+
+           //on va transformer l'objet en tableau php        
+           $dataArray = ['lastname' => $data->getPassword() , 'firstname' => $data->getSalt(), 'email' => $data->getSalt(), 'phone' => $data->getSalt(), 'city' => $data->getSalt()];
+           $data = $dataArray;
+
+        }
+
+        $sql = 'UPDATE users SET ' ;
+        
+        foreach($data as $key=>$value){
+        //on rajoute à la suite de sql avec .=
+        $sql .= "$key = :$key, ";
+        }
+        $sql = substr($sql, 0, -2);
+        $sql .=  ' WHERE id = :id';
+
+     
+        
+        $update = $this->bdd->prepare($sql);
+
+        foreach($data as $key=>$value){
+            //on va créer les lignes bindvalue correspondantes
+            $update->bindvalue(':' .$key, strip_tags($value));
+        }
+        
+        $update->bindvalue(':id', $id, \PDO::PARAM_INT);
+
+        if($update->execute()){
+            return true;
+        }
+         
+        return false;          
+    }
     
     /**
      * {@inheritDoc}

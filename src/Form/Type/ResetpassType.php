@@ -10,20 +10,30 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 
-class ResetpassType extends RegisterType
+class ResetpassType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildform($builder, $options);
-        $builder->remove('username')->remove('lastname')->remove('firstname')->remove('email')->remove('phone')->remove('city')->remove('role')->remove('date_register');   
 
-/*        $builder->remove('lastname');     
-        $builder->remove('firstname');     
-        $builder->remove('email');     
-        $builder->remove('phone');     
-        $builder->remove('city');     
-        $builder->remove('role');    */ 
-    }   
+        ////////////////// MOT DE PASSE /////////////////////
+        $builder->add('password', RepeatedType::class, array(       
+            'type' => PasswordType::class,
+            'label' => false,           
+            'invalid_message' => 'Les mots de passe doivent être identiques.',
+            'required' => true,
+            'first_options'  => array('label' => 'Votre nouveau mot de passe', 'attr' => array('placeholder' => 'Au moins 4 caractères')),
+            'second_options' => array('label' => 'Répetez le mot de passe', 'attr' => array('placeholder' => 'Identique au précédent')),
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Length(array(
+                    'min' => 4,
+                    'max' => 255,
+                    'minMessage' => 'Votre mot de passe doit faire au moins 4 caractères.',
+                    'maxMessage' => 'Votre mot de passe ne dois pas faire plus de 255 caractères.'
+                ))
+            )            
+        ));    
+    }
 
     public function getName()
     {

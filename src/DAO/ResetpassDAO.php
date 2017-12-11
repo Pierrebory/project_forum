@@ -36,14 +36,10 @@ class ResetpassDAO extends DAO{
         return $result->fetch(\PDO::FETCH_ASSOC);   
     }   
 
-    public function updatePassword($id, $token, $password, $salt){
-/*      $result = $this->bdd->prepare('UPDATE users SET password = :password , salt = :salt WHERE id = :id');            
-        return $result->execute();    */
-
+    public function updatePassword($id, $token, $data){
 
                
-        $update = $this->bdd->prepare('UPDATE users INNER JOIN resetpass ON users.id = resetpass.user_id SET password = :password, salt = :salt WHERE users.id = :id AND token = :token');
-    
+/*        $update = $this->bdd->prepare('UPDATE users INNER JOIN resetpass ON users.id = resetpass.user_id SET password = :password, salt = :salt WHERE users.id = :id AND token = :token');
 
         $update->bindvalue(':password', $password);         
         $update->bindvalue(':salt', $salt); 
@@ -54,8 +50,29 @@ class ResetpassDAO extends DAO{
             return true;
             }
          
-            return false;        
-        
+            return false;        */        
+        if(is_object($data)){
+
+           //on va transformer l'objet en tableau php        
+           $dataArray = ['password' => $data->getPassword() , 'salt' => $data->getSalt()];
+           $data = $dataArray;
+
+        }
+
+        $update = $this->bdd->prepare('UPDATE users INNER JOIN resetpass ON users.id = resetpass.user_id SET password = :password, salt = :salt WHERE users.id = :id AND token = :token');
+
+        foreach($data as $key=>$value){
+            //on va créer les lignes bindvalue correspondantes
+            $update->bindvalue(':' .$key, strip_tags($value));
+        }
+        $update->bindvalue(':token', $token);        
+        $update->bindvalue(':id', $id, \PDO::PARAM_INT);
+
+        if($update->execute()){
+            return true;
+        }
+         
+        return false;          
     }
 
     public function deleteToken($idUser){

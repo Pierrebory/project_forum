@@ -23,7 +23,6 @@ $app->match('/contacter/{id}', 'WF3\Controller\HomeController::messageriePriveeA
     ->bind('contacter');
 
 
-
 //pages liste des offres d'emploi
 $app->get('/offresemploi', 'WF3\Controller\HomeController::offresAction')
     ->bind('offresemploi');
@@ -38,10 +37,16 @@ $app->match('/detailoffre/{id}', 'WF3\Controller\HomeController::detailOffreActi
 $app->match('/formulaireemploi', 'WF3\Controller\HomeController::formulaireOffreAction')
     ->bind('formulaireemploi');
 
+
 //page qui suuprime une offre d'emploi
 $app->get('/detailoffre/suppression/{id}', 'WF3\Controller\HomeController::deleteOfferAction')
 ->assert('id', '\d+')
 ->bind('suppressionoffre');
+
+
+//page de résultats de recherche en ajax
+$app->match('/ajax/recherchepartitre', 'WF3\Controller\AjaxController::rechercheOffreparTitreAction')
+    ->bind('rechercheajaxpartitre');
 
 
 //page Forum
@@ -65,7 +70,12 @@ $app->match('/mdpoublie', 'WF3\Controller\HomeController::resetPassAction')
 $app->match('/mdpoublie/resetform/{id}/{token}', 'WF3\Controller\HomeController::changePassAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
     ->assert('token', '[a-z0-9]{32}')
-    ->bind('mdpoublie/resetform');    
+    ->bind('mdpoublie/resetform');   
+
+// modifier les infos perso
+$app->match('/profil/{id}', 'WF3\Controller\HomeController::updateUserAction')
+    ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
+    ->bind('profil');    
 
 $app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeController::subjectAction')
     ->bind('forumsubject');
@@ -84,6 +94,10 @@ $app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
 $app->get('/user/delete/{id}', 'WF3\Controller\HomeController::deleteUserAction')
 ->assert('id', '\d+')
 ->bind('deleteUserAction');
+
+$app->match('/alumni/update/{id}', 'WF3\Controller\HomeController::updateAlumniAction')
+->assert('id', '\d+')
+->bind('updateAlumniAction');
 
 
 

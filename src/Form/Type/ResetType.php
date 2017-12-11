@@ -13,13 +13,28 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 
-class ResetType extends RegisterType
+class ResetType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildform($builder, $options);
-        $builder->remove('username')->remove('lastname')->remove('firstname')->remove('password')->remove('phone')->remove('city')->remove('role')->remove('date_register');   
-    }
+
+        /////////////// EMAIL //////////////////
+        $builder->add('email', TextType::class, array(
+            'label' => 'Votre adresse email',
+            'attr' => array(
+                'placeholder' => 'Au format exemple@domaine.com'
+            ),
+            'required' => true,            
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Email(array(
+                    'checkMX' => true,
+                    'message' => 'Votre adresse email n\'est pas valide.'                    
+                ))
+            )
+        ));   
+    }   
+
 
     //à rajouter mais pour l'instant on s'en occupe pas
     public function getName()

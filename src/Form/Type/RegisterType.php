@@ -125,7 +125,7 @@ class RegisterType extends AbstractType
 
         /////////////// EMAIL //////////////////
         $builder->add('email', TextType::class, array(
-            'label' => 'Votre email*',
+            'label' => 'Votre adresse email*',
             'attr' => array(
                 'placeholder' => 'Au format exemple@domaine.com'
             ),
