@@ -31,7 +31,10 @@ $app->match('/detailoffre/{id}', 'WF3\Controller\HomeController::detailOffreActi
 $app->match('/formulaireemploi', 'WF3\Controller\HomeController::formulaireOffreAction')
     ->bind('formulaireemploi');
 
-
+//page qui suuprime une offre d'emploi
+$app->get('/detailoffre/suppression/{id}', 'WF3\Controller\HomeController::deleteOfferAction')
+->assert('id', '\d+')
+->bind('suppressionoffre');
 
 
 //page Forum
@@ -71,6 +74,9 @@ $app->match('/inscription/alumni', 'WF3\Controller\HomeController::alumniAction'
 $app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
     ->bind('rechercheParUsername');
 
+$app->get('/user/delete/{id}', 'WF3\Controller\HomeController::deleteUserAction')
+->assert('id', '\d+')
+->bind('deleteUserAction');
 
 
 

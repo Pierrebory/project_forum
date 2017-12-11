@@ -1,49 +1,49 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>WebForce3</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="">
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
- 
-  <link href="{{ asset('css/bootstrap-responsive.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-  <link href="color/default.css" rel="stylesheet">
-  <link rel="shortcut icon" href="img/favicon.ico">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
+                
+
+<meta charset="utf-8">
+<title>WebForce3</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('css/bootstrap-responsive.css') }}" rel="stylesheet">
+<link href="{{ asset('css/style.css') }}" rel="stylesheet">
+<link href="{{ asset('color/default.css') }}" rel="stylesheet">
+<link href="{{ asset ('img/favicon.ico') }}" rel="shortcut icon" >
 
 
-  
+
 </head>
 
 <header>
-  
-          <!-- navbar -->
-          <div class="navbar-wrapper">
-            <div class="navbar navbar-inverse navbar-fixed-top">
-              <div class="navbar-inner">
-                <div class="container">
-                  <!-- Responsive navbar -->
-                  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                  </a>
+ 
+         <!-- navbar -->
+         <div class="navbar-wrapper">
+           <div class="navbar navbar-inverse navbar-fixed-top">
+             <div class="navbar-inner">
+               <div class="container">
+                 <!-- Responsive navbar -->
+                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                 </a>
 
-                  <div class="brand"><a href="{{ path('home') }}"><img src="img/icons/redim150.png" alt=""></a></div>
-                  <!-- navigation -->
-                  <nav class="pull-right nav-collapse collapse">
-                    <ul id="menu-main" class="nav">
+                 <div class="brand"><a href="{{ path('home') }}"><img src="img/icons/redim150.png" alt=""></a></div>
+                 <!-- navigation -->
+                 <nav class="pull-right nav-collapse collapse">
+                   <ul id="menu-main" class="nav">
+
+
+            
 
                         
-                      <li><a href="{{ path('home') }}">Accueil</a></li>
-
+                    <li><a href="{{ path('home') }}">Accueil</a></li>
                       <li><a title="team" href="{{ path('annuaire') }}">Annuaire</a></li>
-
-                      <li><a href="{{ path('forum') }}">Forum</a></li>
-                      <li><a href="{{ path('offresemploi')}}">Offres d'emploi</a></li>
-
-                      <li><a href="{{ path('contactezmoi') }}">Contact</a></li>
-
+                     <li><a href="{{ path('forum') }}">Forum</a></li>
+                     <li><a href="{{ path('offresemploi')}}">Offres d'emploi</a></li>
+                     <li><a href="{{ path('contactezmoi') }}">Contact</a></li>
+                   
 
                       {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                           <li><a href="{{ path('logout') }}">déconnexion</a></li>                 
@@ -53,20 +53,28 @@
                       {% endif %}
 
 
-                      <!-- A MODIDIER FORMAT TWIG-->
-                    </ul>
-                  </nav>
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
-        <body> 
+                     <!-- A MODIDIER FORMAT TWIG-->
+                   </ul>
+                 </nav>
+               </div>
+             </div>
+           </div>
+         </div>
+       </header>
+       <body>
+           <div>
+         
+          {% block content %}{% endblock %}
+       </div>
+           <!--footer-->
+       <footer>
+   <div class="container">
+     <div class="row">
+       <div class="span6 offset3">
+         <ul class="social-networks">
 
-
-        <div>
-           
            {% block content %}{% endblock %}
+
         </div>
             <!--footer-->
         <footer>
@@ -112,4 +120,3 @@
     <script src="js/scrolling-nav.js"></script>
 </body>
 </html> 
-

@@ -91,7 +91,7 @@ class JobOffers
     }
 
     public function setDescription($description) {
-        if(!empty($description) AND is_string($description) AND mb_strlen($description) >= 10){
+        if(!empty($description) AND is_string($description) AND mb_strlen($description) >= 3){
         $this->description = $description;
         return $this;
     }
