@@ -1,0 +1,276 @@
+{% extends "layout.html.twig" %}
+	
+	{% block title %}Un formulaire inscription alumno{% endblock %}
+	
+	{% block content %}
+
+<br><br>
+<br>
+
+
+{{ form_start(alumniForm, { 'attr': {'class': 'form-horizontal'} }) }}
+                <div class="form-group">
+                    {{ form_label(alumniForm.promo, null) }}
+                    <div>
+                    	{% if alumniForm.promo.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.promo.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.promo, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    {{ form_label(alumniForm.presentation, null) }}
+                    <div>
+                    	{% if alumniForm.presentation.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.presentation.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.presentation, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    {{ form_label(alumniForm.skills, null) }}
+                    <div>
+                    	{% if alumniForm.skills.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.skills.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.skills, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                 <div class="form-group">
+                    {{ form_label(alumniForm.status, null) }}
+                    <div>
+                    	{% if alumniForm.status.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.status.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.status, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    {{ form_label(alumniForm.searchjob, null) }}
+                    <div>
+                    	{% if alumniForm.searchjob.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.searchjob.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.searchjob, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    {{ form_label(alumniForm.searchtime, null) }}
+                    <div>
+                    	{% if alumniForm.searchtime.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.searchtime.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.searchtime, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    {{ form_label(alumniForm.job, null) }}
+                    <div>
+                    	{% if alumniForm.job.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.job.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.job, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    {{ form_label(alumniForm.contract, null) }}
+                    <div>
+                    	{% if alumniForm.contract.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.contract.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.contract, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    {{ form_label(alumniForm.companytype, null) }}
+                    <div>
+                    	{% if alumniForm.companytype.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.companytype.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.companytype, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    {{ form_label(alumniForm.wage, null) }}
+                    <div>
+                    	{% if alumniForm.wage.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.wage.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.wage, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    {{ form_label(alumniForm.companyname, null) }}
+                    <div>
+                    	{% if alumniForm.companyname.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.companyname.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.companyname, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    {{ form_label(alumniForm.linkedinurl, null) }}
+                    <div>
+                    	{% if alumniForm.linkedinurl.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.linkedinurl.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.linkedinurl, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    {{ form_label(alumniForm.cv, null) }}
+                    <div>
+                    	{% if alumniForm.cv.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.cv.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.cv, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    {{ form_label(alumniForm.sponsorship, null) }}
+                    <div>
+                    	{% if alumniForm.sponsorship.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.sponsorship.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.sponsorship, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    {{ form_label(alumniForm.alertjob, null) }}
+                    <div>
+                    	{% if alumniForm.alertjob.vars.errors|length > 0 %}
+		                    <div class="alert alert-danger">
+							    {% for error in alumniForm.alertjob.vars.errors %}
+							        {{ error.message }}
+							    {% endfor %}
+		                    </div>
+		                {% endif %}
+                        {{ form_widget(alumniForm.alertjob, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Enregistrer" />
+                </div><br>
+
+
+
+
+            {{ form_end(alumniForm) }}
+
+     
+{% endblock %}

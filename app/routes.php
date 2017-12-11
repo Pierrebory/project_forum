@@ -78,6 +78,10 @@ $app->get('/user/delete/{id}', 'WF3\Controller\HomeController::deleteUserAction'
 ->assert('id', '\d+')
 ->bind('deleteUserAction');
 
+$app->match('/alumni/update/{id}', 'WF3\Controller\HomeController::updateAlumniAction')
+->assert('id', '\d+')
+->bind('updateAlumniAction');
+
 
 
 ////////////AJAX///////////

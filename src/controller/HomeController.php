@@ -544,4 +544,44 @@ class HomeController{
 	}
     
     
+    
+     public function updateAlumniAction(Application $app, Request $request, $id){
+          if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            //return $app->redirect($app['url_generator']->generate('home'));
+            throw new AccessDeniedHttpException();
+        }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        //on récupère les infos de l'article
+        $alumni = $app['dao.alumni']->findModif($id);
+         $alumniId = $request->attributes->get('id');
+         if($user->getId() != $alumniId){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            throw new AccessDeniedHttpException();
+        }
+        //on crée le formulaire et on lui passe l'article en paramètre
+        //il va utiliser $article pour pré remplir les champs
+        $alumniForm = $app['form.factory']->create(AlumniType::class, $alumni);
+
+        $alumniForm->handleRequest($request);
+
+        if($alumniForm->isSubmitted() && $alumniForm->isValid()){
+            //si le formulaire a été soumis
+            //on update avec les données envoyées par l'utilisateur
+            $app['dao.alumni']->updateModif($id, $alumni);
+        }
+
+       return $app['twig']->render('modification.alumni.html.twig', array(
+           'alumniForm' => $alumniForm->createView(),
+          'alumni' => $alumni)); 
+
+    }
+    
+    
+    
 }
