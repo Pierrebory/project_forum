@@ -2,16 +2,7 @@
 <html>
 <head>
 <title></title>
-<!--
 
-    An email present from your friends at Litmus (@litmusapp)
-
-    Email is surprisingly hard. While this has been thoroughly tested, your mileage may vary.
-    It's highly recommended that you test using a service like Litmus (http://litmus.com) and your own devices.
-
-    Enjoy!
-
- -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -151,40 +142,29 @@
                 <tr>
                     <td>
                         <!-- HERO IMAGE -->
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="5">
                             <tr>
-                                <td class="padding" align="center">
-                                   Changement de mot de passe
-                                </td> 
+                                <td class="padding">
+                                   Changement de mot de passe 
+                                </td>
                             </tr>
                             <tr>
-                                <td>
-                                    Bonjour {{ username }}, veuillez cliquer <a href="http://localhost/project_forum/web/mdpoublie/resetform/{{ id }}/{{ token }}">ICI</a> pour modifier votre mot de passe. 
+                                <td><br>
+                                    Bonjour {{ username }}, veuillez <strong>cliquer</strong> sur le bouton si-dessous pour modifier votre mot de passe.
                                 </td>
-                                <td>
-                                    Si vous n'avez pas fait de demande de changement de mot de passe alors quelqu'un a essayé de le modifier. 
+                                <td><br>
+                                    Si vous n'avez pas fait de demande de modification de mot de passe, quelqu'un d'autre a essayé de le modifier. 
                                 </td>                                
                             </tr>
-                            <tr>
-                                <td align="center">
-                                    <!-- BULLETPROOF BUTTON -->
-                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                        <tr>
-                                            <td align="center" style="padding-top: 25px;" class="padding">
-                                                <table border="0" cellspacing="0" cellpadding="0" class="mobile-button-container">
-                                                    <tr>
-                                                        <td align="center" style="border-radius: 3px;" bgcolor="#256F9C"><a href="https://litmus.com" target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; border-radius: 3px; padding: 15px 25px; border: 1px solid #256F9C; display: inline-block;" class="mobile-button">Watch Now &rarr;</a></td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
+                            
                         </table>
+
                     </td>
                 </tr>
             </table>
+                <div style="margin-left: 56em; margin-right: 60em; margin-top:10px;">
+                    <a href="http://localhost/project_forum/web/mdpoublie/resetform/{{ id }}/{{ token }}"><input type="submit" value="Envoyer" style="background:#2f96b4;/></a>
+                </div>
             <!--[if (gte mso 9)|(IE)]>
             </td>
             </tr>
@@ -201,11 +181,7 @@
             <![endif]-->
             <!-- UNSUBSCRIBE COPY -->
             <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width: 500px;" class="responsive-table">
-                <tr>
-                    <td align="center" style="font-size: 12px; line-height: 18px; font-family: Helvetica, Arial, sans-serif; color:#666666;">
-                        Peddle Art
-                    </td>
-                </tr>
+               
             </table>
             <!--[if (gte mso 9)|(IE)]>
             </td>
