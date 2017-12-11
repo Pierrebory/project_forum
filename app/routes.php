@@ -100,7 +100,9 @@ $app->match('/alumni/update/{id}', 'WF3\Controller\HomeController::updateAlumniA
 ->bind('updateAlumniAction');
 
 
-
+$app->match('/job/update/{id}', 'WF3\Controller\HomeController::updateJobAction')
+->assert('id', '\d+')
+->bind('updateJobAction');
 ////////////AJAX///////////
 
 /*$app->match('/ajax/recherche', 'WF3\Controller\AjaxController::AjaxActionForum')

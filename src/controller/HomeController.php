@@ -144,8 +144,13 @@ class HomeController{
 
     //PAGE LISTE DES OFFRES D'EMPLOI
     public function offresAction(Application $app){
-        $offres = $app['dao.joboffers']->findAll();  
-        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres)); 
+        $offres = $app['dao.joboffers']->findAll(); 
+         $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+         $button = $user->getId();
+        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres, 'button' => $button)); 
     }
     
     
@@ -708,5 +713,55 @@ class HomeController{
 
     }
     
+    
+    
+    
+     public function updateJobAction(Application $app, Request $request, $id){
+          if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            //return $app->redirect($app['url_generator']->generate('home'));
+            throw new AccessDeniedHttpException();
+        }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        //on récupère les infos de l'article
+        $jobOffert = $app['dao.joboffers']->findJobModif($id);
+         $alumniId = $request->attributes->get('id');
+         if($user->getId() != $alumniId){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            throw new AccessDeniedHttpException();
+        }
+        //on crée le formulaire et on lui passe l'article en paramètre
+        //il va utiliser $article pour pré remplir les champs
+        $offerForm = $app['form.factory']->create(JobOffersType::class, $jobOffert);
 
+        $offerForm->handleRequest($request);
+
+        if($offerForm->isSubmitted() && $offerForm->isValid()){
+            //si le formulaire a été soumis
+            //on update avec les données envoyées par l'utilisateur
+            $app['dao.joboffers']->updateJobModif($id, $jobOffert);
+        }
+
+       return $app['twig']->render('modification.jobOffert.html.twig', array(
+           'offerForm' => $offerForm->createView(),
+          'jobOffert' => $jobOffert)); 
+
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
