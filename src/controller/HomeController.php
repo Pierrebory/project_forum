@@ -110,18 +110,15 @@ class HomeController{
                 'message'=>$privatemessage->getMessage()
             ));
             
- 
             
             $app['session']->getFlashBag()->add('success', 'Votre message a bien été envoyé.');
            
         }
-        else{
-            $error = true;
-        }
+        
         
         // j'envoie le formulaire
          return $app['twig']->render('privatemessage.html.twig', array(
-                         'privatemessageForm' => $privatemessageForm->createView(), 'test' => $privatemessage
+                         'privatemessageForm' => $privatemessageForm->createView()
                         
          )); 
         
