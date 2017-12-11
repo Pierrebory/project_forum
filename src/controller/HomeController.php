@@ -22,6 +22,8 @@ use WF3\Form\Type\ContactType;
 use WF3\Form\Type\JoboffersType;
 use WF3\Form\Type\AlumniType;
 use WF3\Form\Type\RechercheUsernameType;
+use WF3\Form\Type\UpdateUserType;
+
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -173,7 +175,7 @@ class HomeController{
             $error = true;
         }
 
-        if(array_search($data->getPhone(), array_column($uniqueTest, 'phone')) !== false) {
+        if(array_search($data->getPhone(), array_column($uniqueTest, 'phone')) !== false && $data->getPhone() != null) {
             $app['session']->getFlashBag()->add('phoneNotUnique', 'Ce numéro de téléphone est déjà attribué à un autre utilisateur.');
             $error = true;
         }
@@ -236,6 +238,7 @@ class HomeController{
             $token = md5(uniqid(rand(), true));  
             $app['dao.resetpass']->insertReset($token, $user['id']);        
             $message = \Swift_Message::newInstance()
+                        ->setSubject('Changement de mot de passe forum WF3')
                         ->setFrom(array('promo5wf3@gmx.fr'))
                         ->setTo(array($data['email']))
                         ->setBody($app['twig']->render('emailReset.html.twig', 
@@ -266,7 +269,8 @@ class HomeController{
     /////////////// FORMULAIRE RESET MOT DE PASSE ///////////////////////////
     public function changePassAction(Application $app, Request $request, $id, $token){
 
-    $user = new User();
+/*    $user = new User();*/   
+    $user = $app['dao.users']->find($id);
     $resetForm = $app['form.factory']->create(ResetpassType::class, $user);
     // on envoie les paramètres de la requête à notre objet formulaire
     $resetForm->handleRequest($request); 
@@ -291,7 +295,7 @@ class HomeController{
         //on remplace le mdp en clair par le mdp crypté
         $user->setPassword($password);
 
-        $app['dao.resetpass']->updatePassword($id, $token, $user->getPassword(), $user->getSalt() );
+        $app['dao.resetpass']->updatePassword($id, $token, $user);
         $app['dao.resetpass']->deleteToken($id);        
         $app['session']->getFlashBag()->add('success', 'Votre mot de passe a bien été modifié.');
         return $app->redirect($app['url_generator']->generate('home'));     
@@ -303,7 +307,30 @@ class HomeController{
     ));         
 }   
 
-    
+    /////////////////////// MODIFIER INFOS PERSO ///////////////////////////
+    public function updateUserAction(Application $app, Request $request, $id){
+
+        // on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+
+        $userForm = $app['form.factory']->create(UpdateUserType::class, $user);
+
+        $userForm->handleRequest($request); 
+
+        if($userForm->isSubmitted() && $userForm->isValid()){
+
+            $app['dao.user']->updateUser($id, $user);   
+            $app['session']->getFlashBag()->add('success', 'Vos informations ont bien été modifiées');          
+        }
+        
+        return $app['twig']->render('updateUser.html.twig', array(
+            'userForm' => $userForm->createView(),
+            'user' => $user,
+        ));
+    }
     
      ///////////////////////PAGE REPONSE FORUM////////////////////////
      /* public function subjectAction(Application $app, Request $request, $idSubject, $idUser){
@@ -443,9 +470,6 @@ class HomeController{
             //'test'=>$request->files->get('search_engine')['attachment']->getOriginalName()
         ));
     }
-    
-    
-    
     
     
 }
