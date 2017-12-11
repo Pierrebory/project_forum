@@ -179,11 +179,8 @@ class HomeController{
         }
 
         // si le formulaire a été envoyé
-        if($userForm->isSubmitted() && $userForm->isValid()){
+        if($userForm->isSubmitted() && $userForm->isValid() && $error === false){
 
-
-
-            if($error === false){
             $salt = substr(md5(time()), 0, 23);
             $user->setSalt($salt);
             //on récupère le mot de passe en clair (envoyé par l'utilisateur)
@@ -197,9 +194,6 @@ class HomeController{
 
             $app['dao.users']->insert($user);               
             $app['session']->getFlashBag()->add('success', 'Vous êtes bien enregistré(e). Vous pouvez à présent vous connecter.');
-            }
-
-
                     
         }
 
@@ -345,8 +339,17 @@ class HomeController{
         $responsesForm->handleRequest($request);
                  $responses = $app['dao.response']->getResponses($idSubject);
 
+        // on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+
+
         if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
-        $response->setUser_id(3);
+
+
+        $response->setUser_id($user->getId());
          $response->setSubject_id($idSubject);
         $response->setDate_message(date('Y-m-d H:i:s'));
          $app['dao.response']->insert($response);
