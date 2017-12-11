@@ -7,6 +7,19 @@
 
             <p>Vous avez oublié votre mot de passe ? Pas de panique, entrez votre adresse email pour reçevoir un message vous permettant de modifier votre mot de passe.</p>
 
+            {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+            {% endfor %}    
+
+            {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">
+                {{ flashMessage }}
+            </div>
+            {% endfor %}            
+
+
             <div>
             {{ form_start(resetForm, { 'attr': {'class': 'form-horizontal'} }) }}
 
@@ -32,6 +45,8 @@
 
 
             {{ form_end(resetForm) }}
+            {{ dump(emailTest) }}
+            {{ dump(data) }}
         </div>
 
         {% endblock %}

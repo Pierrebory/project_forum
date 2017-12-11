@@ -4,6 +4,9 @@ namespace WF3\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+
+
+
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -13,13 +16,27 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class RegisterType extends AbstractType
 {
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addConstraint(new UniqueEntity(array(
+            'fields'  => 'email',
+            'message' => 'efre'
+        )));
+
+        $metadata->addPropertyConstraint('email', new Assert\Email());
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+
+
         /////////////////// PSEUDO /////////////////////
         $builder->add('username', TextType::class, array(
             'label' => 'Votre pseudo*',
             'attr' => array(
-                'placeholder' => 'Au moins 2 caractères'
+                'placeholder' => 'Entre 2 et 45 caractères'
             ),
             'required' => true,                      
             'constraints' => array(
@@ -29,7 +46,7 @@ class RegisterType extends AbstractType
                     'max' => 45,
                     'minMessage' => 'Votre pseudo doit faire au moins 2 caractères.',
                     'maxMessage' => 'Votre pseudo ne dois pas faire plus de 45 caractères.'
-                ))      
+                ))          
             )
         ));
         
@@ -37,7 +54,7 @@ class RegisterType extends AbstractType
         $builder->add('lastname', TextType::class, array(
             'label' => 'Votre nom*',
             'attr' => array(
-                'placeholder' => 'Au moins 2 caractères'
+                'placeholder' => 'Au format Nom'
             ),
             'required' => true,                      
             'constraints' => array(
@@ -59,12 +76,12 @@ class RegisterType extends AbstractType
                     'message' => 'Votre nom ne doit pas contenir de caractères spéciaux.'            
                 )),
                 new Assert\Regex(array(
-                    'pattern' => '/^[A-Za-zéèàâêîôûäëïöüÿ]/',
-                    'message' => 'Votre nom doit commencer par une lettre minuscule ou sans caractères spéciaux.'    
+                    'pattern' => '/^[A-Z]/',
+                    'message' => 'Votre nom doit commencer par une majuscule sans acccent.'    
                 )),   
                 new Assert\Regex(array(
-                    'pattern' => '/[A-Za-zéèàâêîôûäëïöüÿ]$/',
-                    'message' => 'Votre nom doit finir par une lettre minuscule ou sans caractères spéciaux.'         
+                    'pattern' => '/[a-zéèàâêîôûäëïöüÿ]$/',
+                    'message' => 'Votre nom doit finir par une minuscule sans caractères spéciaux.'         
                 ))          
             )
         ));
@@ -73,7 +90,7 @@ class RegisterType extends AbstractType
         $builder->add('firstname', TextType::class, array(
             'label' => 'Votre prénom*',
             'attr' => array(
-                'placeholder' => 'Au moins 2 caractères'
+                'placeholder' => 'Au format Prénom'
             ),
             'required' => true,            
             'constraints' => array(
@@ -95,12 +112,12 @@ class RegisterType extends AbstractType
                     'message' => 'Votre prénom ne doit pas contenir de caractères spéciaux.'            
                 )),
                 new Assert\Regex(array(
-                    'pattern' => '/^[A-Za-zéèàâêîôûäëïöüÿ]/',
-                    'message' => 'Votre prénom doit commencer par une lettre minuscule ou sans caractères spéciaux.'            
+                    'pattern' => '/^[A-Z]/',
+                    'message' => 'Votre prénom doit commencer par une majuscule sans acccent.'       
                 )),   
                 new Assert\Regex(array(
-                    'pattern' => '/[A-Za-zéèàâêîôûäëïöüÿ]$/',
-                    'message' => 'Votre prénom doit finir par une lettre minuscule ou sans caractères spéciaux.'      
+                    'pattern' => '/[a-zéèàâêîôûäëïöüÿ]$/',
+                    'message' => 'Votre prénom doit finir par une minuscule sans caractères spéciaux.'      
                 ))                                                                                   
             )
         ));   
@@ -161,7 +178,7 @@ class RegisterType extends AbstractType
         $builder->add('city', TextType::class, array(
             'label' => 'Votre ville*',
             'attr' => array(
-                'placeholder' => 'Au moins 2 caractères'
+                'placeholder' => 'Au format Ville'
             ),           
             'required' => true,                            
             'constraints' => array(
@@ -182,12 +199,12 @@ class RegisterType extends AbstractType
                     'message' => 'Votre ville ne doit pas contenir de caractères spéciaux.'            
                 )),
                 new Assert\Regex(array(
-                    'pattern' => '/^[A-Za-zéèàâêîôûäëïöüÿ]/',
-                    'message' => 'Votre ville doit commencer par une lettre minuscule ou sans caractères spéciaux.' 
+                    'pattern' => '/^[A-Z]/',
+                    'message' => 'Votre ville doit commencer par une majuscule sans acccent.'    
                 )),   
                 new Assert\Regex(array(
-                    'pattern' => '/[A-Za-zéèàâêîôûäëïöüÿ]$/',
-                    'message' => 'Votre ville doit finir par une lettre minuscule ou sans caractères spéciaux.'      
+                    'pattern' => '/[a-zéèàâêîôûäëïöüÿ]$/',
+                    'message' => 'Votre ville doit finir par une minuscule sans caractères spéciaux.'      
                 ))                      
             )
         ));   
