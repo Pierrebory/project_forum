@@ -27,20 +27,20 @@ class DAO implements DB{
     }
     
     public function buildObject($row){
-        $class = $this->objectClassName;
-        $object = new $class();
-        foreach($row as $key=>$value){
-            // à chaque tour de boucle
-            //on crée le nom de la méthode grâce à la clé du tableau : setId, setTitle...
-            $method = 'set'.ucfirst($key);
-            //echo $method;
-            // si cette méthode existe bien dans l'objet
-            if(method_exists($object, $method)){
-                //on l'exécute en lui passant en paramètre la valeur associée
-                $object->$method($value);
-            }
- 
-    }
+       $class = $this->objectClassName;
+       $object = new $class();
+       foreach($row as $key=>$value){
+           // à chaque tour de boucle
+           //on crée le nom de la méthode grâce à la clé du tableau : setId, setTitle...
+           $method = 'set'.ucfirst($key);
+           //echo $method;
+           // si cette méthode existe bien dans l'objet
+           if(method_exists($object, $method)){
+               //on l'exécute en lui passant en paramètre la valeur associée
+               $object->$method($value);
+           }
+
+   }
          return $object;
     }
     
