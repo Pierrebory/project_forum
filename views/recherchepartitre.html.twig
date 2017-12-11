@@ -1,0 +1,46 @@
+{% extends "layout.html.twig" %}
+
+{% block title %} Recherche {% endblock %}
+
+{% block content %}
+        <div class="col-sm-6">
+            {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+            {% endfor %}
+            <div class="contact_form">
+            {{ form_start(form) }}
+                
+            {{ form_end(form) }}
+        </div>
+        <div class="col-sm-12" id="result">
+            
+        </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $(function(){
+            $('#search_engine_Rechercher').click(function(event){
+                //permet d'empêcher la validation du formulaire et le chargement de la page
+                event.preventDefault();
+                //construction de l'url de la requête avec les paramètres
+                var url = "{{ path('ajaxRechercheParAuteur') }}";
+                //requête ajax en POST
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: $('form').serialize(),
+                    dataType: 'html',
+                    success: function(data){
+                        $('#result').html(data);
+                    },
+                    error: function() {
+                        alert('La requête n\'a pas abouti'); 
+                    }
+                });
+            });
+        });
+    </script>      
+{% endblock%}

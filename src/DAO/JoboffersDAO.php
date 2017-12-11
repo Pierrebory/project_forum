@@ -33,7 +33,7 @@ class JoboffersDAO extends DAO{
     
 	//méthode de recherche d'une offre d'emploi par le titre
 	 public function findOffersByTitle($title){
-        $result = $this->bdd->prepare('SELECT joboffers.id AS idJoboffers, title, description, skills, advantages, contract, contractduration, timetable FROM joboffers WHERE title LIKE :title');
+        $result = $this->bdd->prepare('SELECT id, title, company, city, date_offer, description, skills, advantages, contract, contractduration, timetable, recruitername, recruitercontact FROM joboffers WHERE title LIKE :title');
         $result->bindValue(':title', '%' . $title . '%');
         $result->execute();
         return $result->fetchALL(\PDO::FETCH_ASSOC);

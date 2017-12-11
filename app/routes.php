@@ -23,7 +23,6 @@ $app->match('/contacter/{id}', 'WF3\Controller\HomeController::messageriePriveeA
     ->bind('contacter');
 
 
-
 //pages liste des offres d'emploi
 $app->get('/offresemploi', 'WF3\Controller\HomeController::offresAction')
     ->bind('offresemploi');
@@ -38,10 +37,16 @@ $app->match('/detailoffre/{id}', 'WF3\Controller\HomeController::detailOffreActi
 $app->match('/formulaireemploi', 'WF3\Controller\HomeController::formulaireOffreAction')
     ->bind('formulaireemploi');
 
+
 //page qui suuprime une offre d'emploi
 $app->get('/detailoffre/suppression/{id}', 'WF3\Controller\HomeController::deleteOfferAction')
 ->assert('id', '\d+')
 ->bind('suppressionoffre');
+
+
+//page de résultats de recherche en ajax
+$app->match('/ajax/recherchepartitre', 'WF3\Controller\AjaxController::rechercheOffreparTitreAction')
+    ->bind('rechercheajaxpartitre');
 
 
 //page Forum

@@ -18,6 +18,53 @@
 <a href="{{ path('formulaireemploi') }}"><button type="button" class="btn btn-info" style="margin-left:10px;">Poster une offre d'emploi</button></a>
 
 
+            <form>
+            <label>Recherche d'un article par son titre</label>
+            <input type="text" name="title" placeholder="Rentrer le nom de l'offre d'emploi">
+            <button type="button" class="btn btn-info" id="action" style="margin-left:10px">Rechercher</button>
+            </form>
+
+            <div id="result"></div>
+
+
+{% block javascript %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+               
+    <script>
+        $(function(){
+            $('#action').click(function(event){
+                //permet d'empêcher la validation du formulaire et le chargement de la page
+                event.preventDefault();
+                //construction de l'url de la requête avec les paramètres
+                var url = "{{ path('rechercheajaxpartitre') }}";
+                //requête ajax en POST
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: $('form').serialize(),
+                    dataType: 'html',
+                    success: function(data){
+                        $('#result').html(data);
+                    },
+                    error: function() {
+                        alert('La requête n\'a pas abouti'); 
+                    }
+                });
+            });
+        });
+    </script>      
+{% endblock%}
+
+
+
+
+
+
+
+
+
+
 
 
 
