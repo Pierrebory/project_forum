@@ -81,6 +81,9 @@ $app->match('/inscription/alumni', 'WF3\Controller\HomeController::alumniAction'
 $app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
     ->bind('rechercheParUsername');
 
+$app->get('/user/delete/{id}', 'WF3\Controller\HomeController::deleteUserAction')
+->assert('id', '\d+')
+->bind('deleteUserAction');
 
 
 

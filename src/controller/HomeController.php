@@ -41,7 +41,15 @@ class HomeController{
     //page Annuaire (liste des anciens élèves) qui affiche uniquement les noms des anciens élèves
     public function annuaireAction(Application $app){
         $users = $app['dao.users']->findAll();
-        return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
+        
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        
+        $button = $user->getId();
+        return $app['twig']->render('annuaire.html.twig', array('users' => $users, 'button' => $button)); 
     }
     
 
@@ -66,7 +74,7 @@ class HomeController{
                                                                            'alumni' => $alumni)); 
     }
     
-    
+
     
     
     ///////////////////////PAGE MESSAGERIE PRIVEE///////////////////
@@ -538,6 +546,7 @@ class HomeController{
     
 
     //PAGE D'INSCRIPTION ANNUAIRE ANCIENS ELEVES
+
         public function alumniAction(Application $app, Request $request){
         //on va vérifier que l'utilisateur est connecté
         if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
@@ -572,7 +581,8 @@ class HomeController{
         ));     
     }
 
-    
+    	
+
     
     
     public function rechercheParUsername(Application $app, Request $request){
@@ -596,6 +606,33 @@ class HomeController{
     
     
     
+    public function deleteUserAction(Application $app, $id){
+        //on va vérifier que l'utilisateur est connecté
+        if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            //return $app->redirect($app['url_generator']->generate('home'));
+            throw new AccessDeniedHttpException();
+        }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        //on va chercher les infos sur cet article
+        
+        $users = $app['dao.users']->displayAlumni($id);
+        //on vérifie que cet utlisateur est bien l'auteur de l'article
+        if($user->getId() != $users['id']){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            throw new AccessDeniedHttpException();
+        }
+		$users = $app['dao.users']->delete($id);
+        //on crée un message de réussite dans la session
+        $app['session']->getFlashBag()->add('success', 'fiche bien supprimé');
+        //on redirige vers la page d'accueil
+        return $app->redirect($app['url_generator']->generate('home'));
+	}
     
     
 }
