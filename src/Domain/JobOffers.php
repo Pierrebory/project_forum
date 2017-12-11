@@ -91,7 +91,7 @@ class JobOffers
     }
 
     public function setDescription($description) {
-        if(!empty($description) AND is_string($description) AND mb_strlen($description) >= 10){
+        if(!empty($description) AND is_string($description) AND mb_strlen($description) >= 3){
         $this->description = $description;
         return $this;
     }
@@ -162,7 +162,7 @@ class JobOffers
     }
 
     public function setRecruitername($recruitername) {
-        if(!empty($recruitername) AND is_numeric($recruitername)){
+        if(!empty($recruitername) AND is_string($recruitername)){
         $this->recruitername = $recruitername;
         return $this;
         }
@@ -174,7 +174,7 @@ class JobOffers
     }
 
     public function setRecruitercontact($recruitercontact) {
-        if(!empty($recruitercontact) AND is_numeric($recruitercontact)){
+        if(!empty($recruitercontact) AND filter_var($recruitercontact, FILTER_VALIDATE_EMAIL)){
         $this->recruitercontact = $recruitercontact;
         return $this;
         }

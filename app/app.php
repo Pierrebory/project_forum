@@ -115,6 +115,7 @@ $app['dao.alumni'] = function($app){
 
 $app['dao.joboffers'] = function($app){
     $joboffersDAO = new WF3\DAO\JoboffersDAO($app['db'], 'joboffers', 'WF3\Domain\JobOffers');
+    $joboffersDAO->setUserDAO($app['dao.users']);
     return $joboffersDAO;
 };
 
