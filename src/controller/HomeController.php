@@ -24,6 +24,7 @@ use WF3\Form\Type\JoboffersType;
 use WF3\Form\Type\AlumniType;
 use WF3\Form\Type\RechercheUsernameType;
 use WF3\Form\Type\PrivatemessageType;
+use WF3\Form\Type\SearchOfferType;
 
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;

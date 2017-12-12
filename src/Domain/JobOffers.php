@@ -182,17 +182,6 @@ class JobOffers
     
     
     
-    
-    
-    public function getAvatar() {
-        return $this->avatar;
-    }
-    
-    public function setAvatar($avatar) {
-        //verife a voir
-        $this->avatar = $avatar;
-        return $this;
-    }
 
     
 
