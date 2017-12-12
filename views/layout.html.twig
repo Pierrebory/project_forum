@@ -39,18 +39,19 @@
 
                         
                     <li><a href="{{ path('home') }}">Accueil</a></li>
-                      <li><a title="team" href="{{ path('annuaire') }}">Annuaire</a></li>
-                     <li><a href="{{ path('forum') }}">Forum</a></li>
-                     <li><a href="{{ path('offresemploi')}}">Offres d'emploi</a></li>
-                     <li><a href="{{ path('contactezmoi') }}">Contact</a></li>
+                    <li><a title="team" href="{{ path('annuaire') }}">Annuaire</a></li>
+                    <li><a href="{{ path('forum') }}">Forum</a></li>
+                    <li><a href="{{ path('offresemploi')}}">Offres d'emploi</a></li>
+                    <li><a href="{{ path('contactezmoi') }}">Contact</a></li>
                    
 
-                      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                          <li><a href="{{ path('logout') }}">déconnexion</a></li>                 
-                      {% else %}
-                          <li><a href="{{ path('login') }}">connexion</a></li>
-                          <li><a href="{{ path('inscription') }}">inscription</a></li>
-                      {% endif %}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li><a href="{{ path('profil', {id: app.user.id})}}">profil</a></li> 
+                        <li><a href="{{ path('logout') }}">déconnexion</a></li>                 
+                    {% else %}
+                        <li><a href="{{ path('login') }}">connexion</a></li>
+                        <li><a href="{{ path('inscription') }}">inscription</a></li>
+                    {% endif %}
 
 
                      <!-- A MODIDIER FORMAT TWIG-->
@@ -68,8 +69,8 @@
        </div>
 
             <!--footer-->
-        <footer>
-          <div class="site-footer">
+        <footer style="padding:30px;">
+          
 
     <div class="container">
       <div class="row">
@@ -87,7 +88,6 @@
               Concept et site crée en collaboration avec Norman Julié, Pierre Bory, Virginie Boillet et Alexandre Bosc.</p>
             <div class="credits">
               <p class="m-0 text-center text-white" style="margin-bottom:0px;">Copyright &copy; Notre site web 2017</p>           
-              <a href="https://bootstrapmade.com/"></a> 
             </div>
             
           </div>

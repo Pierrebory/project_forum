@@ -92,10 +92,6 @@ $app->match('/contact/moi', 'WF3\Controller\HomeController::contactAction')->bin
 $app->match('/inscription/alumni', 'WF3\Controller\HomeController::alumniAction')
     ->bind('inscription/alumni');
 
-
-$app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
-    ->bind('rechercheParUsername');
-
 $app->get('/user/delete/{id}', 'WF3\Controller\HomeController::deleteUserAction')
 ->assert('id', '\d+')
 ->bind('deleteUserAction');
@@ -108,6 +104,10 @@ $app->match('/alumni/update/{id}', 'WF3\Controller\HomeController::updateAlumniA
 $app->match('/job/update/{id}', 'WF3\Controller\HomeController::updateJobAction')
 ->assert('id', '\d+')
 ->bind('updateJobAction');
+
+
+$app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
+    ->bind('rechercheParUsername');
 ////////////AJAX///////////
 
 /*$app->match('/ajax/recherche', 'WF3\Controller\AjaxController::AjaxActionForum')

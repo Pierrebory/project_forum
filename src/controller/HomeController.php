@@ -231,8 +231,6 @@ class HomeController{
     
     
     
-    
-    
   //page de suppression d'une offre d'emploi
     public function deleteOfferAction(Application $app, $id){
         //on va vérifier que l'utilisateur est connecté
@@ -250,7 +248,7 @@ class HomeController{
         //on va chercher les infos sur l'offre d'emploi
         $joboffer = $app['dao.joboffers']->find($id);
         //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
-        if($user->getId() != $joboffer->getJoboffer()){
+        if($user->getId() != $joboffer->getUsers_id()){
             //si l'utilisateur n'est pas l'auteur: accès interdit
             throw new AccessDeniedHttpException();
         }
