@@ -182,10 +182,6 @@ class JobOffers
     
     
     
-    
- 
-
-    
 
     public function getUsers_id()
     {

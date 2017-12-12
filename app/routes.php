@@ -77,6 +77,11 @@ $app->match('/profil/{id}', 'WF3\Controller\HomeController::updateUserAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
     ->bind('profil');    
 
+// modifier les infos perso
+$app->match('/profil/{id}/mdp', 'WF3\Controller\HomeController::updatePassAction')
+    ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
+    ->bind('profil/mdp');       
+
 $app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeController::subjectAction')
     ->bind('forumsubject');
 
