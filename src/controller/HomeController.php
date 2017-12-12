@@ -275,8 +275,6 @@ class HomeController{
     
     
     
-    
- 
     ///////////////////////PAGE SUJET FORUM/////////////////////////
     public function forumPageAction(Application $app, Request $request){
         $subject = new Subjects();
@@ -547,14 +545,16 @@ class HomeController{
 
     }*/
     
+    
+    
     /////////////////////////////PAGE REPONSE FORUM////////////////////////////
     public function subjectAction(Application $app, Request $request, $idSubject){
-        
+
+    $subject = $app['dao.subject']->getSubject($idSubject);
         $response = new Responses();
-        $responses =[];
         $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
         $responsesForm->handleRequest($request);
-                 $responses = $app['dao.response']->getResponses($idSubject);
+        $responses = $app['dao.response']->getResponses($idSubject);
   $token = $app['security.token_storage']->getToken();
         if(NULL !== $token){
             $user = $token->getUser();
@@ -571,6 +571,7 @@ class HomeController{
         return $app['twig']->render('responses_forum.html.twig', array(
             'responsesForm'=>$responsesForm->createView(),
             'response'=>$response,
+            'subject'=>$subject,
         'responses'=>$responses));
    
 
