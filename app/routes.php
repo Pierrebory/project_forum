@@ -45,7 +45,7 @@ $app->get('/detailoffre/suppression/{id}', 'WF3\Controller\HomeController::delet
 
 
 //page de résultats de recherche en ajax
-$app->match('/ajax/recherchepartitre', 'WF3\Controller\AjaxController::rechercheOffreparTitreAction')
+$app->match('/rechercheajaxpartitre', 'WF3\Controller\AjaxController::rechercheOffreparTitreAction')
     ->bind('rechercheajaxpartitre');
 
 
@@ -76,6 +76,11 @@ $app->match('/mdpoublie/resetform/{id}/{token}', 'WF3\Controller\HomeController:
 $app->match('/profil/{id}', 'WF3\Controller\HomeController::updateUserAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
     ->bind('profil');    
+
+// modifier les infos perso
+$app->match('/mdp/{id}', 'WF3\Controller\HomeController::updatePasswordAction')
+    ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
+    ->bind('mdp');       
 
 // modifier les infos perso
 $app->match('/profil/{id}/mdp', 'WF3\Controller\HomeController::updatePassAction')

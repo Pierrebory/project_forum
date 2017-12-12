@@ -156,7 +156,7 @@ class RegisterType extends AbstractType
             'required' => false,                  
             'constraints' => array(            
                 new Assert\Regex(array(
-                    'pattern' => '/[0][1-9][0-9]{8}/',
+                    'pattern' => '/^[0][1-9][0-9]{8}$/',
                     'message' => 'Votre numéro de téléphone n\'est pas valide.'              
                 ))
             )

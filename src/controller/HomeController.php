@@ -25,20 +25,19 @@ use WF3\Form\Type\AlumniType;
 use WF3\Form\Type\RechercheUsernameType;
 use WF3\Form\Type\PrivatemessageType;
 use WF3\Form\Type\SearchOfferType;
-use WF3\Form\Type\UpdateUserType;
+
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 
 class HomeController{
 
-
     //page d'accueil qui affiche tout les articles
     public function homePageAction(Application $app){
 
         return $app['twig']->render('index.html.twig');
     }
-
+    
     
     //page Annuaire (liste des anciens élèves) qui affiche uniquement les noms des anciens élèves
     public function annuaireAction(Application $app){
@@ -49,8 +48,9 @@ class HomeController{
         if(NULL !== $token){
             $user = $token->getUser();
         }
-
-        return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
+        
+        $button = $user->getId();
+        return $app['twig']->render('annuaire.html.twig', array('users' => $users, 'button' => $button)); 
     }
     
 
@@ -139,19 +139,15 @@ class HomeController{
 
     //PAGE LISTE DES OFFRES D'EMPLOI
     public function offresAction(Application $app){
-
         $offres = $app['dao.joboffers']->findAll();  
-        //on récupère le token si l'utilisateur est connecté
         $token = $app['security.token_storage']->getToken();
+
         if(NULL !== $token){
             $user = $token->getUser();
         }
         
-        $button = $user->getId();
+        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres)); 
 
-
-
-        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres, 'button' => $button)); 
     }
     
     
@@ -192,6 +188,8 @@ class HomeController{
             $user = $token->getUser();
         }
 
+        //je récupère l'id du user qui poste l'offre d'emploi
+    
         //je crée un objet offre vide
         $offer = new JobOffers();
         //je crée mon objet formulaire à partir de la classe JoboffersType
@@ -201,7 +199,8 @@ class HomeController{
         //on vérifie si le formulaire a été envoyé
         //et si les données envoyées sont valides
         if($offerForm->isSubmitted() && $offerForm->isValid()){
-            
+            //je récupère l'id du user qui poste l'offre d'emploi
+            $offer->setUsers_id($user->getId());
             //on insère dans la base les éléments de l'offre
             $app['dao.joboffers']->insert(array(
                 'title'=>$offer->getTitle(),
@@ -215,7 +214,7 @@ class HomeController{
                 'timetable'=>$offer->getTimetable(),
                 'recruitername'=>$offer->getRecruitername(),
                 'recruitercontact'=>$offer->getRecruitercontact(),
-                'users_id'=>$offer->getUsers_id()
+                'users_id'=>$offer->getUsers_Id()
                             
             ));
             //on stocke en session un message de réussite
@@ -229,8 +228,6 @@ class HomeController{
                 'offerForm' => $offerForm->createView()
         ));
     }
-    
-    
     
     
     
@@ -265,6 +262,7 @@ class HomeController{
     }
         
   
+
     //RECHERCHE D'UNE OFFRE D'EMPLOI PAR SON TITRE
     public function searchOfferAction(Application $app, Request $request){
         $joboffers = $app['dao.joboffers']->findOffersByTitle($request->query->get('title'));
@@ -274,19 +272,21 @@ class HomeController{
     }
     
     
-    
-    
+   
  
-    ///////////////////////PAGE SUJET FORUM/////////////////////////
+    ///////////////////////PAGE SUJET FORUM////////////////////////
     public function forumPageAction(Application $app, Request $request){
         $subject = new Subjects();
         $subjects =[];
         $subjectForm = $app['form.factory']->create(subjectType::class, $subject);
         $subjectForm->handleRequest($request);
                  $subjects = $app['dao.subject']->getSubjects();
-
+         $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
         if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
-            $subject->setUser_id(1);
+            $subject->setUser_id($user->getId());
              $subject->setDate_message(date('Y-m-d H:i:s'));
 
          $app['dao.subject']->insert($subject);
@@ -329,7 +329,7 @@ class HomeController{
             $error = true;
         }
 
-        if(array_search($data->getPhone(), array_column($uniqueTest, 'phone')) !== false && $data->getPhone() != null) {
+        if(array_search($data->getPhone(), array_column($uniqueTest, 'phone')) !== false) {
             $app['session']->getFlashBag()->add('phoneNotUnique', 'Ce numéro de téléphone est déjà attribué à un autre utilisateur.');
             $error = true;
         }
@@ -398,7 +398,6 @@ class HomeController{
             $token = md5(uniqid(rand(), true));  
             $app['dao.resetpass']->insertReset($token, $user['id']);        
             $message = \Swift_Message::newInstance()
-                        ->setSubject('Nouveau mot de passe forum WF3')
                         ->setFrom(array('promo5wf3@gmx.fr'))
                         ->setTo(array($data['email']))
                         ->setBody($app['twig']->render('emailReset.html.twig', 
@@ -454,7 +453,7 @@ class HomeController{
         //on remplace le mdp en clair par le mdp crypté
         $user->setPassword($password);
 
-        $app['dao.resetpass']->updatePassword($id, $token, $user);
+        $app['dao.resetpass']->updatePassword($id, $token, $user->getPassword(), $user->getSalt() );
         $app['dao.resetpass']->deleteToken($id);        
         $app['session']->getFlashBag()->add('success', 'Votre mot de passe a bien été modifié.');
         return $app->redirect($app['url_generator']->generate('home'));     
@@ -516,7 +515,81 @@ class HomeController{
             'user' => $user,
         ));
     }
-    
+
+    /////////////////////// MODIFIER MOT DE PASSE ///////////////////////////
+    public function updatePasswordAction(Application $app, Request $request, $id){
+
+        // on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+
+        $idTest = $request->attributes->get('id');
+        $userId = $user->getId();
+
+        //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
+        if($userId != $idTest){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            throw new AccessDeniedHttpException();
+        }
+
+        $error = true;
+        $errors = [];
+        $dataUser = $app['dao.users']->find($userId);  
+
+        if(!empty($_POST)){
+
+/*            password_verify($_POST['oldPassword'], $$dataUser->getPassword())*/
+            if(!password_verify($_POST['oldPassword'], $dataUser->getPassword())){
+                $app['session']->getFlashBag()->add('error', 'Vous n\'avez pas entré le bon mot de passe actuel.');       
+                $errors['1'] = 'erreur';   
+            }
+
+            if($_POST['newPassword'] != $_POST['newPassword2']){
+                $app['session']->getFlashBag()->add('error', 'Les deux champs "nouveau mot de passe" ne sont pas identiques.');      
+                $errors['2'] = 'erreur';             
+            }
+
+            if(mb_strlen($_POST['newPassword']) < 4){
+                $app['session']->getFlashBag()->add('error', 'Le nouveau mot de passe doit faire au moins 4 caractères.');      
+                $errors['3'] = 'erreur';             
+            }
+
+            if(mb_strlen($_POST['newPassword']) > 255){
+                $app['session']->getFlashBag()->add('error', 'Le nouveau mot de passe doit faire moins de 256 caractères.');      
+                $errors['4'] = 'erreur';             
+            }
+
+            if(empty($errors)){
+                $error = false;
+            }
+        }
+
+
+        if($error === false){
+            $salt = substr(md5(time()), 0, 23);
+            $user->setSalt($salt);
+            //on récupère le mot de passe en clair (envoyé par l'utilisateur)
+            $plainPassword = $_POST['newPassword'];
+            // on récupère l'encoder de silex
+            $encoder = $app['security.encoder.bcrypt'];
+            // on encode le mdp
+            $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+            //on remplace le mdp en clair par le mdp crypté
+            $user->setPassword($password);
+
+            $app['dao.users']->updatePassword($id, $user);  
+            $app['session']->getFlashBag()->add('success', 'Votre mot de passe à bien été modifié.');          
+        }
+        
+        return $app['twig']->render('updatePassword.html.twig', array(
+            'test' => $dataUser->getPassword(),
+            'test2' => $errors,
+            'test3' => $error
+        ));
+    }    
+
     
      ///////////////////////PAGE REPONSE FORUM////////////////////////
      /* public function subjectAction(Application $app, Request $request, $idSubject, $idUser){
@@ -543,17 +616,27 @@ class HomeController{
 
     }*/
     
+    
+    
     /////////////////////////////PAGE REPONSE FORUM////////////////////////////
     public function subjectAction(Application $app, Request $request, $idSubject){
-        
+
+    $subject = $app['dao.subject']->getSubject($idSubject);
         $response = new Responses();
-        $responses =[];
         $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
         $responsesForm->handleRequest($request);
+
+        $responses = $app['dao.response']->getResponses($idSubject);
+  $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+
                  $responses = $app['dao.response']->getResponses($idSubject);
 
+
         if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
-        $response->setUser_id(3);
+        $response->setUser_id($user->getId());
          $response->setSubject_id($idSubject);
         $response->setDate_message(date('Y-m-d H:i:s'));
          $app['dao.response']->insert($response);
@@ -563,6 +646,7 @@ class HomeController{
         return $app['twig']->render('responses_forum.html.twig', array(
             'responsesForm'=>$responsesForm->createView(),
             'response'=>$response,
+            'subject'=>$subject,
         'responses'=>$responses));
    
 
@@ -650,14 +734,19 @@ class HomeController{
     public function rechercheParUsername(Application $app, Request $request){
         
         $user =[];
-     
+        $rechercheForm = $app['form.factory']->create(RechercheUsernameType::class);
+        $rechercheForm->handleRequest($request);
+        if($rechercheForm->isSubmitted() AND $rechercheForm->isValid()){
             //le formulaire a été envoyé
             //$request->request est égal à $_POST
             //$request->query est égal à $_GET
-            $user = $app['dao.users']->getUsernameLike($request->query->get('name'));
-        
+            $post = $request->request->get('search_engine');
+            $user = $app['dao.users']->getUsernameLike($post['name']);
+        }
         return $app['twig']->render('recherche.username.html.twig', array(
-            'user'=>$user,
+            'form'=>$rechercheForm->createView(),
+            'user'=>$user//,
+            //'test'=>$request->files->get('search_engine')['attachment']->getOriginalName()
         ));
     }
     
@@ -693,7 +782,7 @@ class HomeController{
     
     
     
-     public function updateAlumniAction(Application $app, Request $request, $id){
+      public function updateAlumniAction(Application $app, Request $request, $id){
           if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
             //je peux rediriger l'utilisateur non authentifié
             //return $app->redirect($app['url_generator']->generate('home'));
@@ -768,5 +857,4 @@ class HomeController{
           'jobOffert' => $jobOffert)); 
 
     }
-    
 }
