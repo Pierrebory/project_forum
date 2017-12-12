@@ -4,16 +4,13 @@
     
     {% block content %}
 
-<br>
-<br>
-<br>
-           {% for flashMessage in app.session.flashbag.get('success') %}
+    {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success">
                 {{ flashMessage }}
             </div>
             {% endfor %}
 
-            <h2 style="text-align: center">Formulaire d'inscription</h2>
+            <h2 style="text-align: center; margin-top: 80px;">Profil</h2>
 
             <p style="text-align: center">Vous pouvez modifier vos informations personelles à l'aide du formulaire ci-desosus.</p>
             <p style="text-align: center">Les champs marqués d'une * sont obligatoires.</p>
@@ -118,7 +115,7 @@
 
 
                 <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em; margin-top: 2em;">
-                    <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" />
+                    <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" style="background: #2f96b4;"/>
                 </div>
             {{ form_end(userForm) }}
 
