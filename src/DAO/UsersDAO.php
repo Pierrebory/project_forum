@@ -124,9 +124,9 @@ class UsersDAO extends DAO implements UserProviderInterface
 
     
     
-    public function getUsernameLike($name){
-        $result = $this->bdd->prepare('SELECT username FROM users  WHERE username LIKE :name');
-        $result->bindValue(':name', '%'.$name.'%');
+    public function getUsernameLike($username){
+        $result = $this->bdd->prepare('SELECT * FROM users  WHERE username LIKE :username');
+        $result->bindValue(':username', '%'.$username.'%');
         $result->execute();
         $rows =  $result->fetchALL(\PDO::FETCH_ASSOC);
         $user = [];
