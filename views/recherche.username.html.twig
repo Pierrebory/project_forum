@@ -9,7 +9,7 @@
 {% for users in user%}
 
 <article>
-    <h1>{{ users.username }}</h1>
+    <h1><a href="{{ path('fichedetaillee', {id: users.id}) }}">{{ users.username }}</a></h1>
     <p>{{ users.lastname }}</p>
     <p>{{ users.firstname }}</p>
 

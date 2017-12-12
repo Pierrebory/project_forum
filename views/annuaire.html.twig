@@ -19,7 +19,9 @@
 
 
 
-          <a href="{{ path('updateAlumniAction', {id: button}) }}"><button type="button" class="btn btn-info" style="margin-left:1em; margin-bottom: 1em; width:390px;">Modifiez votre fiche détaillée</button></a> 
+
+          <a href="{{ path('updateAlumniAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info">Modifiez votre fiche détaillée</button></a> 
+ 
 
 
 <form action="{{ path('rechercheParUsername')}}">
@@ -65,7 +67,7 @@
 
 
 
-<a href="{{ path('deleteUserAction', {id: button})}}"><button type="button" class="btn btn-info" style="margin-bottom:2em; margin-left: 1em; width:390px">Supprimer son compte</button></a> 
+<a href="{{ path('deleteUserAction', {id: app.user.id})}}"><button type="button" class="btn btn-info" style="margin-bottom:2em; margin-left: 1em; width:390px">Supprimer son compte</button></a> 
 
 
 
