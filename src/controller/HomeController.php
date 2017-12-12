@@ -276,7 +276,7 @@ class HomeController{
     
     
  
-    ///////////////////////PAGE SUJET FORUM////////////////////////
+    ///////////////////////PAGE SUJET FORUM/////////////////////////
     public function forumPageAction(Application $app, Request $request){
         $subject = new Subjects();
         $subjects =[];
