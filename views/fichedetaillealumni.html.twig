@@ -18,7 +18,7 @@
             
          <p class="font-weight-bold">Vous avez changé de situation ?</p>
             <br>
-          <a href=""><button type="button" class="btn btn-info">Modifiez votre fiche détaillée</button></a> 
+
             
             <br>
             <br>
@@ -54,10 +54,11 @@
             
             <br>
             <br>
-            
+
+             <a href="{{ path('updateAlumniAction', {id: user.id} ) }}"><button type="button" class="btn btn-info">Contacter</button></a> 
              <a href="{{ path('contacter', {id: alumni.alumni_id}) }}"><button type="button" class="btn btn-info">Contacter</button></a> 
             
-            <br>
+            <br><br>
 
             
             
@@ -68,6 +69,7 @@
 		
 
 		</div>
+
 
 
     {% endblock %} 

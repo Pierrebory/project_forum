@@ -183,8 +183,6 @@ class JobOffers
     
     
 
-    
-
     public function getUsers_id()
     {
         return $this->users_id;

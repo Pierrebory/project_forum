@@ -70,7 +70,17 @@ $app->match('/mdpoublie', 'WF3\Controller\HomeController::resetPassAction')
 $app->match('/mdpoublie/resetform/{id}/{token}', 'WF3\Controller\HomeController::changePassAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
     ->assert('token', '[a-z0-9]{32}')
-    ->bind('mdpoublie/resetform');    
+    ->bind('mdpoublie/resetform');   
+
+// modifier les infos perso
+$app->match('/profil/{id}', 'WF3\Controller\HomeController::updateUserAction')
+    ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
+    ->bind('profil');    
+
+// modifier les infos perso
+$app->match('/profil/{id}/mdp', 'WF3\Controller\HomeController::updatePassAction')
+    ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
+    ->bind('profil/mdp');       
 
 $app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeController::subjectAction')
     ->bind('forumsubject');
@@ -90,8 +100,14 @@ $app->get('/user/delete/{id}', 'WF3\Controller\HomeController::deleteUserAction'
 ->assert('id', '\d+')
 ->bind('deleteUserAction');
 
+$app->match('/alumni/update/{id}', 'WF3\Controller\HomeController::updateAlumniAction')
+->assert('id', '\d+')
+->bind('updateAlumniAction');
 
 
+$app->match('/job/update/{id}', 'WF3\Controller\HomeController::updateJobAction')
+->assert('id', '\d+')
+->bind('updateJobAction');
 ////////////AJAX///////////
 
 /*$app->match('/ajax/recherche', 'WF3\Controller\AjaxController::AjaxActionForum')

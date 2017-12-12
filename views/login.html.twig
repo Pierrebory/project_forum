@@ -7,13 +7,6 @@
 
 <br>
 
-        {% for flashMessage in app.session.flashbag.get('success') %}
-        <div class="alert alert-success">
-            {{ flashMessage }}
-        </div>
-        {% endfor %}
-
-
 
          {% if error %}
          <div class="alert alert-danger">

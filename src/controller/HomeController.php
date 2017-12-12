@@ -136,10 +136,6 @@ class HomeController{
     
     
     
-    
-    
-    
-    
 
     //PAGE LISTE DES OFFRES D'EMPLOI
     public function offresAction(Application $app){

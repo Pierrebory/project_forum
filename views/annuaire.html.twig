@@ -17,6 +17,13 @@
 <p><a href="{{ path('login') }}"><button type="button" class="btn btn-info blockquote text-center" style="margin-left:1em; width:390px">Connectez-vous pour accéder à l'annuaire détaillé</button></a> </p>
 
 
+
+
+          <a href="{{ path('updateAlumniAction', {id: button}) }}"><button type="button" class="btn btn-info">Modifiez votre fiche détaillée</button></a> 
+
+          <a href="{{ path('deleteUserAction', {id: button})}}"><button type="button" class="btn btn-info">Supprimer son compte</button></a> 
+
+
 <br><br>
 <form action="{{ path('rechercheParUsername')}}">
     <input style="margin-left:1em; margin-bottom: 1em; width:390px;" type="text" name="name" placeholder="nom"><br>
