@@ -52,7 +52,6 @@ class UsersDAO extends DAO implements UserProviderInterface
     // update les infos de l'utilisateur (sauf password et avatar) 
     public function updateUser($id, $data){
 
-
         if(is_object($data)){
 
            //on va transformer l'objet en tableau php        
@@ -87,6 +86,32 @@ class UsersDAO extends DAO implements UserProviderInterface
          
         return false;          
     }
+
+    // update le password
+    public function updatePassword($id, $data){
+
+        if(is_object($data)){
+           //on va transformer l'objet en tableau php        
+           $dataArray = ['password' => $data->getPassword() , 'salt' => $data->getSalt()];
+           $data = $dataArray;
+
+        }
+
+        $update = $this->bdd->prepare('UPDATE users SET password = :password, salt = :salt WHERE id = :id');
+
+        foreach($data as $key=>$value){
+            //on va créer les lignes bindvalue correspondantes
+            $update->bindvalue(':' .$key, strip_tags($value));
+        }  
+        $update->bindvalue(':id', $id, \PDO::PARAM_INT);
+
+        if($update->execute()){
+            return true;
+        }
+         
+        return false;          
+    }
+         
     
     /**
      * {@inheritDoc}

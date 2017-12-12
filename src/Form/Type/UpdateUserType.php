@@ -17,7 +17,6 @@ class UpdateUserType extends RegisterType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         parent::buildform($builder, $options);
         $builder->remove('username')->remove('password')->remove('role');
     } 

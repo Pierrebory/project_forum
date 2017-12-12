@@ -16,13 +16,14 @@
 <br>
 
 <a href="{{ path('formulaireemploi') }}"><button type="button" class="btn btn-info" style="margin-left:10px;">Poster une offre d'emploi</button></a>
-<a href="{{ path('updateJobAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info">Modifiez votre offre d'emplois</button></a> 
+<a href="{{ path('updateJobAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info">Modifiez votre offre d'emploi</button></a> 
+  
 
 
-
-            <form method="GET">
+    <form method="GET">
             <label>Recherche d'une offre d'emploi par son titre</label>
             <input type="text" name="title" id="title" placeholder="Rentrer le nom de l'offre d'emploi">
+
             <button type="button" class="btn btn-info" id="action" style="margin-left:10px">Rechercher</button>
             </form>
 
