@@ -45,7 +45,7 @@ $app->get('/detailoffre/suppression/{id}', 'WF3\Controller\HomeController::delet
 
 
 //page de résultats de recherche en ajax
-$app->match('/ajax/recherchepartitre', 'WF3\Controller\AjaxController::rechercheOffreparTitreAction')
+$app->match('/rechercheajaxpartitre', 'WF3\Controller\AjaxController::rechercheOffreparTitreAction')
     ->bind('rechercheajaxpartitre');
 
 
