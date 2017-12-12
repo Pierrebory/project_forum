@@ -77,6 +77,11 @@ $app->match('/profil/{id}', 'WF3\Controller\HomeController::updateUserAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
     ->bind('profil');    
 
+// modifier les infos perso
+$app->match('/profil/{id}/mdp', 'WF3\Controller\HomeController::updatePassAction')
+    ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
+    ->bind('profil/mdp');       
+
 $app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeController::subjectAction')
     ->bind('forumsubject');
 
@@ -87,10 +92,6 @@ $app->match('/contact/moi', 'WF3\Controller\HomeController::contactAction')->bin
 $app->match('/inscription/alumni', 'WF3\Controller\HomeController::alumniAction')
     ->bind('inscription/alumni');
 
-
-$app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
-    ->bind('rechercheParUsername');
-
 $app->get('/user/delete/{id}', 'WF3\Controller\HomeController::deleteUserAction')
 ->assert('id', '\d+')
 ->bind('deleteUserAction');
@@ -100,7 +101,13 @@ $app->match('/alumni/update/{id}', 'WF3\Controller\HomeController::updateAlumniA
 ->bind('updateAlumniAction');
 
 
+$app->match('/job/update/{id}', 'WF3\Controller\HomeController::updateJobAction')
+->assert('id', '\d+')
+->bind('updateJobAction');
 
+
+$app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
+    ->bind('rechercheParUsername');
 ////////////AJAX///////////
 
 /*$app->match('/ajax/recherche', 'WF3\Controller\AjaxController::AjaxActionForum')

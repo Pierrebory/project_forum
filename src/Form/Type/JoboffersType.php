@@ -105,7 +105,7 @@ class JoboffersType extends AbstractType
     
          $builder->add('contract', ChoiceType::class, array(
             'label' => 'Type de contrat', 
-            'required' => false,                                       
+            'required' => true,                                       
             'choices' => array(
                 'CDI' => 'CDI',
                 'CDD' => 'CDD',
@@ -128,7 +128,7 @@ class JoboffersType extends AbstractType
         
         $builder->add('timetable', ChoiceType::class, array(
             'label' => 'Durée hebdomadaire de temps de travail', 
-            'required' => false,                                       
+            'required' => true,                                       
             'choices' => array(
                 'Temps plein' => 'Temps plein',
                 'Temps partiel' => 'Temps partiel',

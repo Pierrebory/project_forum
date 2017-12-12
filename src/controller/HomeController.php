@@ -23,9 +23,8 @@ use WF3\Form\Type\ContactType;
 use WF3\Form\Type\JoboffersType;
 use WF3\Form\Type\AlumniType;
 use WF3\Form\Type\RechercheUsernameType;
-use WF3\Form\Type\UpdateUserType;
 use WF3\Form\Type\PrivatemessageType;
-
+use WF3\Form\Type\SearchOfferType;
 
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -133,10 +132,6 @@ class HomeController{
                 'content'=>$article->getContent(),
                 'author'=>$app['user']->getId()
             ));*/
-    
-    
-    
-    
     
     
     
@@ -271,7 +266,7 @@ class HomeController{
     
     
  
-    ///////////////////////PAGE SUJET FORUM////////////////////////
+    ///////////////////////PAGE SUJET FORUM/////////////////////////
     public function forumPageAction(Application $app, Request $request){
         $subject = new Subjects();
         $subjects =[];
@@ -323,14 +318,17 @@ class HomeController{
             $error = true;
         }
 
-        if(array_search($data->getPhone(), array_column($uniqueTest, 'phone')) !== false && $data->getPhone() != null) {
+        if(array_search($data->getPhone(), array_column($uniqueTest, 'phone')) !== false) {
             $app['session']->getFlashBag()->add('phoneNotUnique', 'Ce numéro de téléphone est déjà attribué à un autre utilisateur.');
             $error = true;
         }
 
         // si le formulaire a été envoyé
-        if($userForm->isSubmitted() && $userForm->isValid() && $error === false){
+        if($userForm->isSubmitted() && $userForm->isValid()){
 
+
+
+            if($error === false){
             $salt = substr(md5(time()), 0, 23);
             $user->setSalt($salt);
             //on récupère le mot de passe en clair (envoyé par l'utilisateur)
@@ -344,6 +342,9 @@ class HomeController{
 
             $app['dao.users']->insert($user);               
             $app['session']->getFlashBag()->add('success', 'Vous êtes bien enregistré(e). Vous pouvez à présent vous connecter.');
+            }
+
+
                     
         }
 
@@ -386,7 +387,6 @@ class HomeController{
             $token = md5(uniqid(rand(), true));  
             $app['dao.resetpass']->insertReset($token, $user['id']);        
             $message = \Swift_Message::newInstance()
-                        ->setSubject('Changement de mot de passe forum WF3')
                         ->setFrom(array('promo5wf3@gmx.fr'))
                         ->setTo(array($data['email']))
                         ->setBody($app['twig']->render('emailReset.html.twig', 
@@ -417,8 +417,7 @@ class HomeController{
     /////////////// FORMULAIRE RESET MOT DE PASSE ///////////////////////////
     public function changePassAction(Application $app, Request $request, $id, $token){
 
-/*    $user = new User();*/   
-    $user = $app['dao.users']->find($id);
+    $user = new User();
     $resetForm = $app['form.factory']->create(ResetpassType::class, $user);
     // on envoie les paramètres de la requête à notre objet formulaire
     $resetForm->handleRequest($request); 
@@ -443,7 +442,7 @@ class HomeController{
         //on remplace le mdp en clair par le mdp crypté
         $user->setPassword($password);
 
-        $app['dao.resetpass']->updatePassword($id, $token, $user);
+        $app['dao.resetpass']->updatePassword($id, $token, $user->getPassword(), $user->getSalt() );
         $app['dao.resetpass']->deleteToken($id);        
         $app['session']->getFlashBag()->add('success', 'Votre mot de passe a bien été modifié.');
         return $app->redirect($app['url_generator']->generate('home'));     
@@ -455,30 +454,7 @@ class HomeController{
     ));         
 }   
 
-    /////////////////////// MODIFIER INFOS PERSO ///////////////////////////
-    public function updateUserAction(Application $app, Request $request, $id){
-
-        // on récupère le token si l'utilisateur est connecté
-        $token = $app['security.token_storage']->getToken();
-        if(NULL !== $token){
-            $user = $token->getUser();
-        }
-
-        $userForm = $app['form.factory']->create(UpdateUserType::class, $user);
-
-        $userForm->handleRequest($request); 
-
-        if($userForm->isSubmitted() && $userForm->isValid()){
-
-            $app['dao.user']->updateUser($id, $user);   
-            $app['session']->getFlashBag()->add('success', 'Vos informations ont bien été modifiées');          
-        }
-        
-        return $app['twig']->render('updateUser.html.twig', array(
-            'userForm' => $userForm->createView(),
-            'user' => $user,
-        ));
-    }
+    
     
      ///////////////////////PAGE REPONSE FORUM////////////////////////
      /* public function subjectAction(Application $app, Request $request, $idSubject, $idUser){
@@ -514,17 +490,8 @@ class HomeController{
         $responsesForm->handleRequest($request);
                  $responses = $app['dao.response']->getResponses($idSubject);
 
-        // on récupère le token si l'utilisateur est connecté
-        $token = $app['security.token_storage']->getToken();
-        if(NULL !== $token){
-            $user = $token->getUser();
-        }
-
-
         if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
-
-
-        $response->setUser_id($user->getId());
+        $response->setUser_id(3);
          $response->setSubject_id($idSubject);
         $response->setDate_message(date('Y-m-d H:i:s'));
          $app['dao.response']->insert($response);
@@ -621,24 +588,18 @@ class HomeController{
     public function rechercheParUsername(Application $app, Request $request){
         
         $user =[];
-        $rechercheForm = $app['form.factory']->create(RechercheUsernameType::class);
-        $rechercheForm->handleRequest($request);
-        if($rechercheForm->isSubmitted() AND $rechercheForm->isValid()){
+     
             //le formulaire a été envoyé
             //$request->request est égal à $_POST
             //$request->query est égal à $_GET
-            $post = $request->request->get('search_engine');
-            $user = $app['dao.users']->getUsernameLike($post['name']);
-        }
+            $user = $app['dao.users']->getUsernameLike($request->query->get('name'));
+        
         return $app['twig']->render('recherche.username.html.twig', array(
-            'form'=>$rechercheForm->createView(),
-            'user'=>$user//,
-            //'test'=>$request->files->get('search_engine')['attachment']->getOriginalName()
+            'user'=>$user,
         ));
     }
     
     
-
     
     public function deleteUserAction(Application $app, $id){
         //on va vérifier que l'utilisateur est connecté
@@ -669,44 +630,4 @@ class HomeController{
 	}
     
     
-
-    
-     public function updateAlumniAction(Application $app, Request $request, $id){
-          if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
-            //je peux rediriger l'utilisateur non authentifié
-            //return $app->redirect($app['url_generator']->generate('home'));
-            throw new AccessDeniedHttpException();
-        }
-        //on récupère l'utilisateur connecté qui veut faire la suppression
-        //on récupère le token si l'utilisateur est connecté
-        $token = $app['security.token_storage']->getToken();
-        if(NULL !== $token){
-            $user = $token->getUser();
-        }
-        //on récupère les infos de l'article
-        $alumni = $app['dao.alumni']->findModif($id);
-         $alumniId = $request->attributes->get('id');
-         if($user->getId() != $alumniId){
-            //si l'utilisateur n'est pas l'auteur: accès interdit
-            throw new AccessDeniedHttpException();
-        }
-        //on crée le formulaire et on lui passe l'article en paramètre
-        //il va utiliser $article pour pré remplir les champs
-        $alumniForm = $app['form.factory']->create(AlumniType::class, $alumni);
-
-        $alumniForm->handleRequest($request);
-
-        if($alumniForm->isSubmitted() && $alumniForm->isValid()){
-            //si le formulaire a été soumis
-            //on update avec les données envoyées par l'utilisateur
-            $app['dao.alumni']->updateModif($id, $alumni);
-        }
-
-       return $app['twig']->render('modification.alumni.html.twig', array(
-           'alumniForm' => $alumniForm->createView(),
-          'alumni' => $alumni)); 
-
-    }
-    
-
 }

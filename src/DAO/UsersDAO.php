@@ -43,6 +43,11 @@ class UsersDAO extends DAO implements UserProviderInterface
         return $result->fetchAll(\PDO::FETCH_ASSOC);   
     }      
 
+    //liste des infos qui ne peuvent pas être en plusieurs exemplaires
+    public function findOtherValues($id){
+        $result = $this->bdd->query('SELECT email, phone FROM users WHERE id != ' . $id);
+        return $result->fetchAll(\PDO::FETCH_ASSOC);   
+    }      
 
     // update les infos de l'utilisateur (sauf password et avatar) 
     public function updateUser($id, $data){
@@ -51,7 +56,7 @@ class UsersDAO extends DAO implements UserProviderInterface
         if(is_object($data)){
 
            //on va transformer l'objet en tableau php        
-           $dataArray = ['lastname' => $data->getPassword() , 'firstname' => $data->getSalt(), 'email' => $data->getSalt(), 'phone' => $data->getSalt(), 'city' => $data->getSalt()];
+           $dataArray = ['lastname' => $data->getLastname() , 'firstname' => $data->getFirstname(), 'email' => $data->getEmail(), 'phone' => $data->getPhone(), 'city' => $data->getCity()];
            $data = $dataArray;
 
         }
@@ -119,9 +124,9 @@ class UsersDAO extends DAO implements UserProviderInterface
 
     
     
-    public function getUsernameLike($name){
-        $result = $this->bdd->prepare('SELECT username FROM users  WHERE username LIKE :name');
-        $result->bindValue(':name', '%'.$name.'%');
+    public function getUsernameLike($username){
+        $result = $this->bdd->prepare('SELECT * FROM users  WHERE username LIKE :username');
+        $result->bindValue(':username', '%'.$username.'%');
         $result->execute();
         $rows =  $result->fetchALL(\PDO::FETCH_ASSOC);
         $user = [];
