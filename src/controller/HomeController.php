@@ -25,6 +25,7 @@ use WF3\Form\Type\AlumniType;
 use WF3\Form\Type\RechercheUsernameType;
 use WF3\Form\Type\PrivatemessageType;
 use WF3\Form\Type\SearchOfferType;
+use WF3\Form\Type\UpdateUserType;
 
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
