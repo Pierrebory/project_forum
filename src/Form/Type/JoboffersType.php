@@ -120,10 +120,7 @@ class JoboffersType extends AbstractType
                 'placeholder' => 'durée du CDD en mois'
             ),
             'required' => false,                      
-            'constraints' => array(
-                new Assert\NotBlank(),
-                ))      
-            );
+                ));
         
         
         $builder->add('timetable', ChoiceType::class, array(
