@@ -278,9 +278,13 @@ class HomeController{
         $subjectForm = $app['form.factory']->create(subjectType::class, $subject);
         $subjectForm->handleRequest($request);
                  $subjects = $app['dao.subject']->getSubjects();
-
+ $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
         if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
-            $subject->setUser_id(1);
+            
+            $subject->setUser_id($user->getId());
              $subject->setDate_message(date('Y-m-d H:i:s'));
 
          $app['dao.subject']->insert($subject);
@@ -494,9 +498,13 @@ class HomeController{
         $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
         $responsesForm->handleRequest($request);
                  $responses = $app['dao.response']->getResponses($idSubject);
+  $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
 
         if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
-        $response->setUser_id(3);
+        $response->setUser_id($user->getId());
          $response->setSubject_id($idSubject);
         $response->setDate_message(date('Y-m-d H:i:s'));
          $app['dao.response']->insert($response);
