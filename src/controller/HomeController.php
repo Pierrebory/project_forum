@@ -49,9 +49,8 @@ class HomeController{
         if(NULL !== $token){
             $user = $token->getUser();
         }
-        
-        $button = $user->getId();
-        return $app['twig']->render('annuaire.html.twig', array('users' => $users, 'button' => $button)); 
+
+        return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
     }
     
 
@@ -253,7 +252,7 @@ class HomeController{
         //on va chercher les infos sur l'offre d'emploi
         $joboffer = $app['dao.joboffers']->find($id);
         //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
-        if($user->getId() != $joboffer->getJoboffer()){
+        if($user->getId() != $joboffer->getUsers_id()){
             //si l'utilisateur n'est pas l'auteur: accès interdit
             throw new AccessDeniedHttpException();
         }
@@ -399,6 +398,7 @@ class HomeController{
             $token = md5(uniqid(rand(), true));  
             $app['dao.resetpass']->insertReset($token, $user['id']);        
             $message = \Swift_Message::newInstance()
+                        ->setSubject('Nouveau mot de passe forum WF3')
                         ->setFrom(array('promo5wf3@gmx.fr'))
                         ->setTo(array($data['email']))
                         ->setBody($app['twig']->render('emailReset.html.twig', 
@@ -454,7 +454,7 @@ class HomeController{
         //on remplace le mdp en clair par le mdp crypté
         $user->setPassword($password);
 
-        $app['dao.resetpass']->updatePassword($id, $token, $user->getPassword(), $user->getSalt() );
+        $app['dao.resetpass']->updatePassword($id, $token, $user);
         $app['dao.resetpass']->deleteToken($id);        
         $app['session']->getFlashBag()->add('success', 'Votre mot de passe a bien été modifié.');
         return $app->redirect($app['url_generator']->generate('home'));     
@@ -476,9 +476,18 @@ class HomeController{
             $user = $token->getUser();
         }
 
-        $userForm = $app['form.factory']->create(UpdateUserType::class, $user);
+        $idTest = $request->attributes->get('id');
 
+        //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
+        if($user->getId() != $idTest){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            throw new AccessDeniedHttpException();
+        }
+
+        $userForm = $app['form.factory']->create(UpdateUserType::class, $user);
         $userForm->handleRequest($request); 
+
+
 
         $uniqueTest = $app['dao.users']->findOtherValues($id);
         $data = $userForm->getData();
