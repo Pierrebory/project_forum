@@ -49,8 +49,8 @@ class HomeController{
             $user = $token->getUser();
         }
         
-        $button = $user->getId();
-        return $app['twig']->render('annuaire.html.twig', array('users' => $users, 'button' => $button)); 
+        
+        return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
     }
     
 
@@ -349,7 +349,8 @@ class HomeController{
             $password = $encoder->encodePassword($plainPassword, $user->getSalt());
             //on remplace le mdp en clair par le mdp crypté
             $user->setPassword($password);
-
+            $user->setAvatar($app['avatar']);
+            
             $app['dao.users']->insert($user);               
             $app['session']->getFlashBag()->add('success', 'Vous êtes bien enregistré(e). Vous pouvez à présent vous connecter.');
             }
@@ -512,9 +513,10 @@ class HomeController{
 
         if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
         $response->setUser_id($user->getId());
-         $response->setSubject_id($idSubject);
+         $response->setSubject_id($idSubject); 
         $response->setDate_message(date('Y-m-d H:i:s'));
          $app['dao.response']->insert($response);
+                
 
         
        }
