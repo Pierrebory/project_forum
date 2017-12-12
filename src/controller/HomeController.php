@@ -147,11 +147,7 @@ class HomeController{
             $user = $token->getUser();
         }
         
-        $button = $user->getId();
-
-
-
-        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres, 'button' => $button)); 
+        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres)); 
     }
     
     
@@ -516,7 +512,80 @@ class HomeController{
             'user' => $user,
         ));
     }
-    
+
+    /////////////////////// MODIFIER MOT DE PASSE ///////////////////////////
+    public function updatePasswordAction(Application $app, Request $request, $id){
+
+        // on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+
+        $idTest = $request->attributes->get('id');
+        $userId = $user->getId();
+
+        //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
+        if($userId != $idTest){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            throw new AccessDeniedHttpException();
+        }
+
+        $error = true;
+        $errors = [];
+        $dataUser = $app['dao.users']->find($userId);  
+
+        if(!empty($_POST)){
+
+/*            password_verify($_POST['oldPassword'], $$dataUser->getPassword())*/
+            if(!password_verify($_POST['oldPassword'], $dataUser->getPassword())){
+                $app['session']->getFlashBag()->add('error', 'Vous n\'avez pas entré le bon mot de passe actuel.');       
+                $errors['1'] = 'erreur';   
+            }
+
+            if($_POST['newPassword'] != $_POST['newPassword2']){
+                $app['session']->getFlashBag()->add('error', 'Les deux champs "nouveau mot de passe" ne sont pas identiques.');      
+                $errors['2'] = 'erreur';             
+            }
+
+            if(mb_strlen($_POST['newPassword']) < 4){
+                $app['session']->getFlashBag()->add('error', 'Le nouveau mot de passe doit faire au moins 4 caractères.');      
+                $errors['3'] = 'erreur';             
+            }
+
+            if(mb_strlen($_POST['newPassword']) > 255){
+                $app['session']->getFlashBag()->add('error', 'Le nouveau mot de passe doit faire moins de 256 caractères.');      
+                $errors['4'] = 'erreur';             
+            }
+
+            if(empty($errors)){
+                $error = false;
+            }
+        }
+
+
+        if($error === false){
+            $salt = substr(md5(time()), 0, 23);
+            $user->setSalt($salt);
+            //on récupère le mot de passe en clair (envoyé par l'utilisateur)
+            $plainPassword = $_POST['newPassword'];
+            // on récupère l'encoder de silex
+            $encoder = $app['security.encoder.bcrypt'];
+            // on encode le mdp
+            $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+            //on remplace le mdp en clair par le mdp crypté
+            $user->setPassword($password);
+
+            $app['dao.users']->updatePassword($id, $user);  
+            $app['session']->getFlashBag()->add('success', 'Votre mot de passe à bien été modifié.');          
+        }
+        
+        return $app['twig']->render('updatePassword.html.twig', array(
+            'test' => $dataUser->getPassword(),
+            'test2' => $errors,
+            'test3' => $error
+        ));
+    }    
     
      ///////////////////////PAGE REPONSE FORUM////////////////////////
      /* public function subjectAction(Application $app, Request $request, $idSubject, $idUser){
