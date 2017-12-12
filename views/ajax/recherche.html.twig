@@ -5,18 +5,12 @@
 {% for joboffer in joboffers %}
 <article>
     
-    <h2> <p>{{ joboffer.title }}</p></h2>
+    <h2><p><a href="{{ path('detailoffre', {id: joboffer.id}) }}">{{ joboffer.title }}</a></p></h2>
+  
      <h3><p>{{ joboffer.company }}</p></h3>
      <p>{{ joboffer.city }}</p>
      <p>{{ joboffer.date_offer }}</p>
-    <p>{{ joboffer.description }}</p>
-    <p>{{ joboffer.skills }}</p>
-    <p>{{ joboffer.advantages }}</p>
-     <p>{{ joboffer.contract }}</p>
-     <p>{{ joboffer.contractduration }}</p>
-     <p>{{ joboffer.timetable }}</p>
-    <p>{{ joboffer.recruitername }}</p>
-     <p>{{ joboffer.recruitercontact }}</p>
+  
     
 </article>
 {% endfor %}

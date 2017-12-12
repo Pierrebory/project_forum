@@ -140,7 +140,13 @@ class HomeController{
     //PAGE LISTE DES OFFRES D'EMPLOI
     public function offresAction(Application $app){
         $offres = $app['dao.joboffers']->findAll();  
-        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres)); 
+        $token = $app['security.token_storage']->getToken();
+       if(NULL !== $token){
+           $user = $token->getUser();
+       }
+        $button = $user->getId();
+        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres,
+                                                                        'button' => $button)); 
     }
     
     
@@ -181,6 +187,8 @@ class HomeController{
             $user = $token->getUser();
         }
 
+        //je récupère l'id du user qui poste l'offre d'emploi
+    
         //je crée un objet offre vide
         $offer = new JobOffers();
         //je crée mon objet formulaire à partir de la classe JoboffersType
@@ -190,7 +198,8 @@ class HomeController{
         //on vérifie si le formulaire a été envoyé
         //et si les données envoyées sont valides
         if($offerForm->isSubmitted() && $offerForm->isValid()){
-            
+            //je récupère l'id du user qui poste l'offre d'emploi
+            $offer->setUsers_id($user->getId());
             //on insère dans la base les éléments de l'offre
             $app['dao.joboffers']->insert(array(
                 'title'=>$offer->getTitle(),
@@ -204,7 +213,7 @@ class HomeController{
                 'timetable'=>$offer->getTimetable(),
                 'recruitername'=>$offer->getRecruitername(),
                 'recruitercontact'=>$offer->getRecruitercontact(),
-                'users_id'=>$offer->getUsers_id()
+                'users_id'=>$offer->getUsers_Id()
                             
             ));
             //on stocke en session un message de réussite
@@ -254,16 +263,6 @@ class HomeController{
     }
         
   
-    //RECHERCHE D'UNE OFFRE D'EMPLOI PAR SON TITRE
-    public function searchOfferAction(Application $app, Request $request){
-        $joboffers = $app['dao.joboffers']->findOffersByTitle($request->query->get('title'));
-       
-        return $app['twig']->render('resultoffers.html.twig', array('joboffers' => $joboffers));
-        
-    }
-    
-    
-    
     
  
     ///////////////////////PAGE SUJET FORUM////////////////////////

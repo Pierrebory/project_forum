@@ -20,9 +20,9 @@
 
 
 
-            <form>
-            <label>Recherche d'un article par son titre</label>
-            <input type="text" name="title" placeholder="Rentrer le nom de l'offre d'emploi">
+            <form method="GET">
+            <label>Recherche d'une offre d'emploi par son titre</label>
+            <input type="text" name="title" id="title" placeholder="Rentrer le nom de l'offre d'emploi">
             <button type="button" class="btn btn-info" id="action" style="margin-left:10px">Rechercher</button>
             </form>
 
@@ -42,7 +42,7 @@
                 var url = "{{ path('rechercheajaxpartitre') }}";
                 //requête ajax en POST
                 $.ajax({
-                    type: 'POST',
+                    type: 'GET',
                     url: url,
                     data: $('form').serialize(),
                     dataType: 'html',

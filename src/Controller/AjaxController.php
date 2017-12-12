@@ -10,17 +10,18 @@ class AjaxController{
     
     //page de recherche d'une offre d'emploi par son titre
     public function rechercheOffreparTitreAction(Application $app, Request $request){
-        
+        $joboffers=[];
         
         //$request->request est égal à $_POST
         //$request->query est égal à $_GET
-        $post = $request->request->get('search_engine');
-        $joboffers = $app['dao.joboffers']->findOffersByTitle($post['title']);
+        
+        $joboffers = $app['dao.joboffers']->findOffersByTitle($request->query->get('title'));
         
         return $app['twig']->render('ajax/recherche.html.twig', array(
-            'joboffers'=>$joboffers
+            'joboffers'=> $joboffers
         ));
     }
 
 
 }
+
