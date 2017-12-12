@@ -25,19 +25,20 @@ use WF3\Form\Type\AlumniType;
 use WF3\Form\Type\RechercheUsernameType;
 use WF3\Form\Type\PrivatemessageType;
 use WF3\Form\Type\SearchOfferType;
-
+use WF3\Form\Type\UpdateUserType;
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 
 class HomeController{
 
+
     //page d'accueil qui affiche tout les articles
     public function homePageAction(Application $app){
 
         return $app['twig']->render('index.html.twig');
     }
-    
+
     
     //page Annuaire (liste des anciens élèves) qui affiche uniquement les noms des anciens élèves
     public function annuaireAction(Application $app){
@@ -140,7 +141,14 @@ class HomeController{
     //PAGE LISTE DES OFFRES D'EMPLOI
     public function offresAction(Application $app){
         $offres = $app['dao.joboffers']->findAll();  
-        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres)); 
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        
+        $button = $user->getId();
+        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres, 'button' => $button)); 
     }
     
     
@@ -318,7 +326,7 @@ class HomeController{
             $error = true;
         }
 
-        if(array_search($data->getPhone(), array_column($uniqueTest, 'phone')) !== false) {
+        if(array_search($data->getPhone(), array_column($uniqueTest, 'phone')) !== false && $data->getPhone() != null) {
             $app['session']->getFlashBag()->add('phoneNotUnique', 'Ce numéro de téléphone est déjà attribué à un autre utilisateur.');
             $error = true;
         }
@@ -454,6 +462,47 @@ class HomeController{
     ));         
 }   
 
+
+    /////////////////////// MODIFIER INFOS PERSO ///////////////////////////
+    public function updateUserAction(Application $app, Request $request, $id){
+
+        // on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+
+        $userForm = $app['form.factory']->create(UpdateUserType::class, $user);
+
+        $userForm->handleRequest($request); 
+
+        $uniqueTest = $app['dao.users']->findOtherValues($id);
+        $data = $userForm->getData();
+        $error = false;
+
+        if(array_search($data->getEmail(), array_column($uniqueTest, 'email')) !== false) {
+            $app['session']->getFlashBag()->add('emailNotUnique', 'Cette adresse email est déjà attribuée à un autre utilisateur.');
+            $error = true;
+        }
+
+        if(array_search($data->getPhone(), array_column($uniqueTest, 'phone')) !== false && $data->getPhone() != null) {
+            $app['session']->getFlashBag()->add('phoneNotUnique', 'Ce numéro de téléphone est déjà attribué à un autre utilisateur.');
+            $error = true;
+        }        
+
+
+
+        if($userForm->isSubmitted() && $userForm->isValid() && $error === false){
+
+            $app['dao.users']->updateUser($id, $user);   
+            $app['session']->getFlashBag()->add('success', 'Vos informations ont bien été modifiées');          
+        }
+        
+        return $app['twig']->render('updateUser.html.twig', array(
+            'userForm' => $userForm->createView(),
+            'user' => $user,
+        ));
+    }
     
     
      ///////////////////////PAGE REPONSE FORUM////////////////////////

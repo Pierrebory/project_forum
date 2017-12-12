@@ -39,18 +39,19 @@
 
                         
                     <li><a href="{{ path('home') }}">Accueil</a></li>
-                      <li><a title="team" href="{{ path('annuaire') }}">Annuaire</a></li>
-                     <li><a href="{{ path('forum') }}">Forum</a></li>
-                     <li><a href="{{ path('offresemploi')}}">Offres d'emploi</a></li>
-                     <li><a href="{{ path('contactezmoi') }}">Contact</a></li>
+                    <li><a title="team" href="{{ path('annuaire') }}">Annuaire</a></li>
+                    <li><a href="{{ path('forum') }}">Forum</a></li>
+                    <li><a href="{{ path('offresemploi')}}">Offres d'emploi</a></li>
+                    <li><a href="{{ path('contactezmoi') }}">Contact</a></li>
                    
 
-                      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                          <li><a href="{{ path('logout') }}">déconnexion</a></li>                 
-                      {% else %}
-                          <li><a href="{{ path('login') }}">connexion</a></li>
-                          <li><a href="{{ path('inscription') }}">inscription</a></li>
-                      {% endif %}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li><a href="{{ path('profil', {id: app.user.id})}}">profil</a></li> 
+                        <li><a href="{{ path('logout') }}">déconnexion</a></li>                 
+                    {% else %}
+                        <li><a href="{{ path('login') }}">connexion</a></li>
+                        <li><a href="{{ path('inscription') }}">inscription</a></li>
+                    {% endif %}
 
 
                      <!-- A MODIDIER FORMAT TWIG-->
