@@ -19,15 +19,14 @@
 
 
 
-          <a href="{{ path('updateAlumniAction', {id: button}) }}"><button type="button" class="btn btn-info">Modifiez votre fiche détaillée</button></a> 
 
-          <a href="{{ path('deleteUserAction', {id: button})}}"><button type="button" class="btn btn-info">Supprimer son compte</button></a> 
+          <a href="{{ path('updateAlumniAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info">Modifiez votre fiche détaillée</button></a> 
+ 
 
 
-<br><br>
 <form action="{{ path('rechercheParUsername')}}">
-    <input style="margin-left:1em; margin-bottom: 1em; width:390px;" type="text" name="name" placeholder="nom"><br>
-    <button type="submit" style="margin-left:1em; ">Rechercher un ancien</button>
+    <input style="margin-left:1em; margin-bottom: 1em; width:390px; margin-top:20px;" type="text" name="name" placeholder="nom"><br>
+    <button type="submit" style="margin-left:1em; background: #ecf0f1; ">Rechercher un ancien</button>
 </form>
 
 
@@ -68,7 +67,7 @@
 
 
 
-<a href="{{ path('deleteUserAction', {id: button})}}"><button type="button" class="btn btn-info" style="margin-bottom:2em; margin-left: 1em; width:390px">Supprimer son compte</button></a> 
+<a href="{{ path('deleteUserAction', {id: app.user.id})}}"><button type="button" class="btn btn-info" style="margin-bottom:2em; margin-left: 1em; width:390px">Supprimer son compte</button></a> 
 
 
 
