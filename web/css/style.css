@@ -260,47 +260,14 @@ ul#menu-main > li > a:focus {
 Page sections
 ============================================================ */
 
-/* === section header === */
 
-#header-wrapper {
-	width: 100%;
-	min-height: 600px;
-	margin-top: -60px;
-	padding-top:160px;
-	text-align:center;
-}
-
-
-#header-wrapper h1 {
-	color: #FFFFFF;
-	font-size: 4em;
-	font-weight: 400;
-	margin: 1em 0;
-}
-#header-wrapper h2 {
-	color: #fff;
-	font-family: 'Open Sans', sans serif;
-	font-size: 2em;
-	font-weight: normal;
-	margin: 0.5em 0;
-	text-shadow: 1px 1px 1px #333333;
-}
 
 header .logo {
 	text-align:center;
 	margin-bottom:30px;
 }
 
-/* --- Header slider --- */
-#header-wrapper.header-slider {
 
-	background: #444 url(../img/bg/source-code_blog.jpg) no-repeat center center fixed;
-
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-}
 
 #main-flexslider ul.slides li p {
 	font-size: 72px;
@@ -482,13 +449,9 @@ footer {
 	text-align: center;
 	color: #ddd;
 	padding:50px 0 50px;
-	padding-bottom: 0px;
+	padding-bottom: 20px;
 	font-size: 12px;
-	position:block;
-	bottom:0;
-	left:0;
-	height:100px;
-	padding:0px;
+	position: relative;	
 }
 
 footer a {
@@ -526,64 +489,20 @@ footer ul.social-networks li a:hover {
 footer ul.social-networks li a i.icon-twitter:hover {
 	background: #5ad2eb;
 	color: #fff;
+	border-radius:50%;
 }
+
 footer ul.social-networks li a i.icon-facebook:hover {
 	background: #3B5998;
 	color: #fff;
+	border-radius:50%;
+	
 }
 footer ul.social-networks li a i.icon-linkedin:hover {
 	background: #007bb6;
 	color: #fff;
-}
-
-/* rounded */
-i.icon-rounded {
-	display: inline-block;
-	border-radius: 6px !important;
-	-moz-border-radius: 6px !important;
-	-webkit-border-radius: 6px !important;
-	-o-border-radius: 6px !important;
-	-ms-border-radius: 6px !important;
-	text-align: center;
-	width: 24px !important;
-	height: 24px !important;
-	line-height: 24px !important;
-}
-
-.icon-rounded.icon-2x{
-	width: 48px !important;
-	height: 48px !important;
-	line-height: 48px !important;
-}
-.icon-rounded.icon-3x{
-	width: 72px !important;
-	height: 72px !important;
-	line-height: 72px !important;
-	border-radius: 8px !important;
-	-moz-border-radius: 8px !important;
-	-webkit-border-radius: 8px !important;
-	-o-border-radius: 8px !important;
-	-ms-border-radius: 8px !important;
-}
-.icon-rounded.icon-4x{
-	width: 96px !important;
-	height: 96px !important;
-	line-height: 96px !important;
-	border-radius: 10px !important;
-	-moz-border-radius: 10px !important;
-	-webkit-border-radius: 10px !important;
-	-o-border-radius: 10px !important;
-	-ms-border-radius: 10px !important;
-}
-.icon-rounded.icon-5x{
-	width: 120px !important;
-	height: 120px !important;
-	line-height: 120px !important;
-	border-radius: 12px !important;
-	-moz-border-radius: 12px !important;
-	-webkit-border-radius: 12px !important;
-	-o-border-radius: 12px !important;
-	-ms-border-radius: 12px !important;
+	border-radius: 50%;
+	
 }
 
 /* =========================================================
@@ -661,20 +580,7 @@ Media queries
 		width: 25%;
 	}
 }
-    
-    /* Smaller screens ----------- */
-@media (max-width : 480px) {
-	#header-wrapper {
-		padding-top:80px;
-	}
-
-	#team .team-thumb {
-		 margin-right: auto;
-		 margin-left: auto;
-		 width: 50px;
-		 display: block;
-		 text-align:center;
-	}
+   
 
 	
 
