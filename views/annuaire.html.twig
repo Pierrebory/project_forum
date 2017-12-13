@@ -20,7 +20,7 @@
 
 
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-          <a href="{{ path('updateAlumniAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info">Modifiez votre fiche détaillée</button></a> 
+          <a href="{{ path('updateAlumniAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info" style="margin-left: 1em; width: 390px;">Modifiez votre fiche détaillée</button></a> 
                     {%endif%}
 
 
