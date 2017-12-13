@@ -26,7 +26,10 @@ use WF3\Form\Type\RechercheUsernameType;
 use WF3\Form\Type\PrivatemessageType;
 use WF3\Form\Type\SearchOfferType;
 use WF3\Form\Type\UpdateUserType;
+<<<<<<< HEAD
 use WF3\Form\Type\UploadType;
+=======
+>>>>>>> 617a9095a8440ec73aa6b4d24e102af0f079084f
 
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -51,18 +54,19 @@ class HomeController{
             $user = $token->getUser();
         }
         
-        
         return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
     }
     
 
-  //PAGE DE DETAIL D'UNE FICHE D'UN ANCIEN ELEVE
+  //PAGE DE DETAIL D'UNE FICHE D'UN ANCIEN ELEVE(accessible uniquement aux personnes connectées)
     public function getAlumniAction(Application $app, $id){
         //on va vérifier que l'utilisateur est connecté
     	if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
             //je peux rediriger l'utilisateur non authentifié
+            
             return $app->redirect($app['url_generator']->generate('login'));
             throw new AccessDeniedHttpException();
+            
         }
         
         //on récupère le token si l'utilisateur est connecté
@@ -149,6 +153,7 @@ class HomeController{
         }
         
         return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres)); 
+
 
     }
     
@@ -253,7 +258,7 @@ class HomeController{
         //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
         if($user->getId() != $joboffer->getUsers_id()){
             //si l'utilisateur n'est pas l'auteur: accès interdit
-            throw new AccessDeniedHttpException();
+            return $app['twig']->render('accesrestreint.html.twig');
         }
         
         $joboffer = $app['dao.joboffers']->delete($id);
@@ -483,7 +488,7 @@ class HomeController{
         //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
         if($user->getId() != $idTest){
             //si l'utilisateur n'est pas l'auteur: accès interdit
-            throw new AccessDeniedHttpException();
+            return $app['twig']->render('accesrestreint.html.twig');
         }
 
         $userForm = $app['form.factory']->create(UpdateUserType::class, $user);
@@ -564,7 +569,7 @@ class HomeController{
         //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
         if($userId != $idTest){
             //si l'utilisateur n'est pas l'auteur: accès interdit
-            throw new AccessDeniedHttpException();
+            return $app['twig']->render('accesrestreint.html.twig');
         }
 
         $error = true;
@@ -804,7 +809,7 @@ class HomeController{
         //on vérifie que cet utlisateur est bien l'auteur de l'article
         if($user->getId() != $users['id']){
             //si l'utilisateur n'est pas l'auteur: accès interdit
-            throw new AccessDeniedHttpException();
+            return $app['twig']->render('accesrestreint.html.twig');
         }
 		$users = $app['dao.users']->delete($id);
         //on crée un message de réussite dans la session
@@ -832,7 +837,7 @@ class HomeController{
          $alumniId = $request->attributes->get('id');
          if($user->getId() != $alumniId){
             //si l'utilisateur n'est pas l'auteur: accès interdit
-            throw new AccessDeniedHttpException();
+            return $app['twig']->render('accesrestreint.html.twig');
         }
         //on crée le formulaire et on lui passe l'article en paramètre
         //il va utiliser $article pour pré remplir les champs
@@ -871,7 +876,7 @@ class HomeController{
          $alumniId = $request->attributes->get('id');
          if($user->getId() != $alumniId){
             //si l'utilisateur n'est pas l'auteur: accès interdit
-            throw new AccessDeniedHttpException();
+            return $app['twig']->render('accesrestreint.html.twig');
         }
         //on crée le formulaire et on lui passe l'article en paramètre
         //il va utiliser $article pour pré remplir les champs
