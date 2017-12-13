@@ -25,6 +25,7 @@ use WF3\Form\Type\AlumniType;
 use WF3\Form\Type\RechercheUsernameType;
 use WF3\Form\Type\PrivatemessageType;
 use WF3\Form\Type\SearchOfferType;
+use WF3\Form\Type\UpdateUserType;
 
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -49,7 +50,6 @@ class HomeController{
             $user = $token->getUser();
         }
         
-      
         return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
     }
     
@@ -143,11 +143,14 @@ class HomeController{
     public function offresAction(Application $app){
         $offres = $app['dao.joboffers']->findAll();  
         $token = $app['security.token_storage']->getToken();
-       if(NULL !== $token){
-           $user = $token->getUser();
-       }
-       
+
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        
         return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres)); 
+
+
     }
     
     
@@ -262,7 +265,17 @@ class HomeController{
     }
         
   
+
+    //RECHERCHE D'UNE OFFRE D'EMPLOI PAR SON TITRE
+    public function searchOfferAction(Application $app, Request $request){
+        $joboffers = $app['dao.joboffers']->findOffersByTitle($request->query->get('title'));
+       
+        return $app['twig']->render('resultoffers.html.twig', array('joboffers' => $joboffers));
+        
+    }
     
+    
+   
  
     ///////////////////////PAGE SUJET FORUM////////////////////////
     public function forumPageAction(Application $app, Request $request){
@@ -271,7 +284,10 @@ class HomeController{
         $subjectForm = $app['form.factory']->create(subjectType::class, $subject);
         $subjectForm->handleRequest($request);
                  $subjects = $app['dao.subject']->getSubjects();
-
+         $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
         if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
             $subject->setUser_id($user->getId());
              $subject->setDate_message(date('Y-m-d H:i:s'));
@@ -337,7 +353,8 @@ class HomeController{
             $password = $encoder->encodePassword($plainPassword, $user->getSalt());
             //on remplace le mdp en clair par le mdp crypté
             $user->setPassword($password);
-
+            $user->setAvatar($app['avatar']);
+            
             $app['dao.users']->insert($user);               
             $app['session']->getFlashBag()->add('success', 'Vous êtes bien enregistré(e). Vous pouvez à présent vous connecter.');
             }
@@ -452,7 +469,131 @@ class HomeController{
     ));         
 }   
 
-    
+
+    /////////////////////// MODIFIER INFOS PERSO ///////////////////////////
+    public function updateUserAction(Application $app, Request $request, $id){
+
+        // on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+
+        $idTest = $request->attributes->get('id');
+
+        //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
+        if($user->getId() != $idTest){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            throw new AccessDeniedHttpException();
+        }
+
+        $userForm = $app['form.factory']->create(UpdateUserType::class, $user);
+        $userForm->handleRequest($request); 
+
+
+
+        $uniqueTest = $app['dao.users']->findOtherValues($id);
+        $data = $userForm->getData();
+        $error = false;
+
+        if(array_search($data->getEmail(), array_column($uniqueTest, 'email')) !== false) {
+            $app['session']->getFlashBag()->add('emailNotUnique', 'Cette adresse email est déjà attribuée à un autre utilisateur.');
+            $error = true;
+        }
+
+        if(array_search($data->getPhone(), array_column($uniqueTest, 'phone')) !== false && $data->getPhone() != null) {
+            $app['session']->getFlashBag()->add('phoneNotUnique', 'Ce numéro de téléphone est déjà attribué à un autre utilisateur.');
+            $error = true;
+        }        
+
+
+
+        if($userForm->isSubmitted() && $userForm->isValid() && $error === false){
+
+            $app['dao.users']->updateUser($id, $user);   
+            $app['session']->getFlashBag()->add('success', 'Vos informations ont bien été modifiées');          
+        }
+        
+        return $app['twig']->render('updateUser.html.twig', array(
+            'userForm' => $userForm->createView(),
+            'user' => $user,
+        ));
+    }
+
+    /////////////////////// MODIFIER MOT DE PASSE ///////////////////////////
+    public function updatePasswordAction(Application $app, Request $request, $id){
+
+        // on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+
+        $idTest = $request->attributes->get('id');
+        $userId = $user->getId();
+
+        //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
+        if($userId != $idTest){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            throw new AccessDeniedHttpException();
+        }
+
+        $error = true;
+        $errors = [];
+        $dataUser = $app['dao.users']->find($userId);  
+
+        if(!empty($_POST)){
+
+/*            password_verify($_POST['oldPassword'], $$dataUser->getPassword())*/
+            if(!password_verify($_POST['oldPassword'], $dataUser->getPassword())){
+                $app['session']->getFlashBag()->add('error', 'Vous n\'avez pas entré le bon mot de passe actuel.');       
+                $errors['1'] = 'erreur';   
+            }
+
+            if($_POST['newPassword'] != $_POST['newPassword2']){
+                $app['session']->getFlashBag()->add('error', 'Les deux champs "nouveau mot de passe" ne sont pas identiques.');      
+                $errors['2'] = 'erreur';             
+            }
+
+            if(mb_strlen($_POST['newPassword']) < 4){
+                $app['session']->getFlashBag()->add('error', 'Le nouveau mot de passe doit faire au moins 4 caractères.');      
+                $errors['3'] = 'erreur';             
+            }
+
+            if(mb_strlen($_POST['newPassword']) > 255){
+                $app['session']->getFlashBag()->add('error', 'Le nouveau mot de passe doit faire moins de 256 caractères.');      
+                $errors['4'] = 'erreur';             
+            }
+
+            if(empty($errors)){
+                $error = false;
+            }
+        }
+
+
+        if($error === false){
+            $salt = substr(md5(time()), 0, 23);
+            $user->setSalt($salt);
+            //on récupère le mot de passe en clair (envoyé par l'utilisateur)
+            $plainPassword = $_POST['newPassword'];
+            // on récupère l'encoder de silex
+            $encoder = $app['security.encoder.bcrypt'];
+            // on encode le mdp
+            $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+            //on remplace le mdp en clair par le mdp crypté
+            $user->setPassword($password);
+
+            $app['dao.users']->updatePassword($id, $user);  
+            $app['session']->getFlashBag()->add('success', 'Votre mot de passe à bien été modifié.');          
+        }
+        
+        return $app['twig']->render('updatePassword.html.twig', array(
+            'test' => $dataUser->getPassword(),
+            'test2' => $errors,
+            'test3' => $error
+        ));
+    }    
+
     
      ///////////////////////PAGE REPONSE FORUM////////////////////////
      /* public function subjectAction(Application $app, Request $request, $idSubject, $idUser){
@@ -479,26 +620,38 @@ class HomeController{
 
     }*/
     
+    
+    
     /////////////////////////////PAGE REPONSE FORUM////////////////////////////
     public function subjectAction(Application $app, Request $request, $idSubject){
-        
+
+    $subject = $app['dao.subject']->getSubject($idSubject);
         $response = new Responses();
-        $responses =[];
         $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
         $responsesForm->handleRequest($request);
+
+        $responses = $app['dao.response']->getResponses($idSubject);
+  $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+
                  $responses = $app['dao.response']->getResponses($idSubject);
+
 
         if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
         $response->setUser_id($user->getId());
-         $response->setSubject_id($idSubject);
+         $response->setSubject_id($idSubject); 
         $response->setDate_message(date('Y-m-d H:i:s'));
          $app['dao.response']->insert($response);
+                
 
         
        }
         return $app['twig']->render('responses_forum.html.twig', array(
             'responsesForm'=>$responsesForm->createView(),
             'response'=>$response,
+            'subject'=>$subject,
         'responses'=>$responses));
    
 
@@ -633,4 +786,80 @@ class HomeController{
 	}
     
     
+    
+      public function updateAlumniAction(Application $app, Request $request, $id){
+          if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            //return $app->redirect($app['url_generator']->generate('home'));
+            throw new AccessDeniedHttpException();
+        }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        //on récupère les infos de l'article
+        $alumni = $app['dao.alumni']->findModif($id);
+         $alumniId = $request->attributes->get('id');
+         if($user->getId() != $alumniId){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            throw new AccessDeniedHttpException();
+        }
+        //on crée le formulaire et on lui passe l'article en paramètre
+        //il va utiliser $article pour pré remplir les champs
+        $alumniForm = $app['form.factory']->create(AlumniType::class, $alumni);
+
+        $alumniForm->handleRequest($request);
+
+        if($alumniForm->isSubmitted() && $alumniForm->isValid()){
+            //si le formulaire a été soumis
+            //on update avec les données envoyées par l'utilisateur
+            $app['dao.alumni']->updateModif($id, $alumni);
+        }
+
+       return $app['twig']->render('modification.alumni.html.twig', array(
+           'alumniForm' => $alumniForm->createView(),
+          'alumni' => $alumni)); 
+
+    }
+    
+    
+    
+     public function updateJobAction(Application $app, Request $request, $id){
+          if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            //return $app->redirect($app['url_generator']->generate('home'));
+            throw new AccessDeniedHttpException();
+        }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        //on récupère les infos de l'article
+        $jobOffert = $app['dao.joboffers']->findJobModif($id);
+         $alumniId = $request->attributes->get('id');
+         if($user->getId() != $alumniId){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            throw new AccessDeniedHttpException();
+        }
+        //on crée le formulaire et on lui passe l'article en paramètre
+        //il va utiliser $article pour pré remplir les champs
+        $offerForm = $app['form.factory']->create(JobOffersType::class, $jobOffert);
+
+        $offerForm->handleRequest($request);
+
+        if($offerForm->isSubmitted() && $offerForm->isValid()){
+            //si le formulaire a été soumis
+            //on update avec les données envoyées par l'utilisateur
+            $app['dao.joboffers']->updateJobModif($id, $jobOffert);
+        }
+
+       return $app['twig']->render('modification.jobOffert.html.twig', array(
+           'offerForm' => $offerForm->createView(),
+          'jobOffert' => $jobOffert)); 
+
+    }
 }

@@ -21,9 +21,10 @@
 
 
 
- {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
           <a href="{{ path('updateAlumniAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info">Modifiez votre fiche détaillée</button></a> 
- {% endif %}
+                    {%endif%}
+
 
 
 <form action="{{ path('rechercheParUsername')}}">
@@ -44,6 +45,7 @@
       <th scope="col">Ville</th>
       <th scope="col">Détails</th>
     <th scope="col">Contact</th>
+    
    
     </tr>
       	
@@ -61,6 +63,7 @@
       <td>{{ user.firstname }}</td>
       <td>{{ user.username }}</td>
       <td>{{ user.city }}</td>
+
         
             {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success">
@@ -68,8 +71,10 @@
             </div>
             {% endfor %}
         
+
         <td><a href="{{ path('fichedetaillee', {id: user.id}) }}">Fiche détaillée</a></td>
         <td><a href="{{ path('contacter', {id: user.id}) }}">Contacter</a></td>
+       
     </tr>
 
       
@@ -78,9 +83,12 @@
 </table>
 
 
- {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+ 
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 <a href="{{ path('deleteUserAction', {id: app.user.id})}}"><button type="button" class="btn btn-info" style="margin-bottom:2em; margin-left: 1em; width:390px">Supprimer son compte</button></a> 
- {% endif %}
+{%endif%}
+
 
 
 

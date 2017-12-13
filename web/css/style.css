@@ -24,7 +24,8 @@ General
 ============================================================ */
 
 html {
-	height: 100%;
+    position: relative;
+    height: 100%;
 }
 body {
 	margin: 0
@@ -436,10 +437,10 @@ footer {
 	background: #2b2b2b;
 	text-align: center;
 	color: #ddd;
-	padding:50px 0 50px;
-	padding-bottom: 20px;
+	padding:50px 50px;
 	font-size: 12px;
 	position: relative;	
+	
 }
 
 footer a {
@@ -495,6 +496,12 @@ footer ul.social-networks li a i.icon-linkedin:hover {
 	color: #fff;
 	border-radius: 50%;
 	
+}
+
+footer ul.social-networks li a i.icon-instagram:hover {
+	background: #bc2a8d;
+	color: #fff;
+	border-radius: 50%;
 }
 
 /* =========================================================

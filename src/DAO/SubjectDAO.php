@@ -16,7 +16,34 @@ class SubjectDAO extends DAO{
             $subjects[] = $this->buildObject($row);
         }
         return $subjects;
+	} 
+    
+    
+    public function getSubject($idSubject){
+		$result = $this->bdd->prepare('SELECT * FROM forum_subjects  WHERE id = :idSubject');
+        $result->bindValue(':idSubject', $idSubject);
+        $result->execute();
+		$row = $result->fetch(\PDO::FETCH_ASSOC);
+        $subject = $this->buildObject($row);
+        
+        return $subject;
+        
 	}
+    
+    public function getSubject2($idSubject){
+		$result = $this->bdd->prepare('SELECT subject_id FROM forum_responses WHERE subject_id = :idSubject');
+        $result->bindValue(':idSubject', $idSubject);
+        $result->execute();
+		return $result->fetch(\PDO::FETCH_ASSOC);
+        $subject = $this->buildObject($row);
+        
+        return $subject;
+        
+	}
+    
+    
+    
+
     
     
     
