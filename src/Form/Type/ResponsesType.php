@@ -22,7 +22,7 @@ class ResponsesType extends AbstractType
         $builder
 
 
-            ->add('message', TextType::class, array(
+            ->add('message', TextareaType::class, array(
 
                 'attr' => array(
                     'placeholder' => 'Votre message'

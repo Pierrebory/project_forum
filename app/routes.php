@@ -101,10 +101,10 @@ $app->match('/mdp/{id}', 'WF3\Controller\HomeController::updatePasswordAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
     ->bind('mdp');       
 
-// modifier les infos perso
-$app->match('/profil/{id}/mdp', 'WF3\Controller\HomeController::updatePassAction')
+// page messagerie avec toutes les conversations
+$app->match('/messagerie/{id}', 'WF3\Controller\HomeController::conversationsAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
-    ->bind('profil/mdp');       
+    ->bind('messagerie');           
 
 
 

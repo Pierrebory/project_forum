@@ -51,7 +51,7 @@ class HomeController{
         if(NULL !== $token){
             $user = $token->getUser();
         }
-        
+
         return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
     }
     
@@ -334,7 +334,7 @@ class HomeController{
             $error = true;
         }
 
-        if(array_search($data->getPhone(), array_column($uniqueTest, 'phone')) !== false) {
+        if(array_search($data->getPhone(), array_column($uniqueTest, 'phone')) !== false && $data->getPhone() != null) {
             $app['session']->getFlashBag()->add('phoneNotUnique', 'Ce numéro de téléphone est déjà attribué à un autre utilisateur.');
             $error = true;
         }
@@ -404,6 +404,7 @@ class HomeController{
             $token = md5(uniqid(rand(), true));  
             $app['dao.resetpass']->insertReset($token, $user['id']);        
             $message = \Swift_Message::newInstance()
+                        ->setSubject('Changement de mot de passe forum WF3')
                         ->setFrom(array('promo5wf3@gmx.fr'))
                         ->setTo(array($data['email']))
                         ->setBody($app['twig']->render('emailReset.html.twig', 
@@ -530,7 +531,7 @@ class HomeController{
             $file = $request->files->get('upload')['avatar'];
             //je lui dis où stocker le fichier
             //$app['upload_dir'] est défini dans app/config/prod.php
-            $path = __DIR__.'/../../web/img/avatar/'.$app['upload_dir'];
+            $path = __DIR__.'/../../web/img/avatar/';
             //le nom original est dispo avec :
             //$filename = $file->getClientOriginalName();
             //guessExtension() renvoie l'extension du fichier
@@ -626,6 +627,54 @@ class HomeController{
         ));
     }    
 
+
+    /////////// ACCES AUX CONVERSATIONS /////////////
+    public function conversationsAction(Application $app){
+        
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+
+        $userId = $user->getId();
+
+        $users = $app['dao.privatemessage']->findConversations($userId);
+
+
+        return $app['twig']->render('conversations.html.twig', array('users' => $users)); 
+    }
+    
+
+    /////////////////////////////PAGE REPONSE FORUM////////////////////////////  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+/*    public function subjectAction(Application $app, Request $request, $idSubject){
+
+    $subject = $app['dao.subject']->getSubject($idSubject);
+        $response = new Responses();
+        $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
+        $responsesForm->handleRequest($request);
+
+        $responses = $app['dao.response']->getResponses($idSubject);
+  $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+
+                 $responses = $app['dao.response']->getResponses($idSubject);
+
+
+
+        return $app['twig']->render('responses_forum.html.twig', array(
+            'responsesForm'=>$responsesForm->createView(),
+            'response'=>$response,
+            'subject'=>$subject,
+        'responses'=>$responses));
+   
+
+    }
+    */
+    
+
     
      ///////////////////////PAGE REPONSE FORUM////////////////////////
      /* public function subjectAction(Application $app, Request $request, $idSubject, $idUser){
@@ -678,6 +727,11 @@ class HomeController{
         $app['dao.response']->insert($response);
 
        }
+
+
+
+         
+
         return $app['twig']->render('responses_forum.html.twig', array(
             'responsesForm'=>$responsesForm->createView(),
             'response'=>$response,
