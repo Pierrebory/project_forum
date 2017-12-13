@@ -13,9 +13,9 @@
             </div>
             {% endfor %}
 
-            <h2 style="text-align: center">Formulaire d'inscription</h2>
+            <h2 style="text-align: center; margin-top: 20px;">Formulaire d'inscription</h2>
 
-            <p style="text-align: center">Veillez remplir le formulaire ci-dessous pour vous inscrire. Vous recevrez une confirmation par email une fois que le formulaire sera validé.</p>
+            <p style="text-align: center">Veuillez remplir le formulaire ci-dessous pour vous inscrire. Vous recevrez une confirmation par email une fois que le formulaire sera validé.</p>
             <p style="text-align: center">Les champs marqués d'une * sont obligatoires.</p>
  
 
@@ -98,7 +98,7 @@
                         }}) }}
                     </div>
                 </div>
-                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
+                <div class="form-group" style="margin-left: 40em; margin-right: 40em; margin-bottom: 10px;">
                     {{ form_label(userForm.password.first, null, { 'label_attr':  {
                         'class': 'col-sm-5 control-label'
                     }}) }}
@@ -115,7 +115,7 @@
                         }}) }}
                     </div>
                 </div>
-                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
+                <div class="form-group" style="margin-left: 40em; margin-right: 40em; margin-bottom: 10px;">
                     {{ form_label(userForm.password.second, null, { 'label_attr':  {
                         'class': 'col-sm-5 control-label'
                     }}) }}
@@ -181,8 +181,6 @@
                 </div>
             {{ form_end(userForm) }}
 
-            {{ dump(test) }}
-            {{ dump(error) }}
         </div>
 
         {% endblock %}
