@@ -31,7 +31,7 @@ class Subjects{
         return $this->date_edit;
     }
     
-    public function getuser_id(){
+    public function getUser_id(){
         return $this->user_id;
     }
     
