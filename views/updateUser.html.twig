@@ -25,7 +25,7 @@
         <div>
             {{ form_start(userForm, { 'attr': {'class': 'form-horizontal'} }) }}
                 
-                <img style="margin-top: -15em; margin-left: 20em;" src="{{ asset('img/avatar/web/uploads/' ~ user.avatar) }} class="img img-responsive img-rounded" width="200"">
+                <img style="margin-top: -15em; margin-left: 20em;" src="{{ asset('img/avatar/' ~ user.avatar) }} class="img img-responsive img-rounded" width="200"">
                 
                 <div class="form-group" style="margin-left: 40em; margin-right: 40em;">
                     {{ form_label(userForm.lastname, null) }}

@@ -530,7 +530,7 @@ class HomeController{
             $file = $request->files->get('upload')['avatar'];
             //je lui dis où stocker le fichier
             //$app['upload_dir'] est défini dans app/config/prod.php
-            $path = __DIR__.'/../../web/img/avatar/'.$app['upload_dir'];
+            $path = __DIR__.'/../../web/img/avatar/';
             //le nom original est dispo avec :
             //$filename = $file->getClientOriginalName();
             //guessExtension() renvoie l'extension du fichier
@@ -680,6 +680,11 @@ class HomeController{
 
         
        }
+
+
+
+         
+
         return $app['twig']->render('responses_forum.html.twig', array(
             'responsesForm'=>$responsesForm->createView(),
             'response'=>$response,

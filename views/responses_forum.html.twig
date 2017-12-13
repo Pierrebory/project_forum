@@ -5,13 +5,13 @@
 	{% block content %}
         <br><br>
 <br><br><br>
-       
+       <div style="background-color: #f5f5f5;  color:grey">
            
         <h2 style="text-align: center">  {{ subject.title}}</h2>
-        <article style="text-align: center; border: ridge;  background-color: #f5f5f5; align-items: center; margin-left: 40em; margin-right: 40em; margin-bottom: 2em; box-shadow: 6px 6px 6px #d6d5d5;   word-wrap: break-word">
+        <article style="text-align: center; border-radius: 1%; background-color: white; align-items: center; margin-left: 40em; margin-right: 40em; margin-bottom: 2em; word-wrap: break-word">
                 
 				
-				<img style="margin-top: 1em; margin-left: 1em; margin-right: 45em; padding-top: -1em;" src="{{ asset('img/avatar/web/uploads/' ~ subject.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -2em;">Message publié le {{ subject.date_message }}
+				<img style="margin-top: 1em; margin-left: 1em; margin-right: 45em; padding-top: -1em;" src="{{ asset('img/avatar/' ~ subject.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -2em;">Message publié le {{ subject.date_message }}
 				par {{ subject.user_id.username }}</p><hr style="margin-left: 3em; margin-right: 3em; border: 0;
     height: 1px;
     background: #333;
@@ -21,15 +21,15 @@
 
         
             {% for response in responses %}
-			 <article style="text-align: center; border: ridge;  background-color: #f5f5f5; align-items: center; margin-left: 40em; margin-right: 40em; margin-bottom: 2em; box-shadow: 6px 6px 6px #d6d5d5;   word-wrap: break-word">
+			 <article style="text-align: center; border-radius: 1%; background-color: white; align-items: center; margin-left: 40em; margin-right: 40em; margin-bottom: 2em;  word-wrap: break-word">
                 
 				
-				<img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/web/uploads/' ~ response.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -2em;">Message publié le {{ response.date_message }}
+				<img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/' ~ response.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -2em;">Message publié le {{ response.date_message }}
 				par {{ response.user_id.username }}</p><hr style="margin-left: 3em; margin-right: 3em; border: 0;
     height: 1px;
     background: #333;
     background-image: linear-gradient(to right, #ccc, #333, #ccc);">    
-                <p style="padding: 1em;">{{ response.message }}</p>
+                <p style="padding: 1em; margin-left: -42em;">{{ response.message }}</p>
 			</article>
         {%endfor%}
 
@@ -43,11 +43,10 @@
                     </div>
                         {%endif%}
                         {{ form_widget(responsesForm.message, { 'attr':  {
-                            'class': 'form-control'
+                            'class': 'form-control ckeditor'
                         }}) }}
                     </div>
                 </div>
-                <textarea name="content" id="editor"></textarea>
 
                 <br>
                 <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
@@ -58,7 +57,7 @@
 
 
             {{ form_end(responsesForm) }}
-
+</div>
 {% endblock %}
 {%block javascript%}
 
@@ -67,10 +66,15 @@
 
 <script>
     ClassicEditor
-        .create( document.querySelector( '#editor' ) )
+        .create( document.querySelector( '.ckeditor') ,
+            {
+            ckfinder: {
+               uploadUrl: "{{ asset('/../../web/img/img') }}"
+            } } ) 
         .catch( error => {
             console.error( error );
         } );
+
 </script>
 
 {%endblock%}
