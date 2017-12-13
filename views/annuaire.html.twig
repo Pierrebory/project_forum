@@ -65,15 +65,9 @@
       <td>{{ user.city }}</td>
 
         
-            {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-success">
-                {{ flashMessage }}
-            </div>
-            {% endfor %}
-        
 
-        <td><a href="{{ path('fichedetaillee', {id: user.id}) }}">Fiche détaillée</a></td>
-        <td><a href="{{ path('contacter', {id: user.id}) }}">Contacter</a></td>
+        <td><div class="fiche"><a href="{{ path('fichedetaillee', {id: user.id}) }}">Fiche détaillée</a></div></td>
+        <td><div class="fiche"><a href="{{ path('contacter', {id: user.id}) }}">Contacter</a></div></td>
        
     </tr>
 
@@ -90,15 +84,18 @@
 {%endif%}
 
 
+    {% endblock %}
 
+{% block javascript %}
 
+{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+               
+    <script>
+        $('.fiche').click(function(){
+          alert('Vous devez être connecté(e) pour accéder à la fiche détaillée.');            
+                       
+    });
+    </script> 
+{% endif %}
 
-
-
-
-
-
-
-
-
-    {% endblock %} 
+{% endblock %}

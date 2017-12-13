@@ -60,12 +60,13 @@ $app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')
 
 //affichage du sujet et message quand on clique dessus
 $app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeController::subjectAction')
+    ->assert('id', '\d+')
    ->bind('forumsubject');
 
 
 //Affichage du sujet de forum en ajax
-$app->match('forumsubject', 'WF3\Controller\AjaxController::subjectPageAction')
-    ->bind('forumsubject');
+$app->match('subject', 'WF3\Controller\AjaxController::subjectPageAction')
+    ->bind('subject');
 
 
 
@@ -129,6 +130,13 @@ $app->match('/job/update/{id}', 'WF3\Controller\HomeController::updateJobAction'
 
 $app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
     ->bind('rechercheParUsername');
+
+
+//Page d'information accès restreint
+$app->match('/accesrestreint')
+->bind('accesrestreint');
+
+
 ////////////AJAX///////////
 
 /*$app->match('/ajax/recherche', 'WF3\Controller\AjaxController::AjaxActionForum')

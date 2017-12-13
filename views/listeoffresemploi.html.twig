@@ -15,7 +15,7 @@
 <br>
 <br>
 
-<a href="{{ path('formulaireemploi') }}"><button type="button" class="btn btn-info" style="margin-left:10px;">Poster une offre d'emploi</button></a>
+<div class="javascript"><a href="{{ path('formulaireemploi') }}"><button type="button" class="btn btn-info" style="margin-left:10px;">Poster une offre d'emploi</button></a></div>
 
 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 <a href="{{ path('updateJobAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info">Modifiez votre offre d'emploi</button></a>
@@ -37,30 +37,46 @@
             <input type="text" name="city" id="city" placeholder="Rentrer une ville">
             <button type="button" class="btn btn-info" id="action1" style="margin-left:10px">Recherche d'offres d'emploi par ville</button>
 
-            <a href="{{ path('updateJobAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info">Modifiez votre offre d'emploi</button></a> 
-  
-
-
-            <form method="GET">
-            <label>Recherche d'une offre d'emploi par son titre</label>
-            <input type="text" name="title" id="title" placeholder="Rentrer le nom de l'offre d'emploi">
-
-            <button type="button" class="btn btn-info" id="action" style="margin-left:10px">Rechercher</button>
-
-            </form>
-
             <div id="result"></div>
+                
+<br>
+<br>
+
+<table class="table table-striped" style="margin-left:10px; width:1900px;">
+  <thead>
+     
+    <tr>
+      <th scope="col">Date de l'offre</th>
+      <th scope="col">Poste</th>
+      <th scope="col">Ville</th>
+      <th scope="col">Détails</th>
+    
+    </tr>
+      	
+  </thead>
+    
+  <tbody>
+    <tr>
+         {% for offre in offres %}
+        
+      
+        
+      <td>{{ offre.date_offer }}</td>
+      <td>{{ offre.title }}</td>
+      <td>{{ offre.city }}</td>
+        <td><div class="javascript"><a href="{{ path('detailoffre', {id:offre.id} ) }}">Détail du poste</a></div></td>
+        
+    </tr>
+      
+  {% endfor %} 
+  </tbody>
+</table>
 
 
-
-
-
-
-
-
+    {% endblock %} 
+                
 {% block javascript %}
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                
                
     <script>
         $(function(){
@@ -113,62 +129,15 @@
 
 
 
-{% endblock%}
+               
+    <script>
+        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+        $('.javascript').click(function(){
+          alert('Vous devez être connecté(e) pour accéder à cette page.');            
+                       
+    });
+         
+         {% endif %}
+    </script> 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<table class="table table-striped" style="margin-left:10px; width:1900px;">
-  <thead>
-     
-    <tr>
-      <th scope="col">Date de l'offre</th>
-      <th scope="col">Poste</th>
-      <th scope="col">Ville</th>
-      <th scope="col">Détails</th>
-    
-    </tr>
-      	
-  </thead>
-    
-  <tbody>
-    <tr>
-         {% for offre in offres %}
-        
-      
-        
-      <td>{{ offre.date_offer }}</td>
-      <td>{{ offre.title }}</td>
-      <td>{{ offre.city }}</td>
-        <td><a href="{{ path('detailoffre', {id:offre.id} ) }}">Détail du poste</a></td>
-        
-    </tr>
-      
-  {% endfor %} 
-  </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    {% endblock %} 
+{% endblock %}
