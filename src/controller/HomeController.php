@@ -26,6 +26,8 @@ use WF3\Form\Type\RechercheUsernameType;
 use WF3\Form\Type\PrivatemessageType;
 use WF3\Form\Type\SearchOfferType;
 use WF3\Form\Type\UpdateUserType;
+use WF3\Form\Type\UploadType;
+
 
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -513,10 +515,40 @@ class HomeController{
             $app['dao.users']->updateUser($id, $user);   
             $app['session']->getFlashBag()->add('success', 'Vos informations ont bien été modifiées');          
         }
+
+
+        $upload = $app['dao.users']->find($id);
+        //on va chercher la liste des articles écrits par l'utilisateur dont l'id est $id
+        //on utilise la méthode getArticlesFromUser() de la classe ArticleDAO
+        //création du formulaire d'upload
+        $uploadForm = $app['form.factory']->create(UploadType::class, $upload);
+        $uploadForm->handleRequest($request);
+        if($uploadForm->isSubmitted() AND $uploadForm->isValid()){
+            //on récupère les infos du fichier envoyé
+            //ici comme j'ai généré le formulaire avec ma classe UploadImageType
+            //c'est silex qui a généré le nom "upload_image"
+            $file = $request->files->get('upload')['avatar'];
+            //je lui dis où stocker le fichier
+            //$app['upload_dir'] est défini dans app/config/prod.php
+            $path = __DIR__.'/../../web/img/avatar/'.$app['upload_dir'];
+            //le nom original est dispo avec :
+            //$filename = $file->getClientOriginalName();
+            //guessExtension() renvoie l'extension du fichier
+            $filename = md5(uniqid()).'.'.$file->guessExtension();
+            $upload->setAvatar($filename);
+            $app['dao.users']->update($upload->getId(), $upload);
+            //on transfère le fichier
+            $file->move($path,$filename);
+        }
+
+
+
         
         return $app['twig']->render('updateUser.html.twig', array(
             'userForm' => $userForm->createView(),
+            'uploadForm' => $uploadForm->createView(),
             'user' => $user,
+            'test' => $request->files
         ));
     }
 
@@ -741,17 +773,16 @@ class HomeController{
         $user =[];
         $rechercheForm = $app['form.factory']->create(RechercheUsernameType::class);
         $rechercheForm->handleRequest($request);
-        if($rechercheForm->isSubmitted() AND $rechercheForm->isValid()){
+        if(NULL!==($request->query->get('name'))){
             //le formulaire a été envoyé
             //$request->request est égal à $_POST
             //$request->query est égal à $_GET
             $post = $request->request->get('search_engine');
-            $user = $app['dao.users']->getUsernameLike($post['name']);
-        }
+            $user = $app['dao.users']->getUsernameLike($request->query->get('name'));        }
         return $app['twig']->render('recherche.username.html.twig', array(
             'form'=>$rechercheForm->createView(),
-            'user'=>$user//,
-            //'test'=>$request->files->get('search_engine')['attachment']->getOriginalName()
+            'user'=>$user,
+            'test'=>$request->query
         ));
     }
     
@@ -863,3 +894,6 @@ class HomeController{
 
     }
 }
+
+
+    
