@@ -26,10 +26,8 @@ use WF3\Form\Type\RechercheUsernameType;
 use WF3\Form\Type\PrivatemessageType;
 use WF3\Form\Type\SearchOfferType;
 use WF3\Form\Type\UpdateUserType;
-<<<<<<< HEAD
 use WF3\Form\Type\UploadType;
-=======
->>>>>>> 617a9095a8440ec73aa6b4d24e102af0f079084f
+
 
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
