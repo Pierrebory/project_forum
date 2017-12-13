@@ -26,6 +26,9 @@ use WF3\Form\Type\RechercheUsernameType;
 use WF3\Form\Type\PrivatemessageType;
 use WF3\Form\Type\SearchOfferType;
 use WF3\Form\Type\UpdateUserType;
+use WF3\Form\Type\UploadType;
+
+
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -53,13 +56,15 @@ class HomeController{
     }
     
 
-  //PAGE DE DETAIL D'UNE FICHE D'UN ANCIEN ELEVE
+  //PAGE DE DETAIL D'UNE FICHE D'UN ANCIEN ELEVE(accessible uniquement aux personnes connectées)
     public function getAlumniAction(Application $app, $id){
         //on va vérifier que l'utilisateur est connecté
     	if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
             //je peux rediriger l'utilisateur non authentifié
+            
             return $app->redirect($app['url_generator']->generate('login'));
             throw new AccessDeniedHttpException();
+            
         }
         
         //on récupère le token si l'utilisateur est connecté
@@ -146,6 +151,7 @@ class HomeController{
         }
         
         return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres)); 
+
 
     }
     
@@ -250,7 +256,7 @@ class HomeController{
         //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
         if($user->getId() != $joboffer->getUsers_id()){
             //si l'utilisateur n'est pas l'auteur: accès interdit
-            throw new AccessDeniedHttpException();
+            return $app['twig']->render('accesrestreint.html.twig');
         }
         
         $joboffer = $app['dao.joboffers']->delete($id);
@@ -349,7 +355,8 @@ class HomeController{
             $password = $encoder->encodePassword($plainPassword, $user->getSalt());
             //on remplace le mdp en clair par le mdp crypté
             $user->setPassword($password);
-
+            $user->setAvatar($app['avatar']);
+            
             $app['dao.users']->insert($user);               
             $app['session']->getFlashBag()->add('success', 'Vous êtes bien enregistré(e). Vous pouvez à présent vous connecter.');
             }
@@ -480,7 +487,7 @@ class HomeController{
         //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
         if($user->getId() != $idTest){
             //si l'utilisateur n'est pas l'auteur: accès interdit
-            throw new AccessDeniedHttpException();
+            return $app['twig']->render('accesrestreint.html.twig');
         }
 
         $userForm = $app['form.factory']->create(UpdateUserType::class, $user);
@@ -509,10 +516,40 @@ class HomeController{
             $app['dao.users']->updateUser($id, $user);   
             $app['session']->getFlashBag()->add('success', 'Vos informations ont bien été modifiées');          
         }
+
+
+        $upload = $app['dao.users']->find($id);
+        //on va chercher la liste des articles écrits par l'utilisateur dont l'id est $id
+        //on utilise la méthode getArticlesFromUser() de la classe ArticleDAO
+        //création du formulaire d'upload
+        $uploadForm = $app['form.factory']->create(UploadType::class, $upload);
+        $uploadForm->handleRequest($request);
+        if($uploadForm->isSubmitted() AND $uploadForm->isValid()){
+            //on récupère les infos du fichier envoyé
+            //ici comme j'ai généré le formulaire avec ma classe UploadImageType
+            //c'est silex qui a généré le nom "upload_image"
+            $file = $request->files->get('upload')['avatar'];
+            //je lui dis où stocker le fichier
+            //$app['upload_dir'] est défini dans app/config/prod.php
+            $path = __DIR__.'/../../web/img/avatar/'.$app['upload_dir'];
+            //le nom original est dispo avec :
+            //$filename = $file->getClientOriginalName();
+            //guessExtension() renvoie l'extension du fichier
+            $filename = md5(uniqid()).'.'.$file->guessExtension();
+            $upload->setAvatar($filename);
+            $app['dao.users']->update($upload->getId(), $upload);
+            //on transfère le fichier
+            $file->move($path,$filename);
+        }
+
+
+
         
         return $app['twig']->render('updateUser.html.twig', array(
             'userForm' => $userForm->createView(),
+            'uploadForm' => $uploadForm->createView(),
             'user' => $user,
+            'test' => $request->files
         ));
     }
 
@@ -531,7 +568,7 @@ class HomeController{
         //on vérifie que cet utlisateur est bien l'auteur de l'offre d'emploi
         if($userId != $idTest){
             //si l'utilisateur n'est pas l'auteur: accès interdit
-            throw new AccessDeniedHttpException();
+            return $app['twig']->render('accesrestreint.html.twig');
         }
 
         $error = true;
@@ -669,33 +706,32 @@ class HomeController{
     /////////////////////////////PAGE REPONSE FORUM////////////////////////////
     public function subjectAction(Application $app, Request $request, $idSubject){
 
-    $subject = $app['dao.subject']->getSubject($idSubject);
+        $subject = $app['dao.subject']->getSubject($idSubject);
         $response = new Responses();
         $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
         $responsesForm->handleRequest($request);
 
         $responses = $app['dao.response']->getResponses($idSubject);
-  $token = $app['security.token_storage']->getToken();
+        
+        $token = $app['security.token_storage']->getToken();
         if(NULL !== $token){
             $user = $token->getUser();
         }
 
-                 $responses = $app['dao.response']->getResponses($idSubject);
-
 
         if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
-        $response->setUser_id($user->getId());
-         $response->setSubject_id($idSubject);
-        $response->setDate_message(date('Y-m-d H:i:s'));
-         $app['dao.response']->insert($response);
-
         
+        $response->setUser_id($user->getId());
+        $response->setSubject_id($idSubject); 
+        $response->setDate_message(date('Y-m-d H:i:s'));
+        $app['dao.response']->insert($response);
+
        }
         return $app['twig']->render('responses_forum.html.twig', array(
             'responsesForm'=>$responsesForm->createView(),
             'response'=>$response,
             'subject'=>$subject,
-        'responses'=>$responses));
+            'responses'=>$responses));
    
 
     }
@@ -762,7 +798,8 @@ class HomeController{
         $alumniForm->handleRequest($request); 
         // si le formulaire a été envoyé
         if($alumniForm->isSubmitted() && $alumniForm->isValid()){
-
+        
+            $alumni->setAlumni_id($user->getId());
 
             $app['dao.alumni']->insert($alumni);                
             $app['session']->getFlashBag()->add('success', 'vous êtes bien enregistré');
@@ -784,17 +821,16 @@ class HomeController{
         $user =[];
         $rechercheForm = $app['form.factory']->create(RechercheUsernameType::class);
         $rechercheForm->handleRequest($request);
-        if($rechercheForm->isSubmitted() AND $rechercheForm->isValid()){
+        if(NULL!==($request->query->get('name'))){
             //le formulaire a été envoyé
             //$request->request est égal à $_POST
             //$request->query est égal à $_GET
             $post = $request->request->get('search_engine');
-            $user = $app['dao.users']->getUsernameLike($post['name']);
-        }
+            $user = $app['dao.users']->getUsernameLike($request->query->get('name'));        }
         return $app['twig']->render('recherche.username.html.twig', array(
             'form'=>$rechercheForm->createView(),
-            'user'=>$user//,
-            //'test'=>$request->files->get('search_engine')['attachment']->getOriginalName()
+            'user'=>$user,
+            'test'=>$request->query
         ));
     }
     
@@ -819,7 +855,7 @@ class HomeController{
         //on vérifie que cet utlisateur est bien l'auteur de l'article
         if($user->getId() != $users['id']){
             //si l'utilisateur n'est pas l'auteur: accès interdit
-            throw new AccessDeniedHttpException();
+            return $app['twig']->render('accesrestreint.html.twig');
         }
 		$users = $app['dao.users']->delete($id);
         //on crée un message de réussite dans la session
@@ -847,7 +883,7 @@ class HomeController{
          $alumniId = $request->attributes->get('id');
          if($user->getId() != $alumniId){
             //si l'utilisateur n'est pas l'auteur: accès interdit
-            throw new AccessDeniedHttpException();
+            return $app['twig']->render('accesrestreint.html.twig');
         }
         //on crée le formulaire et on lui passe l'article en paramètre
         //il va utiliser $article pour pré remplir les champs
@@ -886,7 +922,7 @@ class HomeController{
          $alumniId = $request->attributes->get('id');
          if($user->getId() != $alumniId){
             //si l'utilisateur n'est pas l'auteur: accès interdit
-            throw new AccessDeniedHttpException();
+            return $app['twig']->render('accesrestreint.html.twig');
         }
         //on crée le formulaire et on lui passe l'article en paramètre
         //il va utiliser $article pour pré remplir les champs
@@ -906,3 +942,6 @@ class HomeController{
 
     }
 }
+
+
+    

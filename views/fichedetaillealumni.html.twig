@@ -11,26 +11,17 @@
             
             
             <h1>Fiche détaillée</h1>
-            
-           <br>
-            
-            
-            
-         <p class="font-weight-bold">Vous avez changé de situation ?</p>
+ 
             <br>
-
-            
-            <br>
-            <br>
-            
 			
-				         <h2> <p class="bold">{{ user.avatar }} {{ user.firstname }} {{ user.username }}</p></h2>
+				         <h2> <p class="bold"> {{ user.firstname }} {{ user.username }}</p></h2>
             
             
             <table class="table table-bordered table-hover table-responsive">
                 
                 <tbody>
-               
+                    
+            <img src="{{ asset('img/avatar/' ~ user.avatar) }}">
             <tr><th scope="row">Promo</th> <td>{{ alumni.promo }}</td> </tr>
             <tr><th scope="row">Ville</th> <td>{{ user.city }}</td></tr>
             <tr><th scope="row">Brève présentation</th> <td>{{ alumni.presentation }}</td></tr> 
@@ -55,7 +46,8 @@
             <br>
             <br>
 
-             <a href="{{ path('updateAlumniAction', {id: user.id} ) }}"><button type="button" class="btn btn-info">Contacter</button></a> 
+             <a href="{{ path('updateAlumniAction', {id: user.id} ) }}"><button type="button" class="btn btn-info">Modifier</button></a> 
+            
              <a href="{{ path('contacter', {id: alumni.alumni_id}) }}"><button type="button" class="btn btn-info">Contacter</button></a> 
             
             <br><br>

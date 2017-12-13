@@ -21,7 +21,7 @@ class ResetpassType extends AbstractType
             'label' => false,           
             'invalid_message' => 'Les mots de passe doivent être identiques.',
             'required' => true,
-            'first_options'  => array('label' => 'Votre nouveau mot de passe', 'attr' => array('placeholder' => 'Au moins 4 caractères')),
+            'first_options'  => array('label' => 'Nouveau mot de passe', 'attr' => array('placeholder' => 'Au moins 4 caractères')),
             'second_options' => array('label' => 'Répetez le mot de passe', 'attr' => array('placeholder' => 'Identique au précédent')),
             'constraints' => array(
                 new Assert\NotBlank(),

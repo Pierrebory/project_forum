@@ -2,6 +2,9 @@
 
   {% block title %}Annuaire des anciens élèves de Webforce3{% endblock %}
 
+        
+
+
 
         {% block content %}
 
@@ -12,16 +15,21 @@
             
 		</div>
 
-<p><a href="{{ path('inscription') }}"><button type="button" class="btn btn-info blockquote text-center" style="margin-left:1em; width:390px">Inscrivez-vous pour figurer dans l'annuaire</button></a></p>
+<p>
+    <a href="{{ path('inscription') }}"><button type="button" class="btn btn-info blockquote text-center" style="margin-left:1em; width:390px">Inscrivez-vous pour figurer dans l'annuaire</button></a>
+    <a href="{{ path('login') }}"><button type="button" class="btn btn-info blockquote text-center" style="margin-left:1em; width:390px">Connectez-vous pour accéder à l'annuaire détaillé</button></a>
+</p>
 
-<p><a href="{{ path('login') }}"><button type="button" class="btn btn-info blockquote text-center" style="margin-left:1em; width:390px">Connectez-vous pour accéder à l'annuaire détaillé</button></a> </p>
+  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+  <p>
+      <a href="{{ path('inscription/alumni') }}"><button type="button" class="btn btn-info blockquote text-center" style="margin-left:1em; width:390px">Remplissez votre fiche détaillée</button></a>
+    {% endif %}
 
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          <a href="{{ path('updateAlumniAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info" style="margin-left: 1em; width: 390px;">Modifiez votre fiche détaillée</button></a> 
+                    {%endif%}
+      </p>
 
-
-
-
-          <a href="{{ path('updateAlumniAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info">Modifiez votre fiche détaillée</button></a> 
- 
 
 
 <form action="{{ path('rechercheParUsername')}}">
@@ -42,12 +50,14 @@
       <th scope="col">Ville</th>
       <th scope="col">Détails</th>
     <th scope="col">Contact</th>
+    
    
     </tr>
       	
   </thead>
 
-  <p><a href="{{ path('inscription/alumni') }}"><button type="button" class="btn btn-info blockquote text-center" style="margin-left:1em; width:390px">Si vous êtes deja inscrit, remplissez votre fiche détaillée</button></a></p>
+   
+    
     
   <tbody>
     <tr>
@@ -56,8 +66,12 @@
       <td>{{ user.firstname }}</td>
       <td>{{ user.username }}</td>
       <td>{{ user.city }}</td>
-        <td><a href="{{ path('fichedetaillee', {id: user.id}) }}">Fiche détaillée</a></td>
-        <td><a href="{{ path('contacter', {id: user.id}) }}">Contacter</a></td>
+
+        
+
+        <td><div class="fiche"><a href="{{ path('fichedetaillee', {id: user.id}) }}">Fiche détaillée</a></div></td>
+        <td><div class="fiche"><a href="{{ path('contacter', {id: user.id}) }}">Contacter</a></div></td>
+       
     </tr>
 
       
@@ -67,18 +81,24 @@
 
 
 
+ 
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 <a href="{{ path('deleteUserAction', {id: app.user.id})}}"><button type="button" class="btn btn-info" style="margin-bottom:2em; margin-left: 1em; width:390px">Supprimer son compte</button></a> 
+{%endif%}
 
 
+    {% endblock %}
 
+{% block javascript %}
 
+{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+               
+    <script>
+        $('.fiche').click(function(){
+          alert('Vous devez être connecté(e) pour accéder à cette page.');            
+                       
+    });
+    </script> 
+{% endif %}
 
-
-
-
-
-
-
-
-
-    {% endblock %} 
+{% endblock %}

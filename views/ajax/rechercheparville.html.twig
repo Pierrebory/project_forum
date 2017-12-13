@@ -1,0 +1,16 @@
+
+
+
+<h1>Résultats de votre recherche d'offres d'emploi pour une ville donnée</h1>
+{% for joboffer in joboffers %}
+<article>
+    
+    <h2><p><a href="{{ path('detailoffre', {id: joboffer.id}) }}">{{ joboffer.title }}</a></p></h2>
+  
+     <h3><p>{{ joboffer.company }}</p></h3>
+     <p>{{ joboffer.city }}</p>
+     <p>{{ joboffer.date_offer }}</p>
+  
+    
+</article>
+{% endfor %}

@@ -99,6 +99,7 @@ $app['dao.subject'] = function($app){
 $app['dao.response'] = function($app){
 	$responseDAO = new WF3\DAO\ResponseDAO($app['db'], 'forum_responses', 'WF3\Domain\Responses');
     $responseDAO->setUserDAO($app['dao.users']);
+    $responseDAO->setSubjectDAO($app['dao.subject']);
     return $responseDAO;
 
 };

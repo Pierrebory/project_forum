@@ -5,8 +5,8 @@
 	{% block content %}
             <h2>Formulaire d'inscription</h2>
 
-            <p>Veillez remplir le formulaire ci-dessous pour vous inscrire. Vous recevrez une confirmation par email une fois que le formulaire sera validé.</p>
-            <p>Les champs marqués d'une * sont obligatoires.</p>
+            <p>Veillez remplir le formulaire ci-dessous avec votre nouveau mot de passe.</p>
+            
  
 
             <div>
@@ -29,19 +29,21 @@
 			            }}) }}
 			        </div>
 			    </div>
+                <br>
 			    <div class="form-group">
 			        {{ form_label(resetForm.password.second, null, { 'label_attr':  {
 			            'class': 'col-sm-5 control-label'
 			        }}) }}
-			        <div class="col-sm-4">
+			        <div >
 			            {{ form_widget(resetForm.password.second, { 'attr':  {
 			                'class': 'form-control'
 			            }}) }}
 			        </div>
 			    </div>
+<br>
+<br>
 
-
-                <div class="form-group">
+                <div class="form-group" "col-sm-4">
                     <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" />
                 </div>
             {{ form_end(resetForm) }}        

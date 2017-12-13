@@ -9,6 +9,13 @@ class ResponseDAO extends DAO{
 		$this->userDAO = $userDAO;
 	}
     
+    private $subjectDAO;
+    public function setSubjectDAO(SubjectDAO $subjectDAO){
+        $this->subjectDAO = $subjectDAO;
+    }
+    
+    
+    
     public function getResponses($idSubject){
 
 
@@ -38,12 +45,16 @@ class ResponseDAO extends DAO{
     	$response = parent::buildObject($row);
     	//getAuthor() renvoie l'id de l'auteur de l'article
     	$idAuteur = $response->getUser_id();
+        $idsubject = $response->getSubject_id();
     	//on utilise l'attribut userDAo qui contient l'instance de la classe UserDAO 
     	//pour aller chercher dans la table users les infos de l'utilisateur correspondant
     	if(array_key_exists('user_id', $row) AND is_numeric($row['user_id'])){
         	$auteur = $this->userDAO->find($idAuteur);
             //on remplace l'id de l'auteur par l'objet $auteur de la classe User qui contient les infos sur l'auteur
             $response->setUser_id($auteur);
+            
+            $subject = $this->subjectDAO->find($idsubject);
+            $response->setSubject_id($subject);
         }
         
         //on renvoie l'article

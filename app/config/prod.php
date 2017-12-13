@@ -17,3 +17,4 @@ $app['db.options'] = array(
 );
 
 $app['upload_dir'] = 'web/uploads';
+$app['avatar'] = 'avatardebase.png';

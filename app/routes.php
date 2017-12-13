@@ -38,20 +38,39 @@ $app->match('/formulaireemploi', 'WF3\Controller\HomeController::formulaireOffre
     ->bind('formulaireemploi');
 
 
-//page qui suuprime une offre d'emploi
+//page qui supprime une offre d'emploi
 $app->get('/detailoffre/suppression/{id}', 'WF3\Controller\HomeController::deleteOfferAction')
 ->assert('id', '\d+')
 ->bind('suppressionoffre');
 
 
-//page de résultats de recherche en ajax
+//page de résultats de recherche d'une offre d'emploi par titre en ajax
 $app->match('/rechercheajaxpartitre', 'WF3\Controller\AjaxController::rechercheOffreparTitreAction')
     ->bind('rechercheajaxpartitre');
+
+//page de résultats de recherche des offres d'emploi par ville en ajax
+$app->match('/rechercheajaxparville', 'WF3\Controller\AjaxController::rechercheOffreparVilleAction')
+    ->bind('rechercheajaxparville');
+
 
 
 //page Forum
 $app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')
     ->bind('forum');
+
+//affichage du sujet et message quand on clique dessus
+$app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeController::subjectAction')
+    ->assert('idSubject', '\d+')
+   ->bind('forumsubject');
+
+
+//Affichage du sujet de forum en ajax
+$app->match('subject', 'WF3\Controller\AjaxController::subjectPageAction')
+    ->bind('subject');
+
+//affichage des réponses du Forum en Ajax
+$app->match('responses', 'WF3\Controller\AjaxController::responsesPageAction')
+    ->bind('responses');
 
 
 // formulaire d'inscription
@@ -87,8 +106,7 @@ $app->match('/messagerie/{id}', 'WF3\Controller\HomeController::conversationsAct
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
     ->bind('messagerie');           
 
-$app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeController::subjectAction')
-    ->bind('forumsubject');
+
 
 $app->match('/contact/moi', 'WF3\Controller\HomeController::contactAction')->bind('contactezmoi');
 
@@ -113,6 +131,13 @@ $app->match('/job/update/{id}', 'WF3\Controller\HomeController::updateJobAction'
 
 $app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
     ->bind('rechercheParUsername');
+
+
+//Page d'information accès restreint
+$app->match('/accesrestreint')
+->bind('accesrestreint');
+
+
 ////////////AJAX///////////
 
 /*$app->match('/ajax/recherche', 'WF3\Controller\AjaxController::AjaxActionForum')

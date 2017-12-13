@@ -115,14 +115,7 @@
             <tr>
             <td align="center" valign="top" width="500">
             <![endif]-->
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="wrapper">
-                <tr>
-                    <td align="center" valign="top" style="padding: 15px 0;" class="logo">
-                         <a href="http://peddle-art.com" target="_blank">
-                            <img alt="Logo" src="http://peddle-art.com/upload/logo.png" width="60" height="60" style="display: block; font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">
-                        </a>
-                    </td>
-                </tr>
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="wrapper">                
             </table>
             <!--[if (gte mso 9)|(IE)]>
             </td>
@@ -132,28 +125,29 @@
         </td>
     </tr>
     <tr>
-        <td bgcolor="#D8F1FF" align="center" style="padding: 70px 15px 70px 15px;" class="section-padding">
+        <td bgcolor="#D8F1FF" align="center" style="padding: 70px 70px 70px 70px;" class="section-padding">
             <!--[if (gte mso 9)|(IE)]>
             <table align="center" border="0" cellspacing="0" cellpadding="0" width="500">
             <tr>
             <td align="center" valign="top" width="500">
+
             <![endif]-->
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="responsive-table">
+            <table border="0" cellpadding="0" cellspacing="1" width="100%" style="max-width: 800px;" class="responsive-table">
                 <tr>
                     <td>
                         <!-- HERO IMAGE -->
-                        <table width="100%" border="0" cellspacing="0" cellpadding="5">
+                        <table width="100%" border="1" cellspacing="0" cellpadding="5">
                             <tr>
-                                <td class="padding">
-                                   Changement de mot de passe 
+                                <td class="padding" style="color:#c0392b;">
+                                   Bonjour {{ username }}, 
                                 </td>
                             </tr>
                             <tr>
                                 <td><br>
-                                    Bonjour {{ username }}, veuillez <strong>cliquer</strong> sur le bouton si-dessous pour modifier votre mot de passe.
+                                   Nous avons reçu une demande de <strong>réinitialisation de votre mot de passe</strong> ! <br> Cliquez sur le bouton ci-dessous si vous désirez le modifier :
                                 </td>
                                 <td><br>
-                                    Si vous n'avez pas fait de demande de modification de mot de passe, quelqu'un d'autre a essayé de le modifier. 
+                                    Si vous n'avez pas demandé la modification de votre mot de passe, veuillez ignorer cet email. Votre mot de passe restera le même. 
                                 </td>                                
                             </tr>
                             
@@ -162,8 +156,8 @@
                     </td>
                 </tr>
             </table>
-                <div style="margin-left: 56em; margin-right: 60em; margin-top:10px;">
-                    <a href="http://localhost/project_forum/web/mdpoublie/resetform/{{ id }}/{{ token }}"><input type="submit" value="Envoyer" style="background:#2f96b4;/></a>
+                <div style="margin-left: 50em; margin-right: 60em; margin-top:10px;">
+                    <a href="http://localhost/project_forum/web/mdpoublie/resetform/{{ id }}/{{ token }}"><input type="submit" value="Envoyer" style="background:#bdc3c7;"/></a>
                 </div>
             <!--[if (gte mso 9)|(IE)]>
             </td>
