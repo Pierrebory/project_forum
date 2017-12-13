@@ -6,60 +6,41 @@
         {% block content %}
 
         <div class="col-md-12 text-center">
-            
-            <blockquote class="blockquote text-center" style="margin-top: 20px;"><h1>Offres d'emploi</h1> </blockquote>
-            
-            
+            <blockquote class="blockquote text-center" style="margin-top: 80px;"><h1>Offres d'emploi</h1> </blockquote>
         </div>
 
-<br>
-<br>
-
-<div class="javascript"><a href="{{ path('formulaireemploi') }}"><button type="button" class="btn btn-info" style="margin-left:10px;">Poster une offre d'emploi</button></a></div>
+<div class="javascript"><a href="{{ path('formulaireemploi') }}"><button type="button" class="btn btn-info" style="margin-left:10px; width: 350px; margin-top:50px;">Poster une offre d'emploi</button></a></div>
 
 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-<a href="{{ path('updateJobAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info">Modifiez votre offre d'emploi</button></a>
+<a href="{{ path('updateJobAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info" style="margin-left: 10px; margin-top: 10px; width: 350px;">Modifiez votre offre d'emploi</button></a>
+
 {% endif %}
-<br>
-<br>
 
-
-            <form method="GET">
-            <input type="text" name="title" id="title" placeholder="Rentrer le nom de l'offre d'emploi">
-            <button type="button" class="btn btn-info" id="action" style="margin-left:10px">Recherche d'une offre d'emploi par son titre</button>
+            <form method="GET" style='margin-top:20px;'>
+            <input type="text" name="title" id="title" placeholder="Rentrer le nom de l'offre d'emploi"  style="margin-left:10px;">
+            <button type="button" class="btn btn-info" id="action" style="margin-left:10px; width: 350px; ">Recherche d'une offre d'emploi par son titre</button>
             </form>
 
             <div id="result"></div>
-<br>
-<br>
 
             <form method="GET">
-            <input type="text" name="city" id="city" placeholder="Rentrer une ville">
-            <button type="button" class="btn btn-info" id="action1" style="margin-left:10px">Recherche d'offres d'emploi par ville</button>
+            <input type="text" name="city" id="city" placeholder="Rentrer une ville" style="margin-left:10px;">
+            <button type="button" class="btn btn-info" id="action1" style="margin-left:10px; width: 350px;">Recherche d'offres d'emploi par ville</button>
 
             <div id="result"></div>
-                
-<br>
-<br>
 
-<table class="table table-striped" style="margin-left:10px; width:1900px;">
+<table class="table table-striped" style="margin-left:10px; margin-top: 20px; width:1900px;">
   <thead>
-     
     <tr>
       <th scope="col">Date de l'offre</th>
       <th scope="col">Poste</th>
       <th scope="col">Ville</th>
       <th scope="col">Détails</th>
-    
     </tr>
-        
   </thead>
-    
-  <tbody>
+<tbody>
     <tr>
-         {% for offre in offres %}
-        
-      
+         {% for offre in offres %} 
         
       <td>{{ offre.date_offer }}</td>
       <td>{{ offre.title }}</td>
@@ -67,16 +48,15 @@
         <td><div class="javascript"><a href="{{ path('detailoffre', {id:offre.id} ) }}">Détail du poste</a></div></td>
         
     </tr>
-      
+
   {% endfor %} 
+
   </tbody>
 </table>
 
-
     {% endblock %} 
                 
-{% block javascript %}
-                
+    {% block javascript %}
                
     <script>
         $(function(){
@@ -101,8 +81,6 @@
             });
         });
     </script> 
-
-
 <script>
         $(function(){
             $('#action1').click(function(event){
@@ -125,16 +103,11 @@
                 });
             });
         });
-    </script>     
-
-
-
-               
+    </script> 
     <script>
         {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
         $('.javascript').click(function(){
-          alert('Vous devez être connecté(e) pour accéder à cette page.');            
-                       
+          alert('Vous devez être connecté(e) pour accéder à cette page.');  
     });
          
          {% endif %}

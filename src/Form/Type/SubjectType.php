@@ -21,6 +21,7 @@ class SubjectType extends AbstractType
         //on liste les champs qu'on veut rajouter
         $builder
             ->add('title', TextType::class, array(
+                'label' => 'Titre',
                 'attr' => array(
                     'placeholder' => 'Votre titre'
                 ),
