@@ -1,9 +1,25 @@
 	{% extends "layout.html.twig" %}
 	
 	{% block title %}Forum{% endblock %}
+
+
+
 	
 	{% block content %}
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
 {{ form_start(subjectForm, { 'attr': {'class': 'form-horizontal'} }) }}
+
+
                 <div class="form-group" style="padding: 5em; padding-bottom: 0;  margin-left: 20em; margin-right: 20em; margin-top:20px;">
                     {{ form_label(subjectForm.title, null) }}
                     <div>
@@ -26,22 +42,75 @@
                         }}) }}
                     </div>
                 </div><br>
+
                 
                 <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
-                    <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" style="background: #2f96b4;">
+                    <input type="submit" class="btn btn-primary btn-lg" id ="action" value="Envoyer" style="background: #2f96b4;">
                 </div>
             {{ form_end(subjectForm) }}
 
-            <h2 style="text-align: center">Les différents sujets du forum : </h2>
+
+<div id="result"></div>
+{% else %}
+
+<button type="button" class="btn btn-info" style="text-align: center"><a href="{{ path('login') }}">Vous devez être connecté(e) pour poster un message.</a></button>
+
+
+{% endif %}
+
+
+
+
+<h1 style="text-align: center">Les différents sujets du forum</h1>
+
+           
           
        {% for subject in subjects %}
 			<article style="text-align: center">
-                <h2><a href="{{ path('forumsubject', {idSubject: subject.id}) }}">{{ subject.title }} :</a></h2>
+                <h2><a href="{{ path('forumsubject', {idSubject: subject.id}) }}">{{ subject.title }}</a></h2>
 				
-				<p>publié le {{ subject.date_message }}
-				par {{ subject.user_id.username }}</p>
+				<p>publié le {{ subject.date_message }} par {{ subject.user_id.username }}</p>
                 <p>{{ subject.message }}</p><hr>
 			</article>
         {%endfor%}
-		{% endblock %}
+
+
+
+{% endblock %}
+
+
+
+
+{% block javascript %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+               
+    <script>
+        $(function(){
+            $('#action').click(function(event){
+                //permet d'empêcher la validation du formulaire et le chargement de la page
+                event.preventDefault();
+                //construction de l'url de la requête avec les paramètres
+                var url = "{{ path('forumsubject') }}";
+                
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    data: $('form').serialize(),  
+                    dataType: 'html',
+                    success: function(data){
+                        $('#result').html(data);
+                    },
+                    error: function() {
+                        alert('La requête n\'a pas abouti'); 
+                    }
+                });
+            });
+        });
+    </script> 
+
+{% endblock %}
+
+
+           
 		

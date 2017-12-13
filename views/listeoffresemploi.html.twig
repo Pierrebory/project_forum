@@ -16,17 +16,34 @@
 <br>
 
 <a href="{{ path('formulaireemploi') }}"><button type="button" class="btn btn-info" style="margin-left:10px;">Poster une offre d'emploi</button></a>
-<a href="{{ path('updateJobAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info">Modifiez votre offre d'emplois</button></a> 
-
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<a href="{{ path('updateJobAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info">Modifiez votre offre d'emploi</button></a>
+{% endif %}
+<br>
+<br>
 
 
             <form method="GET">
-            <label>Recherche d'une offre d'emploi par son titre</label>
             <input type="text" name="title" id="title" placeholder="Rentrer le nom de l'offre d'emploi">
-            <button type="button" class="btn btn-info" id="action" style="margin-left:10px">Rechercher</button>
+            <button type="button" class="btn btn-info" id="action" style="margin-left:10px">Recherche d'une offre d'emploi par son titre</button>
             </form>
 
             <div id="result"></div>
+<br>
+<br>
+
+            <form method="GET">
+            <input type="text" name="city" id="city" placeholder="Rentrer une ville">
+            <button type="button" class="btn btn-info" id="action1" style="margin-left:10px">Recherche d'offres d'emploi par ville</button>
+            </form>
+
+            <div id="result"></div>
+
+
+
+
+
+
 
 
 {% block javascript %}
@@ -40,7 +57,7 @@
                 event.preventDefault();
                 //construction de l'url de la requête avec les paramètres
                 var url = "{{ path('rechercheajaxpartitre') }}";
-                //requête ajax en POST
+                //requête ajax en GET
                 $.ajax({
                     type: 'GET',
                     url: url,
@@ -55,7 +72,35 @@
                 });
             });
         });
-    </script>      
+    </script> 
+
+
+<script>
+        $(function(){
+            $('#action1').click(function(event){
+                //permet d'empêcher la validation du formulaire et le chargement de la page
+                event.preventDefault();
+                //construction de l'url de la requête avec les paramètres
+                var url = "{{ path('rechercheajaxparville') }}";
+                //requête ajax en GET
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    data: $('form').serialize(),
+                    dataType: 'html',
+                    success: function(data){
+                        $('#result').html(data);
+                    },
+                    error: function() {
+                        alert('La requête n\'a pas abouti'); 
+                    }
+                });
+            });
+        });
+    </script>     
+
+
+
 {% endblock%}
 
 

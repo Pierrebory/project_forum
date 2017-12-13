@@ -39,26 +39,15 @@ class JoboffersDAO extends DAO{
         return $result->fetchALL(\PDO::FETCH_ASSOC);
     }
     
-    
-    //méthode de recherche d'emploi par la société
-    public function findOffersByCompany($company){
-		$result = $this->bdd->query('SELECT joboffers.id AS idJoboffers, title, description, skills, advantages, contract, contractduration, timetable FROM joboffers WHERE company LIKE :company');
-        $result->bindValue(':company', '%' . $company . '%');
+    //méthode de recherche d'offres d'emploi par ville
+   public function findOffersByCity($city){
+        $result = $this->bdd->prepare('SELECT id, title, company, city, date_offer FROM joboffers WHERE city LIKE :city');
+        $result->bindValue(':city', '%' . $city . '%');
         $result->execute();
-		return $result->fetchALL(\PDO::FETCH_ASSOC);
-	}
-    
-    
-    
-    //méthode de recherche d'emploi par la date
-    public function findOffersBydate($dateoffer){
-		$result = $this->bdd->query('SELECT joboffers.id AS idJoboffers, title, description, skills, advantages, contract, contractduration, timetable FROM joboffers WHERE date_offer LIKE :dateoffer');
-        $result->bindValue(':dateoffer', $dateoffer);
-        $result->execute();
-		return $result->fetchALL(\PDO::FETCH_ASSOC);
-	}
-    
-    
+        return $result->fetchALL(\PDO::FETCH_ASSOC);
+    }      
+
+
     
      public function findJobModif($id){
         $resultat = $this->bdd->prepare('SELECT * FROM ' . $this->tableName .  ' WHERE users_id = :id');

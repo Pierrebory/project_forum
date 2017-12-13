@@ -49,18 +49,20 @@ class HomeController{
             $user = $token->getUser();
         }
         
-        $button = $user->getId();
-        return $app['twig']->render('annuaire.html.twig', array('users' => $users, 'button' => $button)); 
+      
+        return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
     }
     
 
-  //PAGE DE DETAIL D'UNE FICHE D'UN ANCIEN ELEVE
+  //PAGE DE DETAIL D'UNE FICHE D'UN ANCIEN ELEVE(accessible uniquement aux personnes connectées)
     public function getAlumniAction(Application $app, $id){
         //on va vérifier que l'utilisateur est connecté
     	if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
             //je peux rediriger l'utilisateur non authentifié
+            $app['session']->getFlashBag()->add('success', 'Vous devez être connecté(e) pour accéder à la fiche détaillée.');
             return $app->redirect($app['url_generator']->generate('login'));
             throw new AccessDeniedHttpException();
+            
         }
         
         //on récupère le token si l'utilisateur est connecté
@@ -144,9 +146,8 @@ class HomeController{
        if(NULL !== $token){
            $user = $token->getUser();
        }
-        $button = $user->getId();
-        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres,
-                                                                        'button' => $button)); 
+       
+        return $app['twig']->render('listeoffresemploi.html.twig', array('offres' => $offres)); 
     }
     
     
@@ -272,7 +273,7 @@ class HomeController{
                  $subjects = $app['dao.subject']->getSubjects();
 
         if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
-            $subject->setUser_id(1);
+            $subject->setUser_id($user->getId());
              $subject->setDate_message(date('Y-m-d H:i:s'));
 
          $app['dao.subject']->insert($subject);
@@ -488,7 +489,7 @@ class HomeController{
                  $responses = $app['dao.response']->getResponses($idSubject);
 
         if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
-        $response->setUser_id(3);
+        $response->setUser_id($user->getId());
          $response->setSubject_id($idSubject);
         $response->setDate_message(date('Y-m-d H:i:s'));
          $app['dao.response']->insert($response);
