@@ -3,8 +3,7 @@
 	{% block title %}Un sujet{% endblock %}
 	
 	{% block content %}
-
-<br><br>
+        <br><br>
 <br><br><br>
        
            
@@ -29,7 +28,7 @@
 				par {{ response.user_id.username }}</p><hr style="margin-left: 3em; margin-right: 3em; border: 0;
     height: 1px;
     background: #333;
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);">
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);">    
                 <p style="padding: 1em;">{{ response.message }}</p>
 			</article>
         {%endfor%}
@@ -48,9 +47,14 @@
                         }}) }}
                     </div>
                 </div>
+                <textarea name="content" id="editor"></textarea>
+
                 <br>
                 <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
+
                     <input type="submit" class="btn btn-primary btn-lg" id="action" value="Send" />
+
+
                 </div><br>
 
 <div id="result"></div>
@@ -59,6 +63,7 @@
             {{ form_end(responsesForm) }}
 
 {% endblock %}
+
 
 
 {% block javascript %}
@@ -88,6 +93,18 @@
        });
    </script> 
 
-    
 
-{% endblock %}
+
+<script src="https://cdn.ckeditor.com/ckeditor5/1.0.0-alpha.2/classic/ckeditor.js"></script>
+
+
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
+{%endblock%}
+

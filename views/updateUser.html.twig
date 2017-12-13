@@ -5,38 +5,29 @@
     {% block content %}
 
     {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-success">
+<div class="alert alert-success">
                 {{ flashMessage }}
-            </div>
+    </div>
             {% endfor %}
 
-            <h2 style="text-align: center; margin-top: 80px;">Profil</h2>
+        <h2 style="text-align: center; margin-top: 80px;">Profil</h2>
 
-            <p style="text-align: center">Vous pouvez modifier vos informations personelles à l'aide du formulaire ci-desosus.</p>
-            <p style="text-align: center">Les champs marqués d'une * sont obligatoires.</p>
+        <p style="text-align: center">Vous pouvez modifier vos informations personelles à l'aide du formulaire ci-desosus.</p>
+        <p style="text-align: center">Les champs marqués d'une * sont obligatoires.</p>
             
-             <div class="row">
+        <div class="row">
     
-        <div class="col-md-4" style="margin-left: 42em; margin-top: 3em;">
+        <div class="col-md-4" style="margin-left: 42em; margin-top: 3em; margin-bottom: -40px;">
             {{ form_start(uploadForm, {'mulitipart' : true}) }}
             {{ form_end(uploadForm) }}
-        </div>
     </div>
-
-            <div>
+    </div>
+        <div>
             {{ form_start(userForm, { 'attr': {'class': 'form-horizontal'} }) }}
-
-
                 
-                <img style="margin-top: -15em; margin-left: 20em" src="{{ asset('img/avatar/web/uploads/' ~ user.avatar) }} class="img img-responsive img-rounded" width="200"">
-
-
-   
-        
-
-
+                <img style="margin-top: -15em; margin-left: 20em;" src="{{ asset('img/avatar/web/uploads/' ~ user.avatar) }} class="img img-responsive img-rounded" width="200"">
                 
-                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
+                <div class="form-group" style="margin-left: 40em; margin-right: 40em;">
                     {{ form_label(userForm.lastname, null) }}
                     <div>
                         {% if userForm.lastname.vars.errors|length > 0 %}
@@ -54,7 +45,7 @@
                 
                 
                 
-                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
+                <div class="form-group" style="margin-left: 40em; margin-right: 40em;">
                     {{ form_label(userForm.firstname, null) }}
                     <div>
                         {% if userForm.firstname.vars.errors|length > 0 %}

@@ -22,13 +22,14 @@ class ContactType extends AbstractType
         $builder
             ->add('email', TextType::class, array(
                 'attr' => array(
-                    'placeholder' => 'Your email'
+                    'placeholder' => 'Votre email'
                 ),
                 'constraints' => new Assert\Email()
             ))
             ->add('name', TextType::class, array(
+                'label' => 'Nom',
                 'attr' => array(
-                    'placeholder' => 'Your name'
+                    'placeholder' => 'Votre nom'
                 ),
                 'constraints' => array(
                     new Assert\NotBlank(),
@@ -40,11 +41,13 @@ class ContactType extends AbstractType
                 )
             ))
             ->add('subject', TextType::class, array(
-                'attr' => array(
-                    'placeholder' => 'Subject'
+                'label' => 'Sujet',
+                'attr' => array(                    
+                    'placeholder' => 'Sujet',
                 )
             ))                
             ->add('message', TextType::class, array(
+            'label' => 'Message',
             'attr' => array(
                     'placeholder' => 'Message'
                 )))
