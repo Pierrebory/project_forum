@@ -459,7 +459,7 @@ class HomeController{
         //on remplace le mdp en clair par le mdp crypté
         $user->setPassword($password);
 
-        $app['dao.resetpass']->updatePassword($id, $token, $user->getPassword(), $user->getSalt() );
+        $app['dao.resetpass']->updatePassword($id, $token, $user);
         $app['dao.resetpass']->deleteToken($id);        
         $app['session']->getFlashBag()->add('success', 'Votre mot de passe a bien été modifié.');
         return $app->redirect($app['url_generator']->generate('home'));     
