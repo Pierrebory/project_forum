@@ -60,7 +60,7 @@ $app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')
 
 //affichage du sujet et message quand on clique dessus
 $app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeController::subjectAction')
-    ->assert('id', '\d+')
+    ->assert('idSubject', '\d+')
    ->bind('forumsubject');
 
 
@@ -68,8 +68,9 @@ $app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeControlle
 $app->match('subject', 'WF3\Controller\AjaxController::subjectPageAction')
     ->bind('subject');
 
-
-
+//affichage des réponses du Forum en Ajax
+$app->match('responses', 'WF3\Controller\AjaxController::responsesPageAction')
+    ->bind('responses');
 
 
 // formulaire d'inscription

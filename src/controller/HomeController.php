@@ -657,34 +657,32 @@ class HomeController{
     /////////////////////////////PAGE REPONSE FORUM////////////////////////////
     public function subjectAction(Application $app, Request $request, $idSubject){
 
-    $subject = $app['dao.subject']->getSubject($idSubject);
+        $subject = $app['dao.subject']->getSubject($idSubject);
         $response = new Responses();
         $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
         $responsesForm->handleRequest($request);
 
         $responses = $app['dao.response']->getResponses($idSubject);
-  $token = $app['security.token_storage']->getToken();
+        
+        $token = $app['security.token_storage']->getToken();
         if(NULL !== $token){
             $user = $token->getUser();
         }
 
-                 $responses = $app['dao.response']->getResponses($idSubject);
-
 
         if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
-        $response->setUser_id($user->getId());
-         $response->setSubject_id($idSubject); 
-        $response->setDate_message(date('Y-m-d H:i:s'));
-         $app['dao.response']->insert($response);
-                
-
         
+        $response->setUser_id($user->getId());
+        $response->setSubject_id($idSubject); 
+        $response->setDate_message(date('Y-m-d H:i:s'));
+        $app['dao.response']->insert($response);
+
        }
         return $app['twig']->render('responses_forum.html.twig', array(
             'responsesForm'=>$responsesForm->createView(),
             'response'=>$response,
             'subject'=>$subject,
-        'responses'=>$responses));
+            'responses'=>$responses));
    
 
     }
@@ -751,7 +749,8 @@ class HomeController{
         $alumniForm->handleRequest($request); 
         // si le formulaire a été envoyé
         if($alumniForm->isSubmitted() && $alumniForm->isValid()){
-
+        
+            $alumni->setAlumni_id($user->getId());
 
             $app['dao.alumni']->insert($alumni);                
             $app['session']->getFlashBag()->add('success', 'vous êtes bien enregistré');

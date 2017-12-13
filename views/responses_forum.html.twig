@@ -50,12 +50,44 @@
                 </div>
                 <br>
                 <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
-                    <input type="submit" class="btn btn-primary btn-lg" value="Send" />
+                    <input type="submit" class="btn btn-primary btn-lg" id="action" value="Send" />
                 </div><br>
 
-
+<div id="result"></div>
 
 
             {{ form_end(responsesForm) }}
+
+{% endblock %}
+
+
+{% block javascript %}
+
+             
+   <script>
+       $(function(){
+           $('#action').click(function(event){
+               //permet d'empêcher la validation du formulaire et le chargement de la page
+               event.preventDefault();
+               //construction de l'url de la requête avec les paramètres
+               var url = "{{ path('responses') }}";
+               
+               $.ajax({
+                   type: 'GET',
+                   url: url,
+                   data: $('form').serialize(),  
+                   dataType: 'html',
+                   success: function(data){
+                       $('#result').html(data);
+                   },
+                   error: function() {
+                       alert('La requête n\'a pas abouti');
+                   }
+               });
+           });
+       });
+   </script> 
+
+    
 
 {% endblock %}
