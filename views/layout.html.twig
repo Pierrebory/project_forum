@@ -46,11 +46,12 @@
                    
 
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <li><a href="{{ path('profil', {id: app.user.id})}}">profil</a></li> 
-                        <li><a href="{{ path('logout') }}">déconnexion</a></li>                 
+                        <li><a href="{{ path('profil', {id: app.user.id})}}">page perso</a></li> 
+                        <li><a href="{{ path('messagerie', {id: app.user.id})}}">messagerie</a></li>                             
+                        <li><a href="{{ path('logout') }}">déconnexion</a></li>   
                     {% else %}
                         <li><a href="{{ path('login') }}">connexion</a></li>
-                        <li><a href="{{ path('inscription') }}">inscription</a></li>
+                        <li><a href="{{ path('inscription') }}">inscription</a></li>                       
                     {% endif %}
 
 

@@ -16,7 +16,7 @@ class ResponseDAO extends DAO{
         $result->bindValue(':idSubject', $idSubject);
         $result->execute();
 		$rows = $result->fetchALL(\PDO::FETCH_ASSOC);
-                $responses = [];
+        $responses = [];
 
 
         foreach($rows as $row){

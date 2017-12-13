@@ -111,7 +111,7 @@ class UsersDAO extends DAO implements UserProviderInterface
          
         return false;          
     }
-         
+        
     
     /**
      * {@inheritDoc}
