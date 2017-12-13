@@ -13,7 +13,12 @@
 <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 <link href="{{ asset('color/default.css') }}" rel="stylesheet">
 <link href="{{ asset ('img/favicon.ico') }}" rel="shortcut icon" >
+<<<<<<< HEAD
+<link rel="shortcut icon" href="{{ asset ('img/favicon.ico') }}">
 
+=======
+<link href="https://fonts.googleapis.com/css?family=Monoton|Shadows+Into+Light" rel="stylesheet">
+>>>>>>> 26d1f0b9ae9840876fb491367bce3dac2871a7f0
 
 
 
@@ -36,10 +41,6 @@
                 <nav class="pull-right nav-collapse collapse">
                   <ul id="menu-main" class="nav">
 
-
-           
-
-                       
                    <li><a href="{{ path('home') }}">Accueil</a></li>
                    <li><a title="team" href="{{ path('annuaire') }}">Annuaire</a></li>
                    <li><a href="{{ path('forum') }}">Forum</a></li>
@@ -54,9 +55,6 @@
                        <li><a href="{{ path('login') }}">connexion</a></li>
                        <li><a href="{{ path('inscription') }}">inscription</a></li>
                    {% endif %}
-
-
-                    <!-- A MODIDIER FORMAT TWIG-->
                   </ul>
                 </nav>
               </div>
@@ -72,19 +70,19 @@
 
 
 <!--footer-->
-       <footer class="footer" style="padding:30px;">
+       <footer style="padding:30px;">
          
 
    <div class="container">
      <div class="row">
       <div class="col-md-12">
-       
-         <ul class="social-networks">
-           <li><a href="https://twitter.com/_webforce3?lang=fr"><i class="icon-circled icon-bgdark icon-twitter icon-2x"></i></a></li>
-           <li><a href="https://fr.linkedin.com/edu/webforce3-373011"><i class="icon-circled icon-bgdark icon-linkedin icon-2x"></i></a></li>
-           <li><a href="https://www.facebook.com/groups/1902908846646569/?ref=ts&fref=ts"><i class="icon-circled icon-bgdark icon-facebook icon-2x"></i></a></li>
-           <li><a href="https://www.instagram.com/philomathique/"><i class="icon-circled icon-bgdark icon-instagram icon-2x"></i></a></li>
-         </ul>
+        <div class="span6 offset3">       
+          <ul class="social-networks">
+             <li><a href="https://twitter.com/_webforce3?lang=fr"><i class="icon-circled icon-bgdark icon-twitter icon-2x"></i></a></li>
+             <li><a href="https://fr.linkedin.com/edu/webforce3-373011"><i class="icon-circled icon-bgdark icon-linkedin icon-2x"></i></a></li>
+             <li><a href="https://www.facebook.com/groups/1902908846646569/?ref=ts&fref=ts"><i class="icon-circled icon-bgdark icon-facebook icon-2x"></i></a></li>
+             <li><a href="https://www.instagram.com/philomathique/"><i class="icon-circled icon-bgdark icon-instagram icon-2x"></i></a></li>
+          </ul>
          <p class="copyright">
              Concept et site crée en collaboration avec Norman Julié, Pierre Bory, Virginie Boillet et Alexandre Bosc.</p>
            <div class="credits">
@@ -92,11 +90,10 @@
            </div>           
          </div>
        </div>
-     
-    </div> 
+     </div>    
  </footer>
    
-
+ <a href="#" class="scrollup"><i class="icon-angle-up icon-square icon-bgdark icon-2x"></i></a>
   <!-- jQuery -->
   <script src="{{ asset('js/jquery.js') }}"></script>
               {% block javascript %}{% endblock %}
@@ -105,9 +102,27 @@
 
    <!-- Plugin JavaScript -->
    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+   
 
    <!-- Custom JavaScript for this theme -->
    <script src="{{ asset('js/scrolling-nav.js') }}"></script>
+<<<<<<< HEAD
+   <a href="#" class="scrollup"><i class="icon-angle-up icon-square icon-bgdark icon-2x"></i></a>
+  <script src="js/jquery.js"></script>
+  <script src="js/jquery.scrollTo.js"></script>
+  <script src="js/jquery.nav.js"></script>
+  <script src="js/jquery.localScroll.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/jquery.prettyPhoto.js"></script>
+  <script src="js/isotope.js"></script>
+  <script src="js/jquery.flexslider.js"></script>
+  <script src="js/inview.js"></script>
+  <script src="js/animate.js"></script>
+  <script src="js/custom.js"></script>
+  <script src="contactform/contactform.js"></script>
  
+=======
+
+>>>>>>> 26d1f0b9ae9840876fb491367bce3dac2871a7f0
 </body>
 </html>
