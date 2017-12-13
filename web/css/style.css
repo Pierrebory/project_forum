@@ -500,14 +500,11 @@ footer ul.social-networks li a i.icon-facebook:hover {
 footer ul.social-networks li a i.icon-linkedin:hover {
 	background: #007bb6;
 	color: #fff;
-	border-radius: 50%;
-	
 }
 
 footer ul.social-networks li a i.icon-instagram:hover {
 	background: #bc2a8d;
-	color: #fff;
-	border-radius: 50%;
+	color: #fff;	
 }
 
 /* =========================================================

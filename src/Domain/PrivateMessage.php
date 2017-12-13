@@ -45,13 +45,13 @@ class PrivateMessage{
 
     
     public function setSender_id($sender_id){
-        if(!empty($sender_id) AND is_numeric($sender_id)){
+        if(!empty($sender_id)){
             $this->sender_id = $sender_id; 
         }
     }
     
     public function setReceiver_id($receiver_id){
-        if(!empty($receiver_id) AND is_numeric($receiver_id)){
+        if(!empty($receiver_id)){
             $this->receiver_id = $receiver_id; 
         }
     }

@@ -185,7 +185,7 @@ class AlumniType extends AbstractType
         
         
         $builder->add('sponsorship', ChoiceType::class, array(
-            'label' => 'Souhaiteriez-vous devenir paraain/marraine d\'un nouvel élève Webforce3', 
+            'label' => 'Souhaiteriez-vous devenir parrain/marraine d\'un nouvel élève Webforce3 ?', 
             'required' => false,                                       
             'choices' => array(
                 'oui' => 'oui',

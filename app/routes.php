@@ -60,7 +60,7 @@ $app->match('/forum', 'WF3\Controller\HomeController::forumPageAction')
 
 //affichage du sujet et message quand on clique dessus
 $app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeController::subjectAction')
-    ->assert('id', '\d+')
+    ->assert('idSubject', '\d+')
    ->bind('forumsubject');
 
 
@@ -68,8 +68,9 @@ $app->match('forum/subject/responses/{idSubject}', 'WF3\Controller\HomeControlle
 $app->match('subject', 'WF3\Controller\AjaxController::subjectPageAction')
     ->bind('subject');
 
-
-
+//affichage des réponses du Forum en Ajax
+$app->match('responses', 'WF3\Controller\AjaxController::responsesPageAction')
+    ->bind('responses');
 
 
 // formulaire d'inscription
@@ -100,10 +101,10 @@ $app->match('/mdp/{id}', 'WF3\Controller\HomeController::updatePasswordAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
     ->bind('mdp');       
 
-// modifier les infos perso
-$app->match('/profil/{id}/mdp', 'WF3\Controller\HomeController::updatePassAction')
+// page messagerie avec toutes les conversations
+$app->match('/messagerie/{id}', 'WF3\Controller\HomeController::conversationsAction')
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
-    ->bind('profil/mdp');       
+    ->bind('messagerie');           
 
 
 
