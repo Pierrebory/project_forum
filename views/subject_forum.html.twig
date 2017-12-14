@@ -9,9 +9,8 @@
     {% block content %}
 
 
-
 <h1 style="text-align: center; margin-top:80px;">Les différents sujets du forum</h1>
-         
+         <div id="result"></div>
       {% for subject in subjects %}
             <article style="text-align: center">
              
@@ -19,10 +18,17 @@
             
                
                 <p>publié le {{ subject.date_message }} par {{ subject.user_id.username }}</p>
-               <p>{{ subject.message }}</p><hr>
-            </article>
-       {%endfor%}
+               <p>{{ subject.message }}</p>
+               {% if is_granted('ROLE_ADMIN') %}
+              <p><a href="{{ path('deleteAdminSubjectAction', {id: subject.id}) }}">Supprimer ce sujet</a></p>
+              <p><a href="{{ path('updateAdminSubjectAction', {id: subject.id}) }}">Modifier ce sujet</a></p>
+              {%endif%}
+               <hr>
+              
 
+            </article>
+
+       {%endfor%}
 
 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
@@ -54,18 +60,23 @@
 
                
                <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
-                   <input type="submit" class="btn btn-primary btn-lg" id ="action" value="Envoyer" style="background: #2f96b4 ;">
+                   <input type="submit" class="btn btn-primary btn-lg" id ="action" value="Envoyer"   style="background: #2f96b4 ;">
                </div>
            {{ form_end(subjectForm) }}
 
 
-<div id="result"></div>
+
 {% else %}
 
 <button type="button" class="btn btn-info" style="text-align: center"><a href="{{ path('login') }}">Vous devez être connecté(e) pour poster un message.</a></button>
 
 
 {% endif %}
+
+
+
+
+
 
 
 

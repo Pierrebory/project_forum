@@ -43,8 +43,57 @@ class SubjectDAO extends DAO{
     
     
     
-
+public function findSubjectModif($id){
+        $resultat = $this->bdd->prepare('SELECT * FROM ' . $this->tableName .  ' WHERE id = :id');
+        $resultat->bindvalue(':id', $id);
+        $resultat->execute();
+        $row = $resultat->fetch(\PDO::FETCH_ASSOC);
+        return $this->buildObject($row);
+        
+    }
     
+
+
+    public function updateSubjectModif($id, $data){
+        
+        if(is_object($data)){
+
+        $dataArray = ['title' => $data->getTitle() , 'message' => $data->getMessage(), 'date_message' => $data->getDate_message(), 'date_edit' => $data->getDate_edit()];
+           $data = $dataArray;
+
+       }
+        
+
+        
+        $sql = 'UPDATE ' . $this->tableName . ' SET ' ;
+        
+        foreach($data as $key=>$value){
+        //on rajoute à la suite de sql avec .=
+        $sql .= "$key = :$key, ";
+        }
+        $sql = substr($sql, 0, -2);
+        $sql .=  ' WHERE id = :id';
+
+     
+        
+        $update = $this->bdd->prepare($sql);
+        
+        foreach($data as $key=>$value){
+            //on va créer les lignes bindvalue correspondantes
+            $update->bindvalue(':' .$key, strip_tags($value));
+        }
+        
+        $update->bindvalue(':id', $id, \PDO::PARAM_INT);
+        
+        if($update->execute()){
+            return true;
+            }
+         
+            return false;
+    
+        
+        
+    }
     
     
     
