@@ -19,7 +19,13 @@
             
                
                 <p>publié le {{ subject.date_message }} par {{ subject.user_id.username }}</p>
-               <p>{{ subject.message }}</p><hr>
+               <p>{{ subject.message }}</p>
+               {% if is_granted('ROLE_ADMIN') %}
+              <p><a href="{{ path('deleteAdminSubjectAction', {id: subject.id}) }}">Supprimer ce sujet</a></p>
+              {%endif%}
+               <hr>
+              
+
             </article>
        {%endfor%}
 

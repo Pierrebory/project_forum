@@ -49,6 +49,8 @@
       <th scope="col">Nom</th>
       <th scope="col">Ville</th>
       <th scope="col">Détails</th>
+     {% if is_granted('ROLE_ADMIN') %} <th scope="col">Modification</th>{%endif%}
+     {% if is_granted('ROLE_ADMIN') %} <th scope="col">Suppression</th>{%endif%}
     <th scope="col">Contact</th>
     
    
@@ -70,8 +72,14 @@
         
 
         <td><div class="fiche"><a href="{{ path('fichedetaillee', {id: user.id}) }}">Fiche détaillée</a></div></td>
+         {% if is_granted('ROLE_ADMIN') %}
+         <td> <a href="{{ path('updateAdminAlumniAction', {id: user.id}) }}">Modifier cette fiche détaillée</a> </td>
+         <td> <a href="{{ path('deleteAdminUserAction', {id: user.id}) }}">Supprimer cette utilisateur</a> </td>
+
+                    {%endif%}
+                    
         <td><div class="fiche"><a href="{{ path('contacter', {id: user.id}) }}">Contacter</a></div></td>
-       
+
     </tr>
 
       
