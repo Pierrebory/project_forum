@@ -78,11 +78,12 @@ class AjaxController{
             if(NULL !== $token){
             $user = $token->getUser();
             }
-        
+         
+            $subject = $app['dao.subject']->find($request->query->get('subject_id'));
             $response->setDate_message(date('Y-m-d H:i:s'));
-            $response->setUser_id($user->getId());
-            $response->setSubject_id($subject->getId());
-            $response->setMessage($request->query->get('response')['message']);
+            $response->setUser_id($request->query->get('user_id'));
+            $response->setSubject_id($request->query->get('subject_id'));
+            $response->setMessage($request->query->get('responses')['message']);
         
             $app['dao.response']->insert($response);
             $id = $app['db']->lastInsertId();
@@ -93,7 +94,7 @@ class AjaxController{
             'responses'=>$response,
             'subject'=>$subject
         
-    )); 
+            )); 
         
     }
     

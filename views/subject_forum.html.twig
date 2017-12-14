@@ -9,7 +9,6 @@
     {% block content %}
 
 
-
 <h1 style="text-align: center; margin-top:80px;">Les différents sujets du forum</h1>
          
       {% for subject in subjects %}
@@ -27,8 +26,8 @@
               
 
             </article>
-       {%endfor%}
 
+       {%endfor%}
 
 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
@@ -72,6 +71,11 @@
 
 
 {% endif %}
+
+
+
+
+
 
 
 

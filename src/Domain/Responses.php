@@ -63,7 +63,7 @@ class Responses{
     }
     
     public function setSubject_id($subject_id){
-        if(!empty($subject_id) AND is_string($subject_id)){
+        if(!empty($subject_id)){
             $this->subject_id = $subject_id; 
         }
     }
