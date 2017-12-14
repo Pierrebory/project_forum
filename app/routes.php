@@ -178,3 +178,7 @@ $app->match('/admin/response/update/{id}', 'WF3\Controller\AdminController::upda
 $app->match('/response/update/{id}', 'WF3\Controller\HomeController::updateResponseAction')
 ->assert('id', '\d+')
 ->bind('updateResponseAction');
+
+$app->match('/subject/update/{id}', 'WF3\Controller\HomeController::updateSubjectAction')
+->assert('id', '\d+')
+->bind('updateSubjectAction');
