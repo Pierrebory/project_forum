@@ -34,6 +34,7 @@
     <tr>
       <th scope="col">Date de l'offre</th>
       <th scope="col">Poste</th>
+        <th scope="col">Société</th>
       <th scope="col">Ville</th>
       <th scope="col">Détails</th>
     </tr>
@@ -44,8 +45,10 @@
         
       <td>{{ offre.date_offer }}</td>
       <td>{{ offre.title }}</td>
+        <td>{{ offre.company }}</td>
       <td>{{ offre.city }}</td>
         <td><div class="javascript"><a href="{{ path('detailoffre', {id:offre.id} ) }}">Détail du poste</a></div></td>
+       
         
     </tr>
 
