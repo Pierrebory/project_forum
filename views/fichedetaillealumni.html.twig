@@ -7,14 +7,14 @@
 <br>
 <br>
 <br>
-		<div class="col-md-12 text-center">
+		<div  class="col-md-12 text-center">
             
             
-            <h1>Fiche détaillée</h1>
+            <h1 style="margin-top: 80px;">Fiche détaillée</h1>
  
             <br>
 			
-				         <h2> <p class="bold"> {{ user.firstname }} {{ user.username }}</p></h2>
+			<h2> <p class="bold"> {{ user.firstname }} {{ user.username }}</p></h2>
             
             
             <table class="table table-bordered table-hover table-responsive">
@@ -22,7 +22,7 @@
                 <tbody>
                     
             <img src="{{ asset('img/avatar/' ~ user.avatar) }}">
-            <tr><th scope="row">Promo</th> <td>{{ alumni.promo }}</td> </tr>
+            <tr><th scope="row">Promo</th> <td>{{ alumni.promo }}</td></tr>
             <tr><th scope="row">Ville</th> <td>{{ user.city }}</td></tr>
             <tr><th scope="row">Brève présentation</th> <td>{{ alumni.presentation }}</td></tr> 
             <tr><th scope="row">Compétences</th> <td>{{ alumni.skills }}</td></tr>

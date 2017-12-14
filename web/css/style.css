@@ -31,6 +31,7 @@ body {
   min-height: 100%;
   position: relative;
   padding-bottom: 14em;
+    font-family: Merriweather, arial, sans-serif;
 }
 
 .bloc-principal {
@@ -157,10 +158,13 @@ a:hover, a:active {
 	text-decoration: underline;
 }
 
-h1 {
-	font-size: 36px;
-	margin-bottom:20px;
+.titre {
+	font-size: 50px;
+    text-align: center;
+    padding-top: 50em;
+    
 }
+
 h2 {
 
 	font-size: 30px;
@@ -203,6 +207,7 @@ Navigation
 /* Uncomment to make nav expand full width */
  /*	width: auto; */
 }
+
 .navbar .brand {
 	margin-left:0;
 	padding: 0;
@@ -217,7 +222,7 @@ Navigation
 	text-transform:uppercase;
 }
 .navbar .brand a:hover {
-	text-decoration: none;
+text-decoration: none;
  transition: color .15s linear;
  -webkit-transition: color .15s linear;
  -moz-transition: color .15s linear;
@@ -227,6 +232,7 @@ Navigation
 }
 .navbar-inner {
 	min-height: 4.75em;
+    background: #505050 !important;
 }
 .navbar-inverse .navbar-inner {
 	background-repeat: repeat;
@@ -302,22 +308,36 @@ header .logo {
 /* --- Header slider --- */
 #header-wrapper.header-slider {
 	margin-top:60px;
-	background: #444 url(../img/bg/source.jpg) no-repeat center center fixed;
+    padding-top: 25em;
+    height: 60em;
+    text-align : center;
+    font-family: Merriweather, arial, sans-serif;
+	background: url(../img/home/desktop.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 }
 
+#header-wrapper.header-slider h1{
+    color: #11A09A;
+}
+
+#header-wrapper.header-slider h2 {
+    padding-top: 0.5em; 
+    font-family: Merriweather, arial, sans-serif;
+    color: #505050;
+
+}
+
 #main-flexslider ul.slides li p {
 	font-size: 72px;
-	text-transform: uppercase;
 	position: relative;
-	margin-bottom: 0px;
 	text-align: center;
 	line-height: 1;
-	color:#fff;
+	color:black;
 }
+
 #main-flexslider.flexslider {
 		margin:0;
 		background:none;
@@ -357,7 +377,16 @@ section.inner {
 }
 
 
+
+
+
 /* === section fonctionnalité === */
+#webforce3 {
+    text-align: justify;
+}
+
+
+
 
 section.spacer {
 	padding:90px 0 70px;
@@ -388,7 +417,8 @@ section.spacer blockquote cite {
 /* === section services === */
 
 section#services h2 {
-	font-size: 22px;
+    font-family: Merriweather, arial, sans-serif;
+    font-size: 22px;
 	margin-bottom: 15px;
 	margin-top: 10px;
 	text-align:center;
@@ -419,10 +449,12 @@ section#services.section.orange .service-box:hover {
 	background: #ffffff;
 }
 
-/* === section équipe === */
+/* === section présentation formation webforce3 === */
 
 section#about {
-	background:#466A80;
+	background:#9DBEB6;
+    text-align: justify;
+    text-align: center;
 }
 
 .team-thumb {
@@ -436,7 +468,7 @@ Footer
 ============================================================ */
 
 footer {
-	background: #2b2b2b;
+	background: #505050;
 	text-align: center;
 	color: #ddd;
 	padding:50px 50px;

@@ -103,7 +103,6 @@
 
 <!-- HIDDEN PREHEADER TEXT -->
 <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
-    You received a message from peddle art contact form
 </div>
 
 <!-- HEADER -->
@@ -132,33 +131,41 @@
             <td align="center" valign="top" width="500">
 
             <![endif]-->
-            <table border="0" cellpadding="0" cellspacing="1" width="100%" style="max-width: 800px;" class="responsive-table">
+            <table border="0" cellpadding="10" cellspacing="0" width="70%" style="max-width:800px; border-radius:50%;" class="responsive-table">
                 <tr>
                     <td>
                         <!-- HERO IMAGE -->
                         <table width="100%" border="1" cellspacing="0" cellpadding="5">
-                            <tr>
-                                <td class="padding" style="color:#c0392b;">
-                                   Bonjour {{ username }}, 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><br>
-                                   Nous avons reçu une demande de <strong>réinitialisation de votre mot de passe</strong> ! <br> Cliquez sur le bouton ci-dessous si vous désirez le modifier :
-                                </td>
-                                <td><br>
+                           <div style="text-align:center;"> 
+                                  <p style="font-size:2em;">
+                                    <strong>Mot de passe oublié ?</strong>
+                                  </p>                           
+                          </div>                     
+                            <div>                                               
+                                <p class="padding">
+                                   Bonjour <strong>{{ username }}</strong>, 
+                                </p>                                
+                            </div> 
+                            <div>  
+                               <br>
+                                   <p>
+                                     Nous avons reçu une demande de <strong>réinitialisation de votre mot de passe</strong> ! <br> Cliquez sur le bouton ci-dessous si vous désirez le modifier :
+                                    </p>
+                              <div>
+                    <a href="http://localhost/project_forum/web/mdpoublie/resetform/{{ id }}/{{ token }}"><input type="submit" class ="btn btn-primary btn-lg"  value="Modifier" style="background:#6bbcc4"/></a>
+                </div>
+                              
+                                   <p>                                                         
                                     Si vous n'avez pas demandé la modification de votre mot de passe, veuillez ignorer cet email. Votre mot de passe restera le même. 
-                                </td>                                
-                            </tr>
+                                    </p>                               
+                            </div>
                             
                         </table>
 
                     </td>
                 </tr>
             </table>
-                <div style="margin-left: 50em; margin-right: 60em; margin-top:10px;">
-                    <a href="http://localhost/project_forum/web/mdpoublie/resetform/{{ id }}/{{ token }}"><input type="submit" value="Envoyer" style="background:#bdc3c7;"/></a>
-                </div>
+                
             <!--[if (gte mso 9)|(IE)]>
             </td>
             </tr>
