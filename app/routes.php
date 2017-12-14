@@ -138,9 +138,39 @@ $app->match('/accesrestreint')
 ->bind('accesrestreint');
 
 
-////////////AJAX///////////
-
-/*$app->match('/ajax/recherche', 'WF3\Controller\AjaxController::AjaxActionForum')
-    ->bind('ajaxResultatForum');*/
+$app->get('/admin', 'WF3\Controller\AdminController::indexAction')->bind('homeAdmin');
 
 
+$app->match('/admin/alumni/update/{id}', 'WF3\Controller\AdminController::updateAdminAlumniAction')
+->assert('id', '\d+')
+->bind('updateAdminAlumniAction');
+
+$app->get('/amdin/user/delete/{id}', 'WF3\Controller\AdminController::deleteAdminUserAction')
+->assert('id', '\d+')
+->bind('deleteAdminUserAction');
+
+
+$app->match('/admin/offre/update/{id}', 'WF3\Controller\AdminController::updateAdminOffreAction')
+->assert('id', '\d+')
+->bind('updateAdminOffreAction');
+
+$app->get('/admin/offre/delete/{id}', 'WF3\Controller\AdminController::deleteAdminOffreAction')
+->assert('id', '\d+')
+->bind('deleteAdminOffreAction');
+
+
+$app->get('/admin/subject/delete/{id}', 'WF3\Controller\AdminController::deleteAdminSubjectAction')
+->assert('id', '\d+')
+->bind('deleteAdminSubjectAction');
+
+$app->get('/admin/response/delete/{id}', 'WF3\Controller\AdminController::deleteAdminResponseAction')
+->assert('id', '\d+')
+->bind('deleteAdminResponseAction');
+
+$app->match('/admin/subject/update/{id}', 'WF3\Controller\AdminController::updateAdminSubjectAction')
+->assert('id', '\d+')
+->bind('updateAdminSubjectAction');
+
+$app->match('/admin/response/update/{id}', 'WF3\Controller\AdminController::updateAdminResponseAction')
+->assert('id', '\d+')
+->bind('updateAdminResponseAction');

@@ -37,6 +37,8 @@
         <th scope="col">Société</th>
       <th scope="col">Ville</th>
       <th scope="col">Détails</th>
+      {% if is_granted('ROLE_ADMIN') %} <th scope="col">Modification</th>{%endif%}
+     {% if is_granted('ROLE_ADMIN') %} <th scope="col">Suppression</th>{%endif%}
     </tr>
   </thead>
 <tbody>
@@ -48,7 +50,13 @@
         <td>{{ offre.company }}</td>
       <td>{{ offre.city }}</td>
         <td><div class="javascript"><a href="{{ path('detailoffre', {id:offre.id} ) }}">Détail du poste</a></div></td>
+        {% if is_granted('ROLE_ADMIN') %}
+         <td> <a href="{{ path('updateAdminOffreAction', {id: offre.id}) }}">Modifier cette offre</a> </td>
+         <td> <a href="{{ path('deleteAdminOffreAction', {id: offre.id}) }}">Supprimer cette offre</a> </td>
+                    {%endif%}
+
        
+
         
     </tr>
 
