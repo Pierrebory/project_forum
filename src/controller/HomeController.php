@@ -96,9 +96,11 @@ class HomeController{
         if(NULL !== $token){
             $user = $token->getUser();
         }
-        
-        $error = false;
-        
+
+        $contactId = $request->attributes->get('id');
+
+        $contacts = $app['dao.privatemessage']->findConversation($user->getId(), $contactId);   
+
         $privatemessage = new PrivateMessage();
         $privatemessageForm = $app['form.factory']->create(PrivatemessageType::class, $privatemessage);
         $privatemessageForm->handleRequest($request);
@@ -119,15 +121,49 @@ class HomeController{
             $app['session']->getFlashBag()->add('success', 'Votre message a bien été envoyé.');
            
         }
+
+        setlocale(LC_TIME, "fr_FR");
         
         
         // j'envoie le formulaire
          return $app['twig']->render('privatemessage.html.twig', array(
-                         'privatemessageForm' => $privatemessageForm->createView()
+                         'privatemessageForm' => $privatemessageForm->createView(),
+                         'contacts' => $contacts,
+                         'contactId' =>$contactId 
                         
          )); 
         
     }
+
+/*        ///////////////////////PAGE SUJET FORUM//////////////////////// AAAAAAAAAAAAAAAAAAAAAAAAA
+    public function forumPageAction(Application $app, Request $request){
+        $subject = new Subjects();
+        $subjects =[];
+        $subjectForm = $app['form.factory']->create(subjectType::class, $subject);
+        $subjectForm->handleRequest($request);
+                 $subjects = $app['dao.subject']->getSubjects();
+         $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
+            $subject->setUser_id($user->getId());
+             $subject->setDate_message(date('Y-m-d H:i:s'));
+
+         $app['dao.subject']->insert($subject);
+
+        
+       }
+        return $app['twig']->render('subject_forum.html.twig', array(
+            'subjectForm'=>$subjectForm->createView(),
+            'subject'=>$subject,
+            'subjects'=>$subjects));
+   
+
+    }
+    */
+     
+    
     
     
     /*if($articleForm->isSubmitted() AND $articleForm->isValid()){
@@ -341,11 +377,8 @@ class HomeController{
         }
 
         // si le formulaire a été envoyé
-        if($userForm->isSubmitted() && $userForm->isValid()){
+        if($userForm->isSubmitted() && $userForm->isValid() && $error === false){
 
-
-
-            if($error === false){
             $salt = substr(md5(time()), 0, 23);
             $user->setSalt($salt);
             //on récupère le mot de passe en clair (envoyé par l'utilisateur)
@@ -360,9 +393,6 @@ class HomeController{
             
             $app['dao.users']->insert($user);               
             $app['session']->getFlashBag()->add('success', 'Vous êtes bien enregistré(e). Vous pouvez à présent vous connecter.');
-            }
-
-
                     
         }
 
@@ -645,35 +675,6 @@ class HomeController{
 
         return $app['twig']->render('conversations.html.twig', array('users' => $users)); 
     }
-    
-
-    /////////////////////////////PAGE REPONSE FORUM////////////////////////////  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-/*    public function subjectAction(Application $app, Request $request, $idSubject){
-
-    $subject = $app['dao.subject']->getSubject($idSubject);
-        $response = new Responses();
-        $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
-        $responsesForm->handleRequest($request);
-
-        $responses = $app['dao.response']->getResponses($idSubject);
-  $token = $app['security.token_storage']->getToken();
-        if(NULL !== $token){
-            $user = $token->getUser();
-        }
-
-                 $responses = $app['dao.response']->getResponses($idSubject);
-
-
-
-        return $app['twig']->render('responses_forum.html.twig', array(
-            'responsesForm'=>$responsesForm->createView(),
-            'response'=>$response,
-            'subject'=>$subject,
-        'responses'=>$responses));
-   
-
-    }
-    */
     
 
     

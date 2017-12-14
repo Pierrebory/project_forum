@@ -26,7 +26,7 @@
   <thead>
      
     <tr>
-      <th scope="col">Nom</th>
+      <th scope="col">Contact</th>
       <th scope="col">Dernier message</th>
       <th scope="col">Date du dernier message</th>
     </tr>
@@ -38,9 +38,9 @@
          {% for user in users %}
 
       {% if user.receiver_id.id == app.user.id %}
-        <td>{{ user.sender_id.firstname }} {{ user.sender_id.lastname }}</td>
+        <td><a href="{{ path('contacter', {id: user.sender_id.id}) }}">{{ user.sender_id.firstname }} {{ user.sender_id.lastname }}</a></td>
       {% else %}
-        <td>{{ user.receiver_id.firstname }} {{ user.receiver_id.lastname }}</td>
+        <td><a href="{{ path('contacter', {id: user.receiver_id.id}) }}">{{ user.receiver_id.firstname }} {{ user.receiver_id.lastname }}</a></td>
       {% endif %}
       <td>{{ user.message }}</td>
       <td>{{ user.date_message }}</td>

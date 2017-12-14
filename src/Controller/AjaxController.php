@@ -9,6 +9,8 @@ use WF3\Domain\Subjects;
 use WF3\Form\Type\SubjectType;
 use WF3\DAO\UsersDAO;
 use WF3\Domain\Responses;
+use WF3\Form\Type\PrivatemessageType;
+use WF3\Domain\PrivateMessage;
 
 class AjaxController{
     
@@ -66,6 +68,9 @@ class AjaxController{
     ));
     
 }
+
+
+
     
     public function responsesPageAction(Application $app, Request $request){
             $response = new Responses();
@@ -98,6 +103,39 @@ class AjaxController{
         
     }
     
+    public function lastPrivateMessageAction(Application $app, Request $request){
+
+            $contact = new PrivateMessage();
+
+            $user = $app['user'];
+         
+            //on récupère le token si l'utilisateur est connecté
+            $token = $app['security.token_storage']->getToken();
+            if(NULL !== $token){
+            $user = $token->getUser();
+            }
+    
+            $contactId = $request->request->get('receiver_id');
+
+         
+            $contact->setDate_message(date('Y-m-d H:i:s'));
+            $contact->setSender_id($user->getId());
+            $contact->setReceiver_id($contactId);
+            $contact->setMessage($request->request->get('privatemessage')['message']);
+              
+            
+            $app['dao.privatemessage']->insert($contact);
+            $id = $app['db']->lastInsertId();
+            $contact->setId($id);
+            $contact->setSender_id($user);
+        
+            return $app['twig']->render('ajax/lastprivatemessage.html.twig', array(
+            'contactId' => $contactId,    
+            'contact' => $contact,
+        
+    ));
+    
+}    
     
     
     

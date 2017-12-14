@@ -22,6 +22,9 @@ $app->match('/contacter/{id}', 'WF3\Controller\HomeController::messageriePriveeA
     ->assert('id', '\d+')//\d+ équivaut à la regex[0-9]
     ->bind('contacter');
 
+//Affichage du dernier message privé en ajax
+$app->match('/derniermessageprive', 'WF3\Controller\AjaxController::lastPrivateMessageAction')
+    ->bind('derniermessageprive');    
 
 //pages liste des offres d'emploi
 $app->get('/offresemploi', 'WF3\Controller\HomeController::offresAction')
