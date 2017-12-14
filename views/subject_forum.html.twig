@@ -47,7 +47,7 @@
            {{ form_end(subjectForm) }}
 
 
-<div id="result"></div>
+
 {% else %}
 
 <button type="button" class="btn btn-info" style="text-align: center"><a href="{{ path('login') }}">Vous devez être connecté(e) pour poster un message.</a></button>
@@ -60,7 +60,8 @@
 
 
 <h1 style="text-align: center; margin-top:80px;">Les différents sujets du forum</h1>
-         
+
+    <div id="result"></div>
       {% for subject in subjects %}
             <article style="text-align: center">
              
