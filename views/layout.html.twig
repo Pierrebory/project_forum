@@ -33,29 +33,19 @@
                  <!-- navigation -->
                  <nav class="pull-right nav-collapse collapse">
                    <ul id="menu-main" class="nav">
-
-
-            
-
-                        
                     <li><a href="{{ path('home') }}">Accueil</a></li>
                     <li><a title="team" href="{{ path('annuaire') }}">Annuaire</a></li>
                     <li><a href="{{ path('forum') }}">Forum</a></li>
                     <li><a href="{{ path('offresemploi')}}">Offres d'emploi</a></li>
                     <li><a href="{{ path('contactezmoi') }}">Contact</a></li>
-                   
-
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <li><a href="{{ path('profil', {id: app.user.id})}}">page perso</a></li> 
-                        <li><a href="{{ path('messagerie', {id: app.user.id})}}">messagerie</a></li>                             
-                        <li><a href="{{ path('logout') }}">déconnexion</a></li>   
+                    <li><a href="{{ path('profil', {id: app.user.id})}}">page perso</a></li> 
+                    <li><a href="{{ path('messagerie', {id: app.user.id})}}">messagerie</a></li>
+                    <li><a href="{{ path('logout') }}">déconnexion</a></li>   
                     {% else %}
-                        <li><a href="{{ path('login') }}">connexion</a></li>
-                        <li><a href="{{ path('inscription') }}">inscription</a></li>                       
+                    <li><a href="{{ path('login') }}">connexion</a></li>
+                    <li><a href="{{ path('inscription') }}">inscription</a></li>
                     {% endif %}
-
-
-                     <!-- A MODIDIER FORMAT TWIG-->
                    </ul>
                  </nav>
                </div>
@@ -63,29 +53,23 @@
            </div>
          </div>
        </header>
+       
        <body>
-           <div>
-         
+        <div>
           {% block content %}{% endblock %}
-       </div>
-
-
- 
-
-
+        </div>
 <!--footer-->
-       <footer style="padding:30px;">
-         
-
+       <footer>
    <div class="container">
      <div class="row">
       <div class="col-md-12">
         <div class="span6 offset3">       
           <ul class="social-networks">
-             <li><a href="https://twitter.com/_webforce3?lang=fr"><i class="icon-circled icon-bgdark icon-twitter icon-2x"></i></a></li>
-             <li><a href="https://fr.linkedin.com/edu/webforce3-373011"><i class="icon-circled icon-bgdark icon-linkedin icon-2x"></i></a></li>
-             <li><a href="https://www.facebook.com/groups/1902908846646569/?ref=ts&fref=ts"><i class="icon-circled icon-bgdark icon-facebook icon-2x"></i></a></li>
-             <li><a href="https://www.instagram.com/philomathique/"><i class="icon-circled icon-bgdark icon-instagram icon-2x"></i></a></li>
+             <li><a href="https://twitter.com/_webforce3?lang=fr"><img src="img/icons/twitter.png"></i></a>
+             <li><a href="https://fr.linkedin.com/edu/webforce3-373011"><img src="img/icons/linkedin.png"></i></a>
+             <li><a href="https://www.facebook.com/groups/1902908846646569/?ref=ts&fref=ts"><img src="img/icons/facebook.png"></i></a>
+             <li><a href="https://www.instagram.com/philomathique/"><img src="img/icons/instagram.png"></i></a>
+
           </ul>
          <p class="copyright">
              Concept et site crée en collaboration avec Norman Julié, Pierre Bory, Virginie Boillet et Alexandre Bosc.</p>
@@ -96,8 +80,6 @@
        </div>
      </div>    
  </footer>
-   
-
   <!-- jQuery -->
   <script src="{{ asset('js/jquery.js') }}"></script>
 
@@ -112,7 +94,5 @@
    <script src="{{ asset('js/scrolling-nav.js') }}"></script>
  
                {% block javascript %}{% endblock %}
-
- 
 </body>
 </html>
