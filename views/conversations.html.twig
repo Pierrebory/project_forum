@@ -1,0 +1,70 @@
+{% extends "layout.html.twig" %}
+
+  {% block title %}Annuaire des anciens élèves de Webforce3{% endblock %}
+
+
+        {% block content %}
+
+		<div class="col-md-12 text-center" style="margin-bottom:5em;">            
+                             
+            <blockquote class="blockquote text-center"><h1 style="margin-top: 1em;">Vos conversations</h1> </blockquote>
+            
+            
+		</div>
+
+<p>Vous pouvez retrouver un élève à qui vous voulez parler en passant par <a href="{{ path('login') }}">l'annuaire</a>.</p>
+
+
+
+
+
+
+<br>
+<br>
+
+<table style="margin-left:1em; width:1900px;" class="table table-striped"  >
+  <thead>
+     
+    <tr>
+      <th scope="col">Nom</th>
+      <th scope="col">Dernier message</th>
+      <th scope="col">Date du dernier message</th>
+    </tr>
+      	
+  </thead>
+    
+  <tbody>
+    <tr>
+         {% for user in users %}
+
+      {% if user.receiver_id.id == app.user.id %}
+        <td>{{ user.sender_id.firstname }} {{ user.sender_id.lastname }}</td>
+      {% else %}
+        <td>{{ user.receiver_id.firstname }} {{ user.receiver_id.lastname }}</td>
+      {% endif %}
+      <td>{{ user.message }}</td>
+      <td>{{ user.date_message }}</td>
+
+
+    </tr>
+
+  {% endfor %} 
+
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {% endblock %} 

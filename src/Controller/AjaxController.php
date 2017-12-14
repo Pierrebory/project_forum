@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use WF3\Domain\Subjects;
 use WF3\Form\Type\SubjectType;
 use WF3\DAO\UsersDAO;
+use WF3\Domain\Responses;
 
 class AjaxController{
     
@@ -37,12 +38,12 @@ class AjaxController{
     
     
      public function subjectPageAction(Application $app, Request $request){
-       // je crée un objet Sujet vide
-        $subject = new Subjects();
+            // je crée un objet Sujet vide
+            $subject = new Subjects();
 
             $user = $app['user'];
          
-         //on récupère le token si l'utilisateur est connecté
+            //on récupère le token si l'utilisateur est connecté
             $token = $app['security.token_storage']->getToken();
             if(NULL !== $token){
             $user = $token->getUser();
@@ -55,15 +56,54 @@ class AjaxController{
               
             
             $app['dao.subject']->insert($subject);
-            
+            $id = $app['db']->lastInsertId();
+            $subject->setId($id);
             $subject->setUser_id($user);
         
             return $app['twig']->render('ajax/subject_forum.html.twig', array(
             'subject'=>$subject
-            
-            
+        
     ));
     
 }
+    
+    public function responsesPageAction(Application $app, Request $request){
+            $response = new Responses();
+        
+            $user = $app['user'];
+           
+        
+            //on récupère le token si l'utilisateur est connecté
+            $token = $app['security.token_storage']->getToken();
+            if(NULL !== $token){
+            $user = $token->getUser();
+            }
+        
+            $response->setDate_message(date('Y-m-d H:i:s'));
+            $response->setUser_id($user->getId());
+            $response->setSubject_id($subject->getId());
+            $response->setMessage($request->query->get('response')['message']);
+        
+            $app['dao.response']->insert($response);
+            $id = $app['db']->lastInsertId();
+            $response->setId($id);
+            $response->setUser_id($user);
+        
+            return $app['twig']->render('ajax/responses.html.twig', array(
+            'responses'=>$response,
+            'subject'=>$subject
+        
+    )); 
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }

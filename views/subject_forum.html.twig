@@ -113,10 +113,16 @@
 
              
    <script>
+       
+       {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+       
        $('#sujet').click(function(){
-         alert('Vous devez être connecté(e) pour accéder au sujet.');            
+         alert('Vous devez être connecté(e) pour accéder au sujet.'); 
+            });
+        
+        {% endif %}
                      
-   });
+  
    </script> 
 
 
