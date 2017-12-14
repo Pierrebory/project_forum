@@ -949,6 +949,43 @@ class HomeController{
 
 
    
+   public function updateResponseAction(Application $app, Request $request, $id){
+          if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            //return $app->redirect($app['url_generator']->generate('home'));
+            throw new AccessDeniedHttpException();
+        }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        //on récupère les infos de l'article
+        $response = $app['dao.response']->findResponseModif($id);
+         //$alumniId = $request->attributes->get('id');
+         if($user->getId() != $response->getUser_id()->getId()){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            return $app['twig']->render('accesrestreint.html.twig');
+        }
+        //on crée le formulaire et on lui passe l'article en paramètre
+        //il va utiliser $article pour pré remplir les champs
+        $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
+
+        $responsesForm->handleRequest($request);
+
+        if($responsesForm->isSubmitted() && $responsesForm->isValid()){
+            //si le formulaire a été soumis
+            $response->setDate_edit(date('Y-m-d H:i:s'));
+            //on update avec les données envoyées par l'utilisateur
+            $app['dao.response']->updateResponseModif($id, $response);
+        }
+
+       return $app['twig']->render('modification.response.html.twig', array(
+           'responsesForm' => $responsesForm->createView(),
+          'response' => $response)); 
+
+    }
 
 
 }
