@@ -1,0 +1,42 @@
+{% extends "layout.html.twig" %}
+	
+	{% block title %}Un formulaire inscription alumno{% endblock %}
+	
+	{% block content %}
+
+
+{{ form_start(subjectForm, { 'attr': {'class': 'form-horizontal'} }) }}
+
+
+               <div class="form-group" style="margin-left: 45em; margin-top:20px; width: 35%; margin-top: 8em">
+                   {{ form_label(subjectForm.title, null) }}
+                   <div>
+                       {{ form_errors(subjectForm.title) }}
+                       {{ form_widget(subjectForm.title, { 'attr':  {
+                           'class': 'form-control'
+                       }}) }}
+                   </div>
+               </div>
+               <div class="form-group" style="padding-bottom: 0;  margin-left: 45em; width: 35%;">
+                   {{ form_label(subjectForm.message, null) }}
+                   <div>
+                       {%if not subjectForm.vars.valid %}
+                   <div class="alert alert-danger">
+                       {{ form_errors(subjectForm.message) }}
+                   </div>
+                       {%endif%}
+                       {{ form_widget(subjectForm.message, { 'attr':  {
+                           'class': 'form-control'
+                       }}) }}
+                   </div>
+               </div><br>
+
+               
+               <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
+                   <a href="{{ path('forum') }}"><input type="submit" class="btn btn-primary btn-lg" id ="action" value="Envoyer"   style="background: #2f96b4 ;"></a>
+               </div>
+           {{ form_end(subjectForm) }}
+	{%endblock%}
+
+
+	

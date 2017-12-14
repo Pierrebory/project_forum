@@ -1,0 +1,37 @@
+{% extends "layout.html.twig" %}
+	
+	{% block title %}Un formulaire inscription alumno{% endblock %}
+	
+	{% block content %}
+{{ form_start(responsesForm, { 'attr': {'class': 'form-horizontal'} }) }}
+                <div class="form-group" style="margin-left: 25em; margin-right: 25em; margin-top: 8em;">
+                    {{ form_label(responsesForm.message, null) }}
+                    <div>
+                        {%if not responsesForm.vars.valid %}
+                    <div class="alert alert-danger">
+                        {{ form_errors(responsesForm.message) }}
+                    </div>
+                        {%endif%}
+                        {{ form_widget(responsesForm.message, { 'attr':  {
+                            'class': 'form-control ckeditor'
+                        }}) }}
+                    </div>
+                   
+                    
+                    
+                    
+                </div>
+
+                <br>
+                <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
+
+                    <input type="submit" class="btn btn-primary btn-lg" id="action" value="Send" />
+
+
+                </div><br>
+
+
+
+            {{ form_end(responsesForm) }}
+
+	{%endblock%}

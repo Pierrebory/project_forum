@@ -74,7 +74,7 @@
         <td><div class="fiche"><a href="{{ path('fichedetaillee', {id: user.id}) }}">Fiche détaillée</a></div></td>
          {% if is_granted('ROLE_ADMIN') %}
          <td> <a href="{{ path('updateAdminAlumniAction', {id: user.id}) }}">Modifier cette fiche détaillée</a> </td>
-         <td> <a href="{{ path('deleteAdminUserAction', {id: user.id}) }}">Supprimer cette utilisateur</a> </td>
+         <td> <a href="{{ path('deleteAdminUserAction', {id: user.id}) }}">Supprimer cette utilisateur  </a> </td>
 
                     {%endif%}
                     
