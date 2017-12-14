@@ -287,6 +287,7 @@ class HomeController{
         $subjectForm->handleRequest($request);
                  $subjects = $app['dao.subject']->getSubjects();
          $token = $app['security.token_storage']->getToken();
+        
         if(NULL !== $token){
             $user = $token->getUser();
         }

@@ -166,3 +166,11 @@ $app->get('/admin/subject/delete/{id}', 'WF3\Controller\AdminController::deleteA
 $app->get('/admin/response/delete/{id}', 'WF3\Controller\AdminController::deleteAdminResponseAction')
 ->assert('id', '\d+')
 ->bind('deleteAdminResponseAction');
+
+$app->match('/admin/subject/update/{id}', 'WF3\Controller\AdminController::updateAdminSubjectAction')
+->assert('id', '\d+')
+->bind('updateAdminSubjectAction');
+
+$app->match('/admin/response/update/{id}', 'WF3\Controller\AdminController::updateAdminResponseAction')
+->assert('id', '\d+')
+->bind('updateAdminResponseAction');
