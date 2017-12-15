@@ -13,7 +13,7 @@
     
      <h1>Le site communautaire des anciens de Webforce3</h1> 
         <h2>Retrouvez des anciens et communiquez avec eux<br>
-        Recruteurs, proposez vos offres d'emploi d'Intégrateurs et développeurs</h2>
+        Recruteurs, proposez vos offres d'emploi de développeurs</h2>
         
 </div>
       
@@ -54,8 +54,7 @@
             <img class="team-thumb img-circle" src="img/wf3/css3.png" alt="" />
             <h3>CSS 3</h3>
             <p>
-            Concevoir des pages et des interfaces web responsive.<br>
-            Créer des animations.
+            Concevoir des interfaces web responsive.
             </p>
           </div>
         </div>        
@@ -73,13 +72,14 @@
             <img class="team-thumb img-circle" src="img/wf3/php.png" alt="" />
             <h3>PHP</h3>
             <p>
-            Développer des fonctionnalités. <br>
+            Développer des fonctionnalités sur un site dynamique.
             Mettre en ligne un site avec une partie cliente & une interface de gestion.
             </p>
           </div>
         </div>
       </div>
-             <p style="margin-left: 7em;"> Pour en savoir plus, vous pouvez vous rendre sur le site de WebForce3 en cliquant sur le lien <a href="http://www.wf3.fr/" style="color: #180D75">WebForce3</a>.</p> 
+        
+        <p>Pour en savoir plus, vous pouvez vous rendre sur le site de WebForce3 en cliquant sur le lien <a href="http://www.wf3.fr/" style="color: #180D75">WebForce3.</a></p> 
     </div>
     <!-- /.container -->
   </section>
@@ -91,16 +91,17 @@
       <div class="row">
         <div class="span3 animated-fast flyIn">
           <div class="service-box">
-            <img src="img/icons/marto.png" alt="" />
+            <i class="fa fa-4x fa-comment-o" aria-hidden="true"></i>
             <h2>Forum</h2>
-            <p><a href="{{ path('forum') }}">Forum
+            
+            <p><a href="{{ path('forum') }}">
               Communiquez avec des développeurs pour obtenir leur aide !
             </a></p>
           </div>
         </div>
         <div class="span3 animated flyIn">
           <div class="service-box">
-            <img src="img/icons/bulle.png">
+            <i class="fa fa-4x fa-address-book-o" aria-hidden="true"></i>
             <h2>Annuaire</h2>
             <p><a title="team" href="{{ path('annuaire') }}">
               Obtenez des témoignages d'anciens élèves sur le métier de développeur !
@@ -108,15 +109,13 @@
              </p>
           </div>
         </div> 
-
-
  
     
         <div class="span3 animated-slow flyIn">
 
           <div class="service-box">
-            <img src="img/icons/ordi.png" alt="" />
-            <h2>Offres d'emploi</h2>
+            <i class="fa fa-4x fa-exchange" aria-hidden="true"></i>
+               <h2> Offres d'emploi</h2>
             <p><a href="{{ path('offresemploi')}}">
               Trouvez des offres d'emploi correspondant à votre profil !
                 </a></p>
@@ -124,7 +123,7 @@
         </div>
         <div class="span3 animated-fast flyIn">
           <div class="service-box">
-            <img src="img/icons/i.png">
+            <i class="fa fa-4x fa-envelope" aria-hidden="true"></i>
             <h2>Contactez-nous !</h2>
             <p><a href='{{ path("contactezmoi") }}'>
               Vous pouvez nous contacter si vous avez des questions.

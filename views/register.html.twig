@@ -4,25 +4,30 @@
     
     {% block content %}
 
-<br>
-<br>
-<br>
+            <blockquote class="blockquote text-center">
+            <h1 style="text-align: center; margin-top: 2em;">Formulaire d'inscription</h1>
+
+            <h4 style="text-align: center;">
+                Veuillez remplir ce formulaire pour vous inscrire. <br>
+                Vous recevrez une confirmation par email une fois que le formulaire sera validé par les administrateurs.
+            </h4>
+
+                
+            <p style="text-align: center;" style="margin-top: 1em;">Les champs marqués d'un * sont obligatoires.</p>
+ 
            {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success">
                 {{ flashMessage }}
             </div>
             {% endfor %}
 
-            <h2 style="text-align: center; margin-top: 20px;">Formulaire d'inscription</h2>
+            
 
-            <p style="text-align: center">Veuillez remplir le formulaire ci-dessous pour vous inscrire. Vous recevrez une confirmation par email une fois que le formulaire sera validé.</p>
-            <p style="text-align: center">Les champs marqués d'une * sont obligatoires.</p>
- 
-
-            <div>
+           
+                
             {{ form_start(userForm, { 'attr': {'class': 'form-horizontal'} }) }}
 
-                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
+                <div class="form-group" class="form-group" style="margin-left: 45em; margin-right: 45em; margin-top: 2em;">
                     {{ form_label(userForm.username, null) }}
                     <div>
                         {% if userForm.username.vars.errors|length > 0 %}
@@ -181,7 +186,7 @@
                 </div>
             {{ form_end(userForm) }}
 
-        </div>
+      
 
         {% endblock %}
         

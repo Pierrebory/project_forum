@@ -1,18 +1,21 @@
 {% extends "layout.html.twig" %}
 
-  {% block title %}Annuaire des anciens élèves de Webforce3{% endblock %}
+  {% block title %}Messagerie privée{% endblock %}
 
 
         {% block content %}
 
 		<div class="col-md-12 text-center" style="margin-bottom:5em;">            
                              
-            <blockquote class="blockquote text-center"><h1 style="margin-top: 1em;">Vos conversations</h1> </blockquote>
-            
+            <blockquote class="blockquote text-center">
+                <h1 style="margin-top: 3em;">Communiquez en direct avec les anciens étudiants de Webforce3 !</h1>
+            </blockquote>
             
 		</div>
 
-<p>Vous pouvez retrouver un élève à qui vous voulez parler en passant par <a href="{{ path('login') }}">l'annuaire</a>.</p>
+            <blockquote class="blockquote text-center">
+                <h2>Retrouvez un ancien étudiant avec lequel vous souhaitez communiquer dans <a href="{{ path('annuaire') }}">l'annuaire</a></h2>
+            </blockquote>
 
 
 
