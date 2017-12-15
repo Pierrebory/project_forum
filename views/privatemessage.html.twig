@@ -1,7 +1,4 @@
-
-
 {% extends "layout.html.twig" %}
-
 
 {% block title %} Messagerie privée {% endblock %}
 
@@ -13,35 +10,45 @@
             <div class="alert alert-success">
                 {{ flashMessage }}
         </div>
-            {% endfor %}
-            
-<br><br><br>
-                <h1 style="text-align: center">Messagerie privée</h1>
+
+        {% endfor %}            
+
+        <h1 style="text-align: center; margin-top: 80px;">Messagerie privée</h1>
                 
-                <div id="messages">
+        <div id="messages">
 
+        {% for contact in contacts %}
 
-         {% for contact in contacts %}
+        {% if contactId == app.user.id %}
 
-          {% if contactId == app.user.id %}
-            <p><img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/web/uploads/' ~ contact.receiver_id.avatar) }}" class="img img-responsive img-rounded" width="75">
+    
+
+            <p><img src="{{ asset('img/avatar/' ~ contact.receiver_id.avatar) }}" class="img img-responsive img-rounded">
                {{ contact.receiver_id.firstname }} {{ contact.receiver_id.lastname }}
             </p>
+
+    
           {% else %}
-            <p><img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/web/uploads/' ~ contact.sender_id.avatar) }}" class="img img-responsive img-rounded" width="75">
+            <p><img style="margin-top: 1em; margin-left: 40em;" src="{{ asset('img/avatar/' ~ contact.sender_id.avatar) }}" class="img img-responsive img-rounded" width="75">
                {{ contact.sender_id.firstname }} {{ contact.sender_id.lastname }}
             </p>            
           {% endif %}
 
-            <p>{{ contact.message }} <span>{{ contact.date_message|date("d/m/Y")|trans }} à {{ contact.date_message|date("H:i:s")|trans }}</span></p> 
 
 
-          <hr>
+            <p  style="margin-left:40em; margin-right: 40em;  word-wrap: break-word;">{{ contact.message }} <span>{{ contact.date_message|date("d/m/Y")|trans }} à {{ contact.date_message|date("H:i:s")|trans }}</span></p> 
+          
+
+            <hr style="six
+            border: 0;
+            height: 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);">"
+
 
          {% endfor %}
 
-</div>
-
+          </div>
 
 
             <div class="privatemessage_form">
@@ -65,7 +72,7 @@
                 <br>
                 <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
                     
-                    <input type="submit" class="btn btn-primary btn-lg" id="action" value="Envoyer" />
+                    <input type="submit" class="btn btn-primary btn-lg" id="action" value="Envoyer" style="margin-bottom: 50px; background: #2f96b4;"/>
                 </div>
 
                 <div>
