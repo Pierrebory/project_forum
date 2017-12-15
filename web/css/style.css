@@ -35,7 +35,7 @@ body {
 }
 
 .bloc-principal {
-	min-height: calc(100vh - 40px)
+	min-height: calc(100vh - 40px);
 }
 
 /* scroll to top */
@@ -269,7 +269,9 @@ ul#menu-main > li > a:focus {
 Page sections
 ============================================================ */
 
-
+#langages{
+    padding-bottom: 1em;
+}
 
 header .logo {
 	text-align:center;
@@ -301,9 +303,6 @@ header .logo {
 	-o-box-shadow: none;
 }
 
-
-
-/* --- Header subscribe form --- */
 
 /* --- Header slider --- */
 #header-wrapper.header-slider {
@@ -380,12 +379,25 @@ section.inner {
 
 
 
-/* === section fonctionnalité === */
+/* === section fonctionnalités du site === */
 #webforce3 {
     text-align: justify;
 }
 
 
+#services {
+  color: #312f2b;   
+    
+}
+
+#tronches{
+    text-align: center!important;
+}
+
+#quatre{
+   font-size: 1.5em; 
+    
+}
 
 
 section.spacer {
@@ -455,6 +467,7 @@ section#about {
 	background:#9DBEB6;
     text-align: justify;
     text-align: center;
+    padding-bottom: 1em;
 }
 
 .team-thumb {

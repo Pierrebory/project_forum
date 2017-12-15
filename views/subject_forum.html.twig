@@ -9,7 +9,7 @@
     {% block content %}
 
 
-<h1 style="text-align: center; margin-top:80px;">Les différents sujets du forum</h1>
+<h1 style="text-align: center; margin-top:80px; color: #11A09A;">Les différents sujets du forum</h1>
          <div id="result"></div>
       {% for subject in subjects %}
             <article style="text-align: center">
@@ -125,7 +125,7 @@
                    data: $('form').serialize(),  
                    dataType: 'html',
                    success: function(data){
-                       $('#result').html(data);
+                       $('#result').append(data);
                    },
                    error: function() {
                        alert('La requête n\'a pas abouti');

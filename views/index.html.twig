@@ -13,7 +13,7 @@
     
      <h1>Le site communautaire des anciens de Webforce3</h1> 
         <h2>Retrouvez des anciens et communiquez avec eux<br>
-        Recruteurs, proposez vos offres d'emploi d'Intégrateurs et développeurs</h2>
+        Recruteurs, proposez vos offres d'emploi de développeurs</h2>
         
 </div>
       
@@ -39,13 +39,13 @@
         
       
       </div>
-      <div style="font-size: 1.15em" class="row">
+      <div id="langages" style="font-size: 1.15em" class="row">
         <div class="span2 offset1 flyIn">
           <div class="people">
             <img class="team-thumb img-circle" src="img/wf3/html.png" alt="" />
             <h3>HTML 5</h3>
             <p>
-            - Structurer le contenu brut d'une page web.            
+            Structurer le contenu brut d'une page web.            
             </p>
           </div>
         </div>
@@ -54,8 +54,7 @@
             <img class="team-thumb img-circle" src="img/wf3/css3.png" alt="" />
             <h3>CSS 3</h3>
             <p>
-            - Concevoir des pages et des interfaces web responsive.<br>
-            - Créer des animations.
+            Concevoir des interfaces web responsive.<br>
             </p>
           </div>
         </div>        
@@ -64,7 +63,7 @@
             <img class="team-thumb img-circle" src="img/wf3/js.jpg" alt="" />
             <h3>JavaScript</h3>
             <p>
-            - Concevoir des pages web interactives.
+            Concevoir des pages web interactives.
             </p>
           </div>
         </div>
@@ -73,14 +72,13 @@
             <img class="team-thumb img-circle" src="img/wf3/php.png" alt="" />
             <h3>PHP</h3>
             <p>
-            - Maîtriser la syntaxe de PHP. <br>
-            - Développer des fonctionnalités. <br>
-            - Mettre en ligne un site avec une partie cliente & une interface de gestion.
+            Développer des fonctionnalités sur un site dynamique.
             </p>
           </div>
         </div>
       </div>
-             <p style="margin-left: 7em;"> Pour en savoir plus, vous pouvez vous rendre sur le site de WebForce3 en cliquant sur le lien <a href="http://www.wf3.fr/" style="color: #180D75">WebForce3</a>.</p> 
+        
+        <p> Pour en savoir plus, vous pouvez vous rendre sur le site de WebForce3 en cliquant sur le lien <a href="http://www.wf3.fr/" style="color: #180D75">WebForce3.</a></p> 
     </div>
     <!-- /.container -->
   </section>
@@ -92,16 +90,17 @@
       <div class="row">
         <div class="span3 animated-fast flyIn">
           <div class="service-box">
-            <img src="img/icons/marto.png" alt="" />
+            <i class="fa fa-4x fa-comment-o" aria-hidden="true"></i>
             <h2>Forum</h2>
-            <p><a href="{{ path('forum') }}">Forum
+            
+            <p><a href="{{ path('forum') }}">
               Communiquez avec des développeurs pour obtenir leur aide !
             </a></p>
           </div>
         </div>
         <div class="span3 animated flyIn">
           <div class="service-box">
-            <img src="img/icons/bulle.png">
+            <i class="fa fa-4x fa-address-book-o" aria-hidden="true"></i>
             <h2>Annuaire</h2>
             <p><a title="team" href="{{ path('annuaire') }}">
               Obtenez des témoignages d'anciens élèves sur le métier de développeur !
@@ -109,15 +108,13 @@
              </p>
           </div>
         </div> 
-
-
  
     
         <div class="span3 animated-slow flyIn">
 
           <div class="service-box">
-            <img src="img/icons/ordi.png" alt="" />
-            <h2>Offres d'emploi</h2>
+            <i class="fa fa-4x fa-exchange" aria-hidden="true"></i>
+               <h2> Offres d'emploi</h2>
             <p><a href="{{ path('offresemploi')}}">
               Trouvez des offres d'emploi correspondant à votre profil !
                 </a></p>
@@ -125,7 +122,7 @@
         </div>
         <div class="span3 animated-fast flyIn">
           <div class="service-box">
-            <img src="img/icons/i.png">
+            <i class="fa fa-4x fa-envelope" aria-hidden="true"></i>
             <h2>Contactez-nous !</h2>
             <p><a href='{{ path("contactezmoi") }}'>
               Vous pouvez nous contacter si vous avez des questions.
@@ -139,10 +136,10 @@
   <section id="about" class="section" style="color: white">
     <div class="container">
       <h4>Qui sommes-nous ?</h4>
-      <div class="row">
+      <div id="quatre" class="row">
             
             <p>
-              Nous sommes quatre anciens de la promotion 5 WebForce3 de Bordeaux. Nous vous proposons ce site communautaire qui rassemble les anciens élèves de WebForce3 afin de pouvoir communiquer de manière simple avec ces derniers et obtenir des témoignages concernant la formation et le métier d'intégrateur/développeur web.
+              Nous sommes quatre anciens de la promotion 5 de WebForce3 Bordeaux (Philomathique de Bordeaux). Nous vous proposons ce site communautaire qui rassemble les anciens élèves de WebForce3 afin de pouvoir communiquer de manière simple avec ces derniers et obtenir des témoignages concernant la formation et le métier d'intégrateur/développeur web.
             </p>
       
       </div>
