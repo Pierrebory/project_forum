@@ -127,8 +127,10 @@
 
         <div style="margin-left: 40em; margin-right: 40em; margin-bottom: 10px;">
 
-        <a href="{{ path('mdp', {id: app.user.id})}}">Modifier votre mot de passe</a> 
-
+        <a href="{{ path('mdp', {id: app.user.id})}}"><button type="button" class="btn btn-info" style="margin-bottom:2em; margin-left: 1em; width:390px">Modifier votre mot de passe</button></a> 
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<a href="{{ path('deleteUserAction', {id: app.user.id})}}"><button type="button" class="btn btn-info" style="margin-bottom:2em; margin-left: 1em; width:390px">Supprimer son compte</button></a> 
+{%endif%}
         </div>
 
         {% endblock %}

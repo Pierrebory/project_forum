@@ -90,9 +90,7 @@
 
 
  
-{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-<a href="{{ path('deleteUserAction', {id: app.user.id})}}"><button type="button" class="btn btn-info" style="margin-bottom:2em; margin-left: 1em; width:390px">Supprimer son compte</button></a> 
-{%endif%}
+
 
 
     {% endblock %}
