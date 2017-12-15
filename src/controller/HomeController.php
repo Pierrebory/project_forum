@@ -96,9 +96,11 @@ class HomeController{
         if(NULL !== $token){
             $user = $token->getUser();
         }
-        
-        $error = false;
-        
+
+        $contactId = $request->attributes->get('id');
+
+        $contacts = $app['dao.privatemessage']->findConversation($user->getId(), $contactId);   
+
         $privatemessage = new PrivateMessage();
         $privatemessageForm = $app['form.factory']->create(PrivatemessageType::class, $privatemessage);
         $privatemessageForm->handleRequest($request);
@@ -119,15 +121,49 @@ class HomeController{
             $app['session']->getFlashBag()->add('success', 'Votre message a bien été envoyé.');
            
         }
+
+        setlocale(LC_TIME, "fr_FR");
         
         
         // j'envoie le formulaire
          return $app['twig']->render('privatemessage.html.twig', array(
-                         'privatemessageForm' => $privatemessageForm->createView()
+                         'privatemessageForm' => $privatemessageForm->createView(),
+                         'contacts' => $contacts,
+                         'contactId' =>$contactId 
                         
          )); 
         
     }
+
+/*        ///////////////////////PAGE SUJET FORUM//////////////////////// AAAAAAAAAAAAAAAAAAAAAAAAA
+    public function forumPageAction(Application $app, Request $request){
+        $subject = new Subjects();
+        $subjects =[];
+        $subjectForm = $app['form.factory']->create(subjectType::class, $subject);
+        $subjectForm->handleRequest($request);
+                 $subjects = $app['dao.subject']->getSubjects();
+         $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
+            $subject->setUser_id($user->getId());
+             $subject->setDate_message(date('Y-m-d H:i:s'));
+
+         $app['dao.subject']->insert($subject);
+
+        
+       }
+        return $app['twig']->render('subject_forum.html.twig', array(
+            'subjectForm'=>$subjectForm->createView(),
+            'subject'=>$subject,
+            'subjects'=>$subjects));
+   
+
+    }
+    */
+     
+    
     
     
     /*if($articleForm->isSubmitted() AND $articleForm->isValid()){
@@ -341,11 +377,8 @@ class HomeController{
         }
 
         // si le formulaire a été envoyé
-        if($userForm->isSubmitted() && $userForm->isValid()){
+        if($userForm->isSubmitted() && $userForm->isValid() && $error === false){
 
-
-
-            if($error === false){
             $salt = substr(md5(time()), 0, 23);
             $user->setSalt($salt);
             //on récupère le mot de passe en clair (envoyé par l'utilisateur)
@@ -360,9 +393,6 @@ class HomeController{
             
             $app['dao.users']->insert($user);               
             $app['session']->getFlashBag()->add('success', 'Vous êtes bien enregistré(e). Vous pouvez à présent vous connecter.');
-            }
-
-
                     
         }
 
@@ -647,35 +677,6 @@ class HomeController{
     }
     
 
-    /////////////////////////////PAGE REPONSE FORUM////////////////////////////  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-/*    public function subjectAction(Application $app, Request $request, $idSubject){
-
-    $subject = $app['dao.subject']->getSubject($idSubject);
-        $response = new Responses();
-        $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
-        $responsesForm->handleRequest($request);
-
-        $responses = $app['dao.response']->getResponses($idSubject);
-  $token = $app['security.token_storage']->getToken();
-        if(NULL !== $token){
-            $user = $token->getUser();
-        }
-
-                 $responses = $app['dao.response']->getResponses($idSubject);
-
-
-
-        return $app['twig']->render('responses_forum.html.twig', array(
-            'responsesForm'=>$responsesForm->createView(),
-            'response'=>$response,
-            'subject'=>$subject,
-        'responses'=>$responses));
-   
-
-    }
-    */
-    
-
     
      ///////////////////////PAGE REPONSE FORUM////////////////////////
      /* public function subjectAction(Application $app, Request $request, $idSubject, $idUser){
@@ -950,7 +951,81 @@ class HomeController{
 
 
    
+   public function updateResponseAction(Application $app, Request $request, $id){
+          if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            //return $app->redirect($app['url_generator']->generate('home'));
+            throw new AccessDeniedHttpException();
+        }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        //on récupère les infos de l'article
+        $response = $app['dao.response']->findResponseModif($id);
+         //$alumniId = $request->attributes->get('id');
+         if($user->getId() != $response->getUser_id()->getId()){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            return $app['twig']->render('accesrestreint.html.twig');
+        }
+        //on crée le formulaire et on lui passe l'article en paramètre
+        //il va utiliser $article pour pré remplir les champs
+        $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
 
+        $responsesForm->handleRequest($request);
+
+        if($responsesForm->isSubmitted() && $responsesForm->isValid()){
+            //si le formulaire a été soumis
+            $response->setDate_edit(date('Y-m-d H:i:s'));
+            //on update avec les données envoyées par l'utilisateur
+            $app['dao.response']->updateResponseModif($id, $response);
+        }
+
+       return $app['twig']->render('modification.response.html.twig', array(
+           'responsesForm' => $responsesForm->createView(),
+          'response' => $response)); 
+
+    }
+
+    public function updateSubjectAction(Application $app, Request $request, $id){
+          if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            //return $app->redirect($app['url_generator']->generate('home'));
+            throw new AccessDeniedHttpException();
+        }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+        $token = $app['security.token_storage']->getToken();
+        if(NULL !== $token){
+            $user = $token->getUser();
+        }
+        //on récupère les infos de l'article
+        $subject = $app['dao.subject']->findSubjectModif($id);
+         //$alumniId = $request->attributes->get('id');
+         if($user->getId() != $subject->getUser_id()->getId()){
+            //si l'utilisateur n'est pas l'auteur: accès interdit
+            return $app['twig']->render('accesrestreint.html.twig');
+        }
+        //on crée le formulaire et on lui passe l'article en paramètre
+        //il va utiliser $article pour pré remplir les champs
+        $subjectForm = $app['form.factory']->create(SubjectType::class, $subject);
+
+        $subjectForm->handleRequest($request);
+
+        if($subjectForm->isSubmitted() && $subjectForm->isValid()){
+            //si le formulaire a été soumis
+            $subject->setDate_edit(date('Y-m-d H:i:s'));
+            //on update avec les données envoyées par l'utilisateur
+            $app['dao.subject']->updateSubjectModif($id, $subject);
+        }
+
+       return $app['twig']->render('modification.subject.html.twig', array(
+           'subjectForm' => $subjectForm->createView(),
+          'subject' => $subject)); 
+
+    }
 
 }
 

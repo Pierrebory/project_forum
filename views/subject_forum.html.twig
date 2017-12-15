@@ -1,30 +1,31 @@
 {% extends "layout.html.twig" %}
     
-    {% block title %}Forum{% endblock %}
-
-
-
-
+{% block title %}Forum{% endblock %}
     
-    {% block content %}
+{% block content %}
 
 
-<h1 style="text-align: center; margin-top:80px; color: #11A09A;">Les différents sujets du forum</h1>
+
+
+<h1 style="text-align: center; margin-top:80px; margin-bottom: 50px;">Les différents sujets du forum</h1>
+
          <div id="result"></div>
       {% for subject in subjects %}
             <article style="text-align: center">
              
-               <h2 id="sujet"><a href="{{ path('forumsubject', {idSubject: subject.id}) }}">{{ subject.title }}</a></h2>
+               <h2 id="sujet"><a href="{{ path('forumsubject', {idSubject: subject.id}) }} "style="color: #11A09A;">{{ subject.title }}</a></h2>
             
                
-                <p>publié le {{ subject.date_message }} par {{ subject.user_id.username }}</p>
-               <p>{{ subject.message }}</p>
+                <p>publié le {{ subject.date_message|date("d/m/Y") }} à {{ subject.date_message|date("h:i:s") }} par {{ subject.user_id.username }}</p>
+                <p>{{ subject.message }}</p>
                {% if is_granted('ROLE_ADMIN') %}
-              <p><a href="{{ path('deleteAdminSubjectAction', {id: subject.id}) }}">Supprimer ce sujet</a></p>
-              <p><a href="{{ path('updateAdminSubjectAction', {id: subject.id}) }}">Modifier ce sujet</a></p>
-              {%endif%}
-               <hr>
-              
+                <p><a href="{{ path('deleteAdminSubjectAction', {id: subject.id}) }}">Supprimer ce sujet</a></p>
+                <p><a href="{{ path('updateAdminSubjectAction', {id: subject.id}) }}">Modifier ce sujet</a></p>
+               {%endif%}
+               <hr style=" border: 0;
+                height: 1px;
+                background: #333;
+                background-image: linear-gradient(to right, #ccc, #333, #ccc);">              
 
             </article>
 
@@ -57,57 +58,18 @@
                        }}) }}
                    </div>
                </div><br>
-
                
                <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
                    <input type="submit" class="btn btn-primary btn-lg" id ="action" value="Envoyer"   style="background: #2f96b4 ;">
                </div>
            {{ form_end(subjectForm) }}
 
-
-
 {% else %}
 
 <button type="button" class="btn btn-info" style="text-align: center"><a href="{{ path('login') }}">Vous devez être connecté(e) pour poster un message.</a></button>
 
 
-{% endif %}
-
-
-
-
-
-
-<h1 style="text-align: center; margin-top:80px;">Les différents sujets du forum</h1>
-
-    <div id="result"></div>
-      {% for subject in subjects %}
-            <article style="text-align: center">
-             
-               <h2 id="sujet"><a href="{{ path('forumsubject', {idSubject: subject.id}) }}">{{ subject.title }}</a></h2>
-            
-               
-                <p>publié le {{ subject.date_message }} par {{ subject.user_id.username }}</p>
-               <p>{{ subject.message }}</p><hr>
-            </article>
-       {%endfor%}
-
-
-
-
-
-
-
-  
-
-
-{% endblock %}
-
-
-
-
-
-
+{% endif %}{% endblock %}
 {% block javascript %}
 
              
@@ -142,11 +104,9 @@
        
        $('#sujet').click(function(){
          alert('Vous devez être connecté(e) pour accéder au sujet.'); 
-            });
-        
+            });        
         {% endif %}
-                     
-  
+                       
    </script> 
 
 

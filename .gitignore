@@ -1,5 +1,7 @@
 /vendor
 /cache
 *.png
+*.jpg
 *.jpeg
-*.jpeg
+*.svg
+

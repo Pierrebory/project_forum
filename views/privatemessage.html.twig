@@ -1,9 +1,13 @@
+
+
 {% extends "layout.html.twig" %}
+
 
 {% block title %} Messagerie privée {% endblock %}
 
 {% block content %}
-    
+
+
         <div class="col-sm-6">
             {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success">
@@ -11,10 +15,37 @@
         </div>
             {% endfor %}
             
-            <div class="privatemessage_form"><br><br><br>
+<br><br><br>
                 <h1 style="text-align: center">Messagerie privée</h1>
                 
-                
+                <div id="messages">
+
+
+         {% for contact in contacts %}
+
+          {% if contactId == app.user.id %}
+            <p><img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/web/uploads/' ~ contact.receiver_id.avatar) }}" class="img img-responsive img-rounded" width="75">
+               {{ contact.receiver_id.firstname }} {{ contact.receiver_id.lastname }}
+            </p>
+          {% else %}
+            <p><img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/web/uploads/' ~ contact.sender_id.avatar) }}" class="img img-responsive img-rounded" width="75">
+               {{ contact.sender_id.firstname }} {{ contact.sender_id.lastname }}
+            </p>            
+          {% endif %}
+
+            <p>{{ contact.message }} <span>{{ contact.date_message|date("d/m/Y")|trans }} à {{ contact.date_message|date("H:i:s")|trans }}</span></p> 
+
+
+          <hr>
+
+         {% endfor %}
+
+</div>
+
+
+
+            <div class="privatemessage_form">
+
                {{ form_start(privatemessageForm, { 'attr': {'class': 'form-horizontal'} }) }}
                 
         
@@ -34,7 +65,11 @@
                 <br>
                 <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
                     
-                    <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" />
+                    <input type="submit" class="btn btn-primary btn-lg" id="action" value="Envoyer" />
+                </div>
+
+                <div>
+                    <input type="hidden" name="receiver_id" value="{{ contactId }}">
                 </div>
                 
             {{ form_end(privatemessageForm) }}
@@ -42,4 +77,66 @@
                 
         </div>
                                 
+{% endblock %}
+
+{% block javascript %}
+
+             
+   <script>
+       $(function(){
+           $('#action').click(function(event){
+               //permet d'empêcher la validation du formulaire et le chargement de la page
+               event.preventDefault();
+               //construction de l'url de la requête avec les paramètres
+               var url = "{{ path('derniermessageprive') }}";
+               
+               $.ajax({
+                   type: 'POST',
+                   url: url,
+                   data: $('form').serialize(),  
+                   dataType: 'html',
+                   success: function(data){
+                       $('#messages').append(data);
+                   },
+                   error: function() {
+                       alert('La requête n\'a pas abouti');
+                   }
+               });
+           });
+       });
+   </script> 
+
+   <script>
+       
+       function loadlink(){
+        $('#messages').load("{{ path('contacter', {id: contactId}) }} #messages",function () {
+             $(this).unwrap();
+        });
+    }
+
+    loadlink(); // This will run on page load
+    setInterval(function(){
+        loadlink() // this will run after every 5 seconds
+    }, 5000);
+
+   </script>
+
+
+             
+   <script>
+       
+       {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+       
+       $('#sujet').click(function(){
+         alert('Vous devez être connecté(e) pour accéder au sujet.'); 
+            });
+        
+        {% endif %}
+                     
+  
+   </script> 
+
+
+
+
 {% endblock %}
