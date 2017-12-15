@@ -43,7 +43,7 @@ class UsersDAO extends DAO implements UserProviderInterface
         return $result->fetchAll(\PDO::FETCH_ASSOC);   
     }      
 
-    //liste des infos qui ne peuvent pas être en plusieurs exemplaires
+    //liste des infos qui ne peuvent pas être en plusieurs exemplaires.
     public function findOtherValues($id){
         $result = $this->bdd->query('SELECT email, phone FROM users WHERE id != ' . $id);
         return $result->fetchAll(\PDO::FETCH_ASSOC);   
