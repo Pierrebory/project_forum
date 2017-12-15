@@ -1,29 +1,37 @@
 {% extends "layout.html.twig" %}
-
+    
 {% block title %}Forum{% endblock %}
     
 {% block content %}
 
 
-<h1 style="text-align: center; margin-top:80px;">Les différents sujets du forum</h1>
+<h1 style="text-align: center; margin-top:80px; margin-bottom: 50px;">Les différents sujets du forum</h1>
          <div id="result"></div>
       {% for subject in subjects %}
             <article style="text-align: center">
              
-              <h2 id="sujet"><a href="{{ path('forumsubject', {idSubject: subject.id}) }}">{{ subject.title }}</a></h2>
-              <p>publié le {{ subject.date_message }} par {{ subject.user_id.username }}</p>
-              <p>{{ subject.message }}</p>
+               <h2 id="sujet"><a href="{{ path('forumsubject', {idSubject: subject.id}) }} "style="color: #11A09A;">{{ subject.title }}</a></h2>
+            
+               
+                <p>publié le {{ subject.date_message|date("d/m/Y") }} à {{ subject.date_message|date("h:i:s") }} par {{ subject.user_id.username }}</p>
+                <p>{{ subject.message }}</p>
                {% if is_granted('ROLE_ADMIN') %}
-              <p><a href="{{ path('deleteAdminSubjectAction', {id: subject.id}) }}">Supprimer ce sujet</a></p>
-              <p><a href="{{ path('updateAdminSubjectAction', {id: subject.id}) }}">Modifier ce sujet</a></p>
-              {%endif%}
-               <hr>              
+                <p><a href="{{ path('deleteAdminSubjectAction', {id: subject.id}) }}">Supprimer ce sujet</a></p>
+                <p><a href="{{ path('updateAdminSubjectAction', {id: subject.id}) }}">Modifier ce sujet</a></p>
+               {%endif%}
+               <hr style=" border: 0;
+                height: 1px;
+                background: #333;
+                background-image: linear-gradient(to right, #ccc, #333, #ccc);">              
 
-            </article>       
+            </article>
 
-{%endfor%}
+       {%endfor%}
+
 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
 {{ form_start(subjectForm, { 'attr': {'class': 'form-horizontal'} }) }}
+
 
                <div class="form-group" style="margin-left: 45em; margin-top:20px; width: 35%;">
                    {{ form_label(subjectForm.title, null) }}
@@ -46,24 +54,25 @@
                            'class': 'form-control'
                        }}) }}
                    </div>
-               </div>            
+               </div><br>
+               
                <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
                    <input type="submit" class="btn btn-primary btn-lg" id ="action" value="Envoyer"   style="background: #2f96b4 ;">
                </div>
+           {{ form_end(subjectForm) }}
 
-{{ form_end(subjectForm) }}
 {% else %}
 
-              <button type="button" class="btn btn-info" style="text-align: center; margin-left: 55em;"><a href="{{ path('login') }}">Vous devez être connecté(e) pour poster un message.</a></button>
+<button type="button" class="btn btn-info" style="text-align: center"><a href="{{ path('login') }}">Vous devez être connecté(e) pour poster un message.</a></button>
 
 
-{% endif %}
-{% endblock %}
+{% endif %}{% endblock %}
 {% block javascript %}
 
-<script>
-    $(function(){
-        $('#action').click(function(event){
+             
+   <script>
+       $(function(){
+           $('#action').click(function(event){
                //permet d'empêcher la validation du formulaire et le chargement de la page
                event.preventDefault();
                //construction de l'url de la requête avec les paramètres
@@ -76,22 +85,28 @@
                    dataType: 'html',
                    success: function(data){
                        $('#result').html(data);
-                  },
-                  error: function() {
-                      alert('La requête n\'a pas abouti');
-                  }
-              });
-         });
-      });
-</script> 
+                   },
+                   error: function() {
+                       alert('La requête n\'a pas abouti');
+                   }
+               });
+           });
+       });
+   </script> 
 
              
-    <script>       
-       {% if not is_granted('IS_AUTHENTICATED_FULLY') %}       
+   <script>
+       
+       {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+       
        $('#sujet').click(function(){
          alert('Vous devez être connecté(e) pour accéder au sujet.'); 
             });        
         {% endif %}
-    </script>
+                       
+   </script> 
+
+
+
 
 {% endblock %}

@@ -12,24 +12,27 @@ class PrivatemessageDAO extends DAO{
 	}
     
     
-    // update le password
+    // afficher le dernier message de chaque conversation
     public function findConversations($id){
         $result = $this->bdd->prepare('SELECT m.*
-from
-  privatemessage m inner join (
-    select
-      least(sender_id, receiver_id) as user_1,
-      greatest(sender_id, receiver_id) as user_2,
-      max(id) as last_id,
-      max(date_message) as last_timestamp
-    from
-      privatemessage where :id in (sender_id, receiver_id) 
-    group by
-      least(sender_id, receiver_id),
-      greatest(sender_id, receiver_id)
-  ) s on least(sender_id, receiver_id)=user_1
-         and greatest(sender_id, receiver_id)=user_2
-         and m.id = s.last_id order by date_message desc');
+        FROM
+          privatemessage m INNER JOIN (
+        SELECT
+          least(sender_id, receiver_id) AS user_1,
+          greatest(sender_id, receiver_id) AS user_2,
+          max(id) AS last_id,
+          max(date_message) AS last_timestamp
+        FROM
+          privatemessage
+        WHERE 
+          :id IN (sender_id, receiver_id) 
+        GROUP BY
+          least(sender_id, receiver_id),
+          greatest(sender_id, receiver_id)
+          ) s ON least(sender_id, receiver_id)=user_1
+             AND greatest(sender_id, receiver_id)=user_2
+             AND m.id = s.last_id ORDER BY date_message DESC');
+        
         $result->bindValue(':id', $id, \PDO::PARAM_INT);
         $result->execute();
         $rows = $result->fetchAll(\PDO::FETCH_ASSOC);
@@ -40,7 +43,39 @@ from
         return $users;
     } 
        
-
+    // afficher le dernier message de la conversation
+    public function findConversation($userId, $contactId){
+        $result = $this->bdd->prepare('SELECT m.*
+        FROM
+          privatemessage m INNER JOIN (
+        SELECT
+          least(sender_id, receiver_id) AS user_1,
+          greatest(sender_id, receiver_id) AS user_2,
+          id,
+          date_message
+        FROM
+          privatemessage
+        WHERE 
+          :userId IN (sender_id, receiver_id) 
+        AND
+          :contactId IN (sender_id, receiver_id)         
+        GROUP BY
+          least(sender_id, receiver_id),
+          greatest(sender_id, receiver_id)
+          ) s ON least(sender_id, receiver_id)=user_1
+             AND greatest(sender_id, receiver_id)=user_2
+             ORDER BY date_message');
+        
+        $result->bindValue(':userId', $userId, \PDO::PARAM_INT);
+        $result->bindValue(':contactId', $contactId, \PDO::PARAM_INT);        
+        $result->execute();
+        $rows = $result->fetchAll(\PDO::FETCH_ASSOC);
+        $users = [];
+        foreach($rows as $row){
+            $users[] = $this->buildObject($row);
+        }
+        return $users;
+    } 
     
     
     
