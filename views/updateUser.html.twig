@@ -127,9 +127,11 @@
  <blockquote class="blockquote text-center">
     <a href="{{ path('mdp', {id: app.user.id})}}"><button type="button" class="button" style="color: white;">Modifier votre mot de passe</button></a>   
 
-<a href="{{ path('deleteUserAction', {id: app.user.id})}}"><button type="button" class="button" style="color: white;">Supprimer son compte</button></a>
 
-
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<a href="{{ path('deleteUserAction', {id: app.user.id})}}"><button type="button" class="btn btn-info" style="margin-bottom:2em; margin-left: 1em; width:390px">Supprimer son compte</button></a> 
+{%endif%}
+        
 </blockquote>
 
         {% endblock %}
