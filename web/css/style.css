@@ -302,9 +302,6 @@ header .logo {
 }
 
 
-
-/* --- Header subscribe form --- */
-
 /* --- Header slider --- */
 #header-wrapper.header-slider {
 	margin-top:60px;
@@ -380,12 +377,21 @@ section.inner {
 
 
 
-/* === section fonctionnalité === */
+/* === section fonctionnalités du site === */
 #webforce3 {
     text-align: justify;
 }
 
 
+#services {
+  color: 312f2b;   
+    
+}
+
+#quatre{
+   font-size: 1.5em; 
+    
+}
 
 
 section.spacer {
