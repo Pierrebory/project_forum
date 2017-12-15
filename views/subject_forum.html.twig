@@ -18,7 +18,7 @@
       {% for subject in subjects %}
             <article style="text-align: center">
              
-               <h2 id="sujet"><a href="{{ path('forumsubject', {idSubject: subject.id}) }} "style="color: #11A09A;">{{ subject.title }}</a></h2>
+               <h2 id="sujet"><a href="{{ path('forumsubject', {idSubject: subject.id}) }}">{{ subject.title }}</a></h2>
             
                
                 <p>publié le {{ subject.date_message|date("d/m/Y") }} à {{ subject.date_message|date("H:i:s") }} par {{ subject.user_id.username }}</p>
