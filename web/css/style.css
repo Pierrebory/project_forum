@@ -35,7 +35,7 @@ body {
 }
 
 .bloc-principal {
-	min-height: calc(100vh - 40px)
+	min-height: calc(100vh - 40px);
 }
 
 /* scroll to top */
@@ -108,6 +108,18 @@ input, button, select, textarea {
 	font-family:'Open Sans', Arial, sans-serif;
 	
 
+}
+
+/***********************************************************
+STYLE DES BOUTTONS
+**********************************************************/
+
+.button {
+    background-color: #11A09A;
+    color: white;
+    padding: 0.7em;
+    border-radius: .8em;
+    font-size: 0.9em;
 }
 
 /* =========================================================
@@ -266,10 +278,12 @@ ul#menu-main > li > a:focus {
 
 
 /* =========================================================
-Page sections
+SLIDER FIXE
 ============================================================ */
 
-
+#langages{
+    padding-bottom: 1em;
+}
 
 header .logo {
 	text-align:center;
@@ -302,9 +316,6 @@ header .logo {
 }
 
 
-
-/* --- Header subscribe form --- */
-
 /* --- Header slider --- */
 #header-wrapper.header-slider {
 	margin-top:60px;
@@ -322,6 +333,11 @@ header .logo {
 #header-wrapper.header-slider h1{
     color: #11A09A;
 }
+
+h1{
+    color: #11A09A !important;
+}
+
 
 #header-wrapper.header-slider h2 {
     padding-top: 0.5em; 
@@ -379,13 +395,28 @@ section.inner {
 
 
 
-
-/* === section fonctionnalité === */
+/* === section fonctionnalités du site === */
 #webforce3 {
     text-align: justify;
 }
 
 
+#services {
+
+  color: #312f2b;   
+    
+}
+
+#tronches{
+    text-align: center!important;
+}
+
+
+
+#quatre{
+   font-size: 1.5em; 
+    
+}
 
 
 section.spacer {
@@ -455,6 +486,7 @@ section#about {
 	background:#9DBEB6;
     text-align: justify;
     text-align: center;
+    padding-bottom: 1em;
 }
 
 .team-thumb {
@@ -740,6 +772,14 @@ i.icon-white {
   border-radius: 8px;
 }
 
+
+/* PAGE ANNUAIRE*/
+
+#rechercheancien {
+    display: flex;
+    justify-content: center;
+}
+
 /* =========================================================
 Media queries
 ============================================================ */
@@ -817,7 +857,11 @@ Media queries
 }
    
 
-	
+/************************************
+PAGE ANNUAIRE
+**************************************/	
+
+
 
   
 /* Smartphones (portrait and landscape) ----------- */

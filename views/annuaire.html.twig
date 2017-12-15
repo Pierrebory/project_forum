@@ -1,6 +1,6 @@
 {% extends "layout.html.twig" %}
 
-  {% block title %}Annuaire des anciens élèves de Webforce3{% endblock %}
+  {% block title %}Annuaire des anciens étudiants de Webforce3{% endblock %}
 
         
 
@@ -8,34 +8,37 @@
 
         {% block content %}
 
-		<div class="col-md-12 text-center" style="margin-bottom:5em;">            
-                             
-            <blockquote class="blockquote text-center"><h1 style="margin-top: 1em;">Annuaire des anciens élèves de Webforce3</h1> </blockquote>
+		<div class="col-md-12 text-center" style="margin-bottom:5em;" >
             
+
+            <blockquote class="blockquote text-center"><h1 style="margin-top: 3em;" style="font-family: Merriweather, arial, sans-serif;">Annuaire des anciens de Webforce3</h1> </blockquote>
+            <h4>Anciens étudiants de WebForce3, inscrivez-vous et consultez l'annuaire des anciens afin de connaître leur parcours et les contacter directement pour leur poser des questions.</h4>
+            <h4>Vous êtes recruteurs en informatique ? Inscrivez-vous pour contacter directement les profils qui vous intéressent ! </h4>
+ 
             
 		</div>
 
-<p>
-    <a href="{{ path('inscription') }}"><button type="button" class="btn btn-info blockquote text-center" style="margin-left:1em; width:390px">Inscrivez-vous pour figurer dans l'annuaire</button></a>
-    <a href="{{ path('login') }}"><button type="button" class="btn btn-info blockquote text-center" style="margin-left:1em; width:390px">Connectez-vous pour accéder à l'annuaire détaillé</button></a>
-</p>
+
+    <blockquote class="blockquote text-center">
+    <a href="{{ path('inscription') }}"><button type="button" class="button">Inscrivez-vous pour figurer dans l'annuaire</button></a>
+    <a href="{{ path('login') }}"><button type="button" class="button">Connectez-vous pour accéder à l'annuaire détaillé</button></a>
+    </blockquote>
+
 
   {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-  <p>
-      <a href="{{ path('inscription/alumni') }}"><button type="button" class="btn btn-info blockquote text-center" style="margin-left:1em; width:390px">Remplissez votre fiche détaillée</button></a>
-    {% endif %}
-
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-          <a href="{{ path('updateAlumniAction', {id: app.user.id}) }}"><button type="button" class="btn btn-info" style="margin-left: 1em; width: 390px;">Modifiez votre fiche détaillée</button></a> 
-                    {%endif%}
-      </p>
+    <blockquote class="blockquote text-center">
+        <a href="{{ path('inscription/alumni') }}"><button type="button" class="button">Remplissez votre fiche détaillée</button></a>
+        <a href="{{ path('updateAlumniAction', {id: app.user.id}) }}"><button type="button" class="button">Modifiez votre fiche détaillée</button></a> 
+{%endif%}
+    </blockquote>
 
 
-
-<form action="{{ path('rechercheParUsername')}}">
-    <input style="margin-left:1em; margin-bottom: 1em; width:390px; margin-top:20px;" type="text" name="name" placeholder="nom"><br>
-    <button type="submit" style="margin-left:1em; background: #ecf0f1; ">Rechercher un ancien</button>
+<div id="rechercheancien"> 
+<form  action="{{ path('rechercheParUsername')}}">
+    <input style="margin-left:1em; margin-bottom: 1em; width:390px; margin-top:20px;" type="text" name="name" placeholder="nom">
+    <button type="submit" class="button">Rechercher un ancien</button>
 </form>
+</div>
 
 
 <br>
@@ -63,8 +66,9 @@
     
   <tbody>
     <tr>
+
          {% for user in users %}
-        
+        {%if user.role != 'ROLE_ADMIN' and user.role != 'ROLE_EMPLOYER' %}
       <td>{{ user.firstname }}</td>
       <td>{{ user.username }}</td>
       <td>{{ user.city }}</td>
@@ -79,7 +83,7 @@
                     {%endif%}
                     
         <td><div class="fiche"><a href="{{ path('contacter', {id: user.id}) }}">Contacter</a></div></td>
-
+        {%endif%}
     </tr>
 
       
@@ -90,9 +94,7 @@
 
 
  
-{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-<a href="{{ path('deleteUserAction', {id: app.user.id})}}"><button type="button" class="btn btn-info" style="margin-bottom:2em; margin-left: 1em; width:390px">Supprimer son compte</button></a> 
-{%endif%}
+
 
 
     {% endblock %}

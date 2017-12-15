@@ -1,13 +1,27 @@
 {% extends "layout.html.twig" %}
 	
-	{% block title %}Un formulaire inscription alumno{% endblock %}
+	{% block title %}Formulaire d'inscription dans l'annuaire WebForce3{% endblock %}
 	
 	{% block content %}
 
 
+  <h1 style="margin-top: 3em; text-align:center">Formulaire d'inscription dans l'annuaire</h1>
+
+            <p style="margin-top: 2em; text-align:center">Merci de remplir le formulaire ci-dessous pour envoyer votre fiche détaillée.</p>
+            <p style="margin-top: 2em; text-align:center">Les champs marqués d'un * sont obligatoires.</p>
+ 
+
+			{% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+
+
 
 {{ form_start(alumniForm, { 'attr': {'class': 'form-horizontal'} }) }}
-                <div style="margin-top:80px; margin-left:10px;" class="form-group">
+
+               <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.promo, null) }}
                     <div>
                     	{% if alumniForm.promo.vars.errors|length > 0 %}
@@ -24,7 +38,7 @@
                 </div>
 
 
-                <div style="margin-left:10px;" class="form-group">
+                <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.presentation, null) }}
                     <div>
                     	{% if alumniForm.presentation.vars.errors|length > 0 %}
@@ -41,7 +55,7 @@
                 </div>
 
 
-                <div style="margin-left:10px;" class="form-group">
+                <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.skills, null) }}
                     <div>
                     	{% if alumniForm.skills.vars.errors|length > 0 %}
@@ -58,7 +72,7 @@
                 </div>
 
 
-                 <div style="margin-left:10px;" class="form-group">
+                <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.status, null) }}
                     <div>
                     	{% if alumniForm.status.vars.errors|length > 0 %}
@@ -75,7 +89,7 @@
                 </div>
 
 
-                <div style="margin-left:10px;" class="form-group">
+                <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.searchjob, null) }}
                     <div>
                     	{% if alumniForm.searchjob.vars.errors|length > 0 %}
@@ -92,7 +106,7 @@
                 </div>
 
 
-                <div style="margin-left:10px;" class="form-group">
+                <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.searchtime, null) }}
                     <div>
                     	{% if alumniForm.searchtime.vars.errors|length > 0 %}
@@ -109,7 +123,7 @@
                 </div>
 
 
-                <div style="margin-left:10px;" class="form-group">
+               <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.job, null) }}
                     <div>
                     	{% if alumniForm.job.vars.errors|length > 0 %}
@@ -126,7 +140,7 @@
                 </div>
 
 
-                <div style="margin-left:10px;" class="form-group">
+                <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.contract, null) }}
                     <div>
                     	{% if alumniForm.contract.vars.errors|length > 0 %}
@@ -143,7 +157,7 @@
                 </div>
 
 
-                <div style="margin-left:10px;" class="form-group">
+                <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.companytype, null) }}
                     <div>
                     	{% if alumniForm.companytype.vars.errors|length > 0 %}
@@ -160,7 +174,7 @@
                 </div>
 
 
-                <div style="margin-left:10px;" class="form-group">
+                <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.wage, null) }}
                     <div>
                     	{% if alumniForm.wage.vars.errors|length > 0 %}
@@ -177,7 +191,7 @@
                 </div>
 
 
-                <div style="margin-left:10px;" class="form-group">
+                <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.companyname, null) }}
                     <div>
                     	{% if alumniForm.companyname.vars.errors|length > 0 %}
@@ -194,7 +208,7 @@
                 </div>
 
 
-                <div style="margin-left:10px;" class="form-group">
+                <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.linkedinurl, null) }}
                     <div>
                     	{% if alumniForm.linkedinurl.vars.errors|length > 0 %}
@@ -211,7 +225,7 @@
                 </div>
 
 
-                <div style="margin-left:10px;" class="form-group">
+                <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.cv, null) }}
                     <div>
                     	{% if alumniForm.cv.vars.errors|length > 0 %}
@@ -228,7 +242,7 @@
                 </div>
 
 
-                <div style="margin-left:10px;" class="form-group">
+                <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.sponsorship, null) }}
                     <div>
                     	{% if alumniForm.sponsorship.vars.errors|length > 0 %}
@@ -245,7 +259,7 @@
                 </div>
 
 
-                <div style="margin-left:10px;" class="form-group">
+                <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
                     {{ form_label(alumniForm.alertjob, null) }}
                     <div>
                     	{% if alumniForm.alertjob.vars.errors|length > 0 %}
@@ -261,8 +275,8 @@
                     </div>
                 </div>
                 
-                <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
-                    <input type="submit" style="width:  100px; background: #2f96b4;" class="btn btn-primary btn-lg" value="Enregistrer" />
+                <div class="form-group" class="form-group" style="margin-left: 40em; margin-right: 40em; margin-top: 2em;">
+                    <input type="submit" class="button" value="Envoyer">
                 </div>
 
 

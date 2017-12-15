@@ -1,33 +1,36 @@
 {% extends "layout.html.twig" %}
     
-    {% block title %}Forum{% endblock %}
-
-
-
-
+{% block title %}Forum d'échange des anciens étudiants de WebForce3{% endblock %}
     
-    {% block content %}
+{% block content %}
 
 
-<h1 style="text-align: center; margin-top:80px;">Les différents sujets du forum</h1>
+<div class="col-md-12 text-center">
+    <blockquote class="blockquote text-center" style="margin-top: 5em;">
+
+        <h1 style="text-align: center; margin-bottom: 1em;">Forum d'échange</h1>
+        <h4>Echangez sur vos problématiques de code, sur le métier de développeur, sur les technologies...</h4>
+                
+    </blockquote>
+</div>
+
          <div id="result"></div>
       {% for subject in subjects %}
             <article style="text-align: center">
              
-               <h2 id="sujet"><a href="{{ path('forumsubject', {idSubject: subject.id}) }} "style="color: #11A09A">{{ subject.title }}</a></h2>
+               <h2 id="sujet"><a href="{{ path('forumsubject', {idSubject: subject.id}) }} "style="color: #11A09A;">{{ subject.title }}</a></h2>
             
                
-                <p>publié le {{ subject.date_message|date("d/m/Y") }} à {{ subject.date_message|date("h:i:s") }} par {{ subject.user_id.username }}</p>
-               <p>{{ subject.message }}</p>
+                <p>publié le {{ subject.date_message|date("d/m/Y") }} à {{ subject.date_message|date("H:i:s") }} par {{ subject.user_id.username }}</p>
+                <p>{{ subject.message }}</p>
                {% if is_granted('ROLE_ADMIN') %}
-              <p><a href="{{ path('deleteAdminSubjectAction', {id: subject.id}) }}">Supprimer ce sujet</a></p>
-              <p><a href="{{ path('updateAdminSubjectAction', {id: subject.id}) }}">Modifier ce sujet</a></p>
-              {%endif%}
+                <p><a href="{{ path('deleteAdminSubjectAction', {id: subject.id}) }}">Supprimer ce sujet</a></p>
+                <p><a href="{{ path('updateAdminSubjectAction', {id: subject.id}) }}">Modifier ce sujet</a></p>
+               {%endif%}
                <hr style=" border: 0;
-    height: 1px;
-    background: #333;
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);">
-              
+                height: 1px;
+                background: #333;
+                background-image: linear-gradient(to right, #ccc, #333, #ccc);">              
 
             </article>
 
@@ -60,44 +63,18 @@
                        }}) }}
                    </div>
                </div><br>
-
                
                <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
-                   <input type="submit" class="btn btn-primary btn-lg" id ="action" value="Envoyer"   style="background: #2f96b4 ;">
+                   <input type="submit" class="button" id ="action" value="Envoyer">
                </div>
            {{ form_end(subjectForm) }}
 
-
-
 {% else %}
 
-<button type="button" class="btn btn-info" style="text-align: center"><a href="{{ path('login') }}">Vous devez être connecté(e) pour poster un message.</a></button>
+<button type="button" class="button"><a href="{{ path('login') }}">Vous devez être connecté(e) pour poster un message.</a></button>
 
 
-{% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-{% endblock %}
-
-
-
-
-
-
+{% endif %}{% endblock %}
 {% block javascript %}
 
              
@@ -115,7 +92,7 @@
                    data: $('form').serialize(),  
                    dataType: 'html',
                    success: function(data){
-                       $('#result').html(data);
+                       $('#result').append(data);
                    },
                    error: function() {
                        alert('La requête n\'a pas abouti');
@@ -132,11 +109,9 @@
        
        $('#sujet').click(function(){
          alert('Vous devez être connecté(e) pour accéder au sujet.'); 
-            });
-        
+            });        
         {% endif %}
-                     
-  
+                       
    </script> 
 
 
