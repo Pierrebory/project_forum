@@ -96,7 +96,7 @@ class AjaxController{
             $response->setUser_id($user);
         
             return $app['twig']->render('ajax/responses.html.twig', array(
-            'responses'=>$response,
+            'response'=>$response,
             'subject'=>$subject
         
             )); 

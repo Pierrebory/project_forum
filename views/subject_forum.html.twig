@@ -1,13 +1,18 @@
 {% extends "layout.html.twig" %}
     
-{% block title %}Forum{% endblock %}
+{% block title %}Forum d'échange des anciens étudiants de WebForce3{% endblock %}
     
 {% block content %}
 
 
+<div class="col-md-12 text-center">
+    <blockquote class="blockquote text-center" style="margin-top: 5em;">
 
-
-<h1 style="text-align: center; margin-top:80px; margin-bottom: 50px;">Les différents sujets du forum</h1>
+        <h1 style="text-align: center; margin-bottom: 1em;">Forum d'échange</h1>
+        <h4>Echangez sur vos problématiques de code, sur le métier de développeur, sur les technologies...</h4>
+                
+    </blockquote>
+</div>
 
          <div id="result"></div>
       {% for subject in subjects %}
@@ -60,13 +65,13 @@
                </div><br>
                
                <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
-                   <input type="submit" class="btn btn-primary btn-lg" id ="action" value="Envoyer"   style="background: #2f96b4 ;">
+                   <input type="submit" class="button" id ="action" value="Envoyer">
                </div>
            {{ form_end(subjectForm) }}
 
 {% else %}
 
-<button type="button" class="btn btn-info" style="text-align: center"><a href="{{ path('login') }}">Vous devez être connecté(e) pour poster un message.</a></button>
+<button type="button" class="button"><a href="{{ path('login') }}">Vous devez être connecté(e) pour poster un message.</a></button>
 
 
 {% endif %}{% endblock %}

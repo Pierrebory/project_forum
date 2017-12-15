@@ -10,10 +10,10 @@
 
 
 
-            <h1 style="margin-left: 20em; margin-right: 20em; margin-top: 3em; text-align:center">Poster une offre d'emploi</h1>
+            <h1 style="margin-top: 3em; text-align:center">Poster une offre d'emploi</h1>
 
-            <p style="margin-left: 55em; margin-right: 55em; margin-top: 2em;">Merci de remplir le formulaire ci-dessous pour envoyer une offre d'emploi.</p>
-            <p style="margin-left: 55em; margin-right: 55em; margin-top: 2em;">Les champs marqués d'un * sont obligatoires.</p>
+            <p style="margin-top: 2em; text-align:center">Merci de remplir le formulaire ci-dessous pour envoyer une offre d'emploi.</p>
+            <p style="margin-top: 2em; text-align:center">Les champs marqués d'un * sont obligatoires.</p>
  
 
 			{% for flashMessage in app.session.flashbag.get('success') %}
@@ -30,7 +30,7 @@
 
 
 
-            	<div class="form-group" class="form-group" style="margin-left: 55em; margin-right: 55em; margin-top: 2em;">
+            	<div class="form-group" class="form-group" style="margin-left: 45em; margin-right: 45em; margin-top: 2em;">
                      {{ form_label(offerForm.title, null) }}
                     
             	{# affichage des éventuelles erreurs pour le champ titre #}
@@ -49,7 +49,7 @@
 
 
 
-            	<div class="form-group" class="form-group" style="margin-left: 55em; margin-right: 55em; margin-top: 2em;">
+            	<div class="form-group" class="form-group" style="margin-left: 45em; margin-right: 45em; margin-top: 2em;">
                     
                      {{ form_label(offerForm.company, null) }}
             		
@@ -67,7 +67,7 @@
 
 
 
-                <div class="form-group" class="form-group" style="margin-left: 55em; margin-right: 55em; margin-top: 2em;">
+                <div class="form-group" class="form-group" style="margin-left: 45em; margin-right: 45em; margin-top: 2em;">
                     
                     {{ form_label(offerForm.city, null) }}
             		
@@ -87,7 +87,7 @@
 
 
 
-                <div class="form-group" class="form-group" style="margin-left: 55em; margin-right: 55em; margin-top: 2em;">
+                <div class="form-group" class="form-group" style="margin-left: 45em; margin-right: 45em; margin-top: 2em;">
                     
                     {{ form_label(offerForm.description, null) }}
             		
@@ -97,14 +97,14 @@
                     {{ form_widget(offerForm.description, 
                     	{ 
                     		'attr':  {
-                        		'rows': '30',
+                        		'rows': '100',
                         		'class': 'form-control'
                         		
                     }}) }}
             	</div>
 
 
-                <div class="form-group" class="form-group" style="margin-left: 55em; margin-right: 55em; margin-top: 2em;"> 
+                <div class="form-group" class="form-group" style="margin-left: 45em; margin-right: 45em; margin-top: 2em;"> 
                     
                     {{ form_label(offerForm.skills, null) }}
             		
@@ -122,7 +122,7 @@
 
 
 
-                <div class="form-group" class="form-group" style="margin-left: 55em; margin-right: 55em; margin-top: 2em;">
+                <div class="form-group" class="form-group" style="margin-left: 45em; margin-right: 45em; margin-top: 2em;">
             		
                     
                     {{ form_label(offerForm.advantages, null) }}
@@ -141,7 +141,7 @@
 
 
 
-                <div class="form-group" class="form-group" style="margin-left: 55em; margin-right: 55em; margin-top: 2em;">
+                <div class="form-group" class="form-group" style="margin-left: 45em; margin-right: 45em; margin-top: 2em;">
                     
                     {{ form_label(offerForm.contract, null) }}
             		
@@ -158,7 +158,7 @@
             	</div>
 
 
-                <div class="form-group" class="form-group" style="margin-left: 55em; margin-right: 55em; margin-top: 2em;">
+                <div class="form-group" class="form-group" style="margin-left: 45em; margin-right: 45em; margin-top: 2em;">
             		
                     {{ form_label(offerForm.contractduration, null) }}
                     
@@ -176,7 +176,7 @@
 
 
 
-                <div class="form-group" class="form-group" style="margin-left: 55em; margin-right: 55em; margin-top: 2em;">
+                <div class="form-group" class="form-group" style="margin-left: 45em; margin-right: 45em; margin-top: 2em;">
             		
                     {{ form_label(offerForm.timetable, null) }}
                     
@@ -193,7 +193,7 @@
             	</div>
 
 
-                <div class="form-group" class="form-group" style="margin-left: 55em; margin-right: 55em; margin-top: 2em;">
+                <div class="form-group" class="form-group" style="margin-left: 45em; margin-right: 45em; margin-top: 2em;">
                     
             		{{ form_label(offerForm.recruitername, null) }}
                     
@@ -210,7 +210,7 @@
             	</div>
 
 
-                <div class="form-group" class="form-group" style="margin-left: 55em; margin-right: 55em; margin-top: 2em;"> 
+                <div class="form-group" class="form-group" style="margin-left: 45em; margin-right: 45em; margin-top: 2em;"> 
                     
                     {{ form_label(offerForm.recruitercontact, null) }}
             		
@@ -226,8 +226,8 @@
                     }}) }}
             	</div>
 
-                <div class="form-group" style="margin-left: 60em; margin-right: 60em; margin-top: 2em;">
-                    <input type="submit" class="btn btn-info" value="Envoyer" />
+                <div class="form-group" style="margin-left: 45em; margin-right: 45em; margin-top: 2em;">
+                    <input type="submit" class="button" value="Envoyer" />
                 </div>
 
 			{{ form_end(offerForm)}}

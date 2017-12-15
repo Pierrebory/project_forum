@@ -110,6 +110,18 @@ input, button, select, textarea {
 
 }
 
+/***********************************************************
+STYLE DES BOUTTONS
+**********************************************************/
+
+.button {
+    background-color: #11A09A;
+    color: white;
+    padding: 0.7em;
+    border-radius: .8em;
+    font-size: 0.9em;
+}
+
 /* =========================================================
 Typography
 ============================================================ */
@@ -266,7 +278,7 @@ ul#menu-main > li > a:focus {
 
 
 /* =========================================================
-Page sections
+SLIDER FIXE
 ============================================================ */
 
 #langages{
@@ -322,6 +334,11 @@ header .logo {
     color: #11A09A;
 }
 
+h1{
+    color: #11A09A !important;
+}
+
+
 #header-wrapper.header-slider h2 {
     padding-top: 0.5em; 
     font-family: Merriweather, arial, sans-serif;
@@ -374,7 +391,6 @@ section.inner {
 .section.orange p,.section.green p {
 	color: #312f2b;
 }
-
 
 
 
@@ -756,6 +772,14 @@ i.icon-white {
   border-radius: 8px;
 }
 
+
+/* PAGE ANNUAIRE*/
+
+#rechercheancien {
+    display: flex;
+    justify-content: center;
+}
+
 /* =========================================================
 Media queries
 ============================================================ */
@@ -833,7 +857,11 @@ Media queries
 }
    
 
-	
+/************************************
+PAGE ANNUAIRE
+**************************************/	
+
+
 
   
 /* Smartphones (portrait and landscape) ----------- */
