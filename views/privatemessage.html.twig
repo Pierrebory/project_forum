@@ -1,41 +1,51 @@
 {% extends "layout.html.twig" %}
 
-{% block title %} Messagerie privée {% endblock %}
+
+{% block title %}Messagerie privée{% endblock %}
 
 {% block content %}
 
 
-        <div class="col-sm-6">
+        
+    <blockquote class="blockquote text-center" style="margin-top: 5em;">
+                <h1>Messagerie privée</h1>
+    </blockquote>
+
+
+<div class="col-sm-6">
             {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success">
                 {{ flashMessage }}
         </div>
 
-        {% endfor %}            
+            {% endfor %}
+    
+    
+ 
+                <div id="messages"> 
 
-        <h1 style="text-align: center; margin-top: 90px;">Messagerie privée</h1>
-                
-        <div id="messages">
-
-        {% for contact in contacts %}
-
+         {% for contact in contacts %} 
 
           {% if contactId == app.user.id %}
             <p><img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/' ~ contact.receiver_id.avatar) }}" class="img img-responsive img-rounded" width="75">
-
                {{ contact.receiver_id.firstname }} {{ contact.receiver_id.lastname }}
             </p>
-
-    
           {% else %}
+ 
 
             <p><img style="margin-top: 1em; margin-left: 40em; margin-right: 45px" src="{{ asset('img/avatar/' ~ contact.sender_id.avatar) }}" class="img img-responsive img-rounded" width="75">
 
                {{ contact.sender_id.firstname }} {{ contact.sender_id.lastname }}
             </p>            
+         
+          {% endif %}
+
+            <p>{{ contact.message }} <span>{{ contact.date_message|date("d/m/Y")|trans }} à {{ contact.date_message|date("H:i:s")|trans }}</span></p> 
+ 
 
           {% endif %}
 
+ 
             <p  style="margin-left:40em; margin-right: 40em; word-wrap: break-word;">{{ contact.message }} <span>{{ contact.date_message|date("d/m/Y")|trans }} à {{ contact.date_message|date("H:i:s")|trans }}</span></p> 
           
 
@@ -44,9 +54,11 @@
              background: #333;
              background-image: linear-gradient(to right, #ccc, #333, #ccc);">
 
+
          {% endfor %}
 
-          </div>
+</div>
+
 
 
             <div class="privatemessage_form">
@@ -70,7 +82,7 @@
                 <br>
                 <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
                     
-                    <input type="submit" class="btn btn-primary btn-lg" id="action" value="Envoyer" style="margin-bottom: 50px; background: #2f96b4;"/>
+                    <input type="submit" class="button" id="action" value="Envoyer">
                 </div>
 
                 <div>

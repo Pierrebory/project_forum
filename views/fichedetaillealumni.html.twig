@@ -17,6 +17,8 @@
 			<h2> <p class="bold"> {{ user.firstname }} {{ user.username }}</p></h2>
             
             
+            
+            <blockquote class="blockquote text-center" style="margin-right: 30em; margin-left: 30em;">
             <table class="table table-bordered table-hover table-responsive">
                 
                 <tbody>
@@ -42,13 +44,12 @@
             
                 </tbody>
             </table>
+            </blockquote>
             
-            <br>
-            <br>
 
-             <a href="{{ path('updateAlumniAction', {id: user.id} ) }}"><button type="button" class="btn btn-info">Modifier</button></a> 
+             <a href="{{ path('updateAlumniAction', {id: user.id} ) }}"><button type="button" class="button">Modifier la fiche</button></a> 
             
-             <a href="{{ path('contacter', {id: alumni.alumni_id}) }}"><button type="button" class="btn btn-info">Contacter</button></a> 
+             <a href="{{ path('contacter', {id: alumni.alumni_id}) }}"><button type="button" class="button">Contacter</button></a> 
             
             <br><br>
 

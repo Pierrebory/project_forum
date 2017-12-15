@@ -35,6 +35,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class HomeController{
 
+
     //page d'accueil qui affiche tout les articles
     public function homePageAction(Application $app){
 
@@ -98,8 +99,10 @@ class HomeController{
         }
 
         $contactId = $request->attributes->get('id');
-
         $contacts = $app['dao.privatemessage']->findConversation($user->getId(), $contactId);   
+
+        $app['dao.privatemessage']->updateMessagesState($contactId);   
+        $messagesCounter = $app['dao.privatemessage']->unreadMessages($user->getId());
 
         $privatemessage = new PrivateMessage();
         $privatemessageForm = $app['form.factory']->create(PrivatemessageType::class, $privatemessage);
@@ -120,14 +123,16 @@ class HomeController{
             $app['session']->getFlashBag()->add('success', 'Votre message a bien été envoyé.');
         }
 
-        setlocale(LC_TIME, "fr_FR");
-        
+/*        setlocale(LC_TIME, "fr_FR");
+*/        
+
         
         // j'envoie le formulaire
          return $app['twig']->render('privatemessage.html.twig', array(
                          'privatemessageForm' => $privatemessageForm->createView(),
                          'contacts' => $contacts,
-                         'contactId' =>$contactId 
+                         'contactId' =>$contactId,
+                         'messagesCounter' => $messagesCounter
                         
          )); 
         
@@ -857,6 +862,7 @@ class HomeController{
          if($user->getId() != $alumniId){
             //si l'utilisateur n'est pas l'auteur: accès interdit
             return $app['twig']->render('accesrestreint.html.twig');
+             
         }
         //on crée le formulaire et on lui passe l'article en paramètre
         //il va utiliser $article pour pré remplir les champs
@@ -868,6 +874,7 @@ class HomeController{
             //si le formulaire a été soumis
             //on update avec les données envoyées par l'utilisateur
             $app['dao.joboffers']->updateJobModif($id, $jobOffert);
+             $app['session']->getFlashBag()->add('success', 'Modification effectuée ! ');
         }
 
        return $app['twig']->render('modification.jobOffert.html.twig', array(
