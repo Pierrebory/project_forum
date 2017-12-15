@@ -35,6 +35,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class HomeController{
 
+
     //page d'accueil qui affiche tout les articles
     public function homePageAction(Application $app){
 
@@ -98,8 +99,10 @@ class HomeController{
         }
 
         $contactId = $request->attributes->get('id');
-
         $contacts = $app['dao.privatemessage']->findConversation($user->getId(), $contactId);   
+
+        $app['dao.privatemessage']->updateMessagesState($contactId);   
+        $messagesCounter = $app['dao.privatemessage']->unreadMessages($user->getId());
 
         $privatemessage = new PrivateMessage();
         $privatemessageForm = $app['form.factory']->create(PrivatemessageType::class, $privatemessage);
@@ -122,14 +125,16 @@ class HomeController{
            
         }
 
-        setlocale(LC_TIME, "fr_FR");
-        
+/*        setlocale(LC_TIME, "fr_FR");
+*/        
+
         
         // j'envoie le formulaire
          return $app['twig']->render('privatemessage.html.twig', array(
                          'privatemessageForm' => $privatemessageForm->createView(),
                          'contacts' => $contacts,
-                         'contactId' =>$contactId 
+                         'contactId' =>$contactId,
+                         'messagesCounter' => $messagesCounter
                         
          )); 
         

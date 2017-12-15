@@ -13,7 +13,7 @@ class PrivatemessageDAO extends DAO{
     
     
     // afficher le dernier message de chaque conversation
-    public function findConversations($id){
+    public function findConversations($userId){
         $result = $this->bdd->prepare('SELECT m.*
         FROM
           privatemessage m INNER JOIN (
@@ -21,7 +21,8 @@ class PrivatemessageDAO extends DAO{
           least(sender_id, receiver_id) AS user_1,
           greatest(sender_id, receiver_id) AS user_2,
           max(id) AS last_id,
-          max(date_message) AS last_timestamp
+          max(date_message) AS last_timestamp,
+          message_state
         FROM
           privatemessage
         WHERE 
@@ -33,7 +34,7 @@ class PrivatemessageDAO extends DAO{
              AND greatest(sender_id, receiver_id)=user_2
              AND m.id = s.last_id ORDER BY date_message DESC');
         
-        $result->bindValue(':id', $id, \PDO::PARAM_INT);
+        $result->bindValue(':id', $userId, \PDO::PARAM_INT);
         $result->execute();
         $rows = $result->fetchAll(\PDO::FETCH_ASSOC);
         $users = [];
@@ -76,9 +77,31 @@ class PrivatemessageDAO extends DAO{
         }
         return $users;
     } 
+
+    // afficher le dernier message de la conversation
+    public function unreadMessages($userId){
+        $result = $this->bdd->prepare('SELECT id FROM privatemessage WHERE receiver_id = :id AND message_state = 0');
+        
+        $result->bindValue(':id', $userId, \PDO::PARAM_INT);    
+        $result->execute();
+        $rows = $result->fetchAll(\PDO::FETCH_ASSOC);
+        $counter = 0;
+        foreach($rows as $row){
+            $counter += 1;
+        }
+        return $counter;
+    }     
     
+ 
+    // afficher le dernier message de la conversation
+    public function updateMessagesState($contactId){
+        $result = $this->bdd->prepare('UPDATE privatemessage SET message_state = 1 WHERE sender_id = :id');
+        
+        $result->bindValue(':id', $contactId, \PDO::PARAM_INT);    
+        return $result->execute();
+    }     
     
-    
+
     //je réécris ma méthode buildObject 
     public function buildObject($row){
     	//j'exécute le code de buildObject dans DAO

@@ -24,11 +24,11 @@
          {% for contact in contacts %}
 
           {% if contactId == app.user.id %}
-            <p><img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/web/uploads/' ~ contact.receiver_id.avatar) }}" class="img img-responsive img-rounded" width="75">
+            <p><img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/' ~ contact.receiver_id.avatar) }}" class="img img-responsive img-rounded" width="75">
                {{ contact.receiver_id.firstname }} {{ contact.receiver_id.lastname }}
             </p>
           {% else %}
-            <p><img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/web/uploads/' ~ contact.sender_id.avatar) }}" class="img img-responsive img-rounded" width="75">
+            <p><img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/' ~ contact.sender_id.avatar) }}" class="img img-responsive img-rounded" width="75">
                {{ contact.sender_id.firstname }} {{ contact.sender_id.lastname }}
             </p>            
           {% endif %}
@@ -40,7 +40,9 @@
 
          {% endfor %}
 
-</div>
+                </div>
+
+                <div id="result"></div>
 
 
 
@@ -96,7 +98,7 @@
                    data: $('form').serialize(),  
                    dataType: 'html',
                    success: function(data){
-                       $('#messages').append(data);
+                       $('#result').append(data);
                    },
                    error: function() {
                        alert('La requête n\'a pas abouti');
@@ -111,6 +113,7 @@
        function loadlink(){
         $('#messages').load("{{ path('contacter', {id: contactId}) }} #messages",function () {
              $(this).unwrap();
+             $('#result').empty();
         });
     }
 

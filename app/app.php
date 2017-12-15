@@ -136,3 +136,9 @@ $app['dao.privatemessage'] = function($app){
 
 
 
+//set globals variables
+$app->before(function () use ($app) {
+    if($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+      $app['twig']->addGlobal('messagesCounter', $app['dao.privatemessage']->unreadMessages($app['security.token_storage']->getToken()->getUser()->getId()));
+    }
+});

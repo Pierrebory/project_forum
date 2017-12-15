@@ -1,15 +1,15 @@
 
 
           {% if contactId == app.user.id %}
-            <p><img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/web/uploads/' ~ contact.receiver_id.avatar) }}" class="img img-responsive img-rounded" width="75">
+            <p><img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/' ~ contact.receiver_id.avatar) }}" class="img img-responsive img-rounded" width="75">
                {{ contact.receiver_id.firstname }} {{ contact.receiver_id.lastname }}
             </p>
           {% else %}
-            <p><img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/web/uploads/' ~ contact.sender_id.avatar) }}" class="img img-responsive img-rounded" width="75">
+            <p><img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/' ~ contact.sender_id.avatar) }}" class="img img-responsive img-rounded" width="75">
                {{ contact.sender_id.firstname }} {{ contact.sender_id.lastname }}
             </p>            
           {% endif %}
 
-          <p>{{ contact.message }} <span>{{ contact.date_message|date("d/m/Y") }} à {{ contact.date_message|date("h:i:s") }}</span></p> 
+          <p>{{ contact.message }} <span>{{ contact.date_message|date("d/m/Y") }} à {{ contact.date_message|date("H:i:s") }}</span></p> 
 
           <hr>
