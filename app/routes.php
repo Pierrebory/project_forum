@@ -46,6 +46,11 @@ $app->get('/detailoffre/suppression/{id}', 'WF3\Controller\HomeController::delet
 ->assert('id', '\d+')
 ->bind('suppressionoffre');
 
+//PAGE DE MODIFICATION D'UNE OFFRE D'EMPLOI
+$app->match('/job/update/{id}', 'WF3\Controller\HomeController::updateJobAction')
+->assert('id', '\d+')
+->bind('updateJobAction');
+
 
 //page de résultats de recherche d'une offre d'emploi par titre en ajax
 $app->match('/rechercheajaxpartitre', 'WF3\Controller\AjaxController::rechercheOffreparTitreAction')
@@ -111,7 +116,8 @@ $app->match('/messagerie/{id}', 'WF3\Controller\HomeController::conversationsAct
 
 
 
-$app->match('/contact/moi', 'WF3\Controller\HomeController::contactAction')->bind('contactezmoi');
+$app->match('/contact/moi', 'WF3\Controller\HomeController::contactAction')
+    ->bind('contactezmoi');
 
 
 // formulaire d'inscription des alumnis
@@ -127,9 +133,8 @@ $app->match('/alumni/update/{id}', 'WF3\Controller\HomeController::updateAlumniA
 ->bind('updateAlumniAction');
 
 
-$app->match('/job/update/{id}', 'WF3\Controller\HomeController::updateJobAction')
-->assert('id', '\d+')
-->bind('updateJobAction');
+
+
 
 
 $app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
@@ -140,6 +145,8 @@ $app->match('/recherche', 'WF3\Controller\HomeController::rechercheParUsername')
 $app->match('/accesrestreint')
 ->bind('accesrestreint');
 
+
+//ADMIN
 
 $app->get('/admin', 'WF3\Controller\AdminController::indexAction')->bind('homeAdmin');
 

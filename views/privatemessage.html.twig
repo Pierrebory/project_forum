@@ -1,22 +1,25 @@
-
-
 {% extends "layout.html.twig" %}
 
 
-{% block title %} Messagerie privée {% endblock %}
+{% block title %}Messagerie privée{% endblock %}
 
 {% block content %}
 
 
-        <div class="col-sm-6">
+        
+    <blockquote class="blockquote text-center" style="margin-top: 5em;">
+                <h1>Messagerie privée</h1>
+    </blockquote>
+
+
+<div class="col-sm-6">
             {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success">
                 {{ flashMessage }}
         </div>
             {% endfor %}
-            
-<br><br><br>
-                <h1 style="text-align: center">Messagerie privée</h1>
+    
+    
                 
                 <div id="messages">
 
@@ -65,7 +68,7 @@
                 <br>
                 <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
                     
-                    <input type="submit" class="btn btn-primary btn-lg" id="action" value="Envoyer" />
+                    <input type="submit" class="button" id="action" value="Envoyer">
                 </div>
 
                 <div>

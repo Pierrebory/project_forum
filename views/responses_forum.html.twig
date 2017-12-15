@@ -1,10 +1,13 @@
 {% extends "layout.html.twig" %}
-	
-	{% block title %}Un sujet{% endblock %}
-	
-	{% block content %}
+  
+{% block title %}Un sujet{% endblock %}
+  
+{% block content %}
+        
+
         <br><br>
 <br><br><br>
+
        <div style="background-color: #f5f5f5;  color:grey">
            
         <h2 style="text-align: center">  {{ subject.title}}</h2>
@@ -27,8 +30,8 @@
 
             <div id="responses">
             {% for response in responses %}
-			 <article style="text-align: center; border-radius: 1%; background-color: white; align-items: center; margin-left: 40em; margin-right: 40em; margin-bottom: 2em;  word-wrap: break-word">
-                
+
+       <article style="text-align: center; border-radius: 1%; background-color: white; align-items: center; margin-left: 40em; margin-right: 40em; margin-bottom: 2em;  word-wrap: break-word">               
 				
 				<img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/' ~ response.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -5em;">Message publié le {{ response.date_message|date("d/m/Y") }} à {{ response.date_message|date("H:i:s") }} 
 				par {{ response.user_id.username }}<p> {% if response.date_edit != '0000-00-00 00:00:00' %} modifié le {{ response.date_edit|date("d/m/Y") }} à {{ response.date_edit|date("H:i:s") }}  {% endif %}  {% if is_granted('ROLE_ADMIN') %}</p>

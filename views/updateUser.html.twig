@@ -10,7 +10,7 @@
     </div>
             {% endfor %}
 
-        <h2 style="text-align: center; margin-top: 80px;">Profil</h2>
+        <h1 style="text-align: center; margin-top: 3em;">Profil</h1>
 
         <p style="text-align: center">Vous pouvez modifier vos informations personelles à l'aide du formulaire ci-desosus.</p>
         <p style="text-align: center">Les champs marqués d'une * sont obligatoires.</p>
@@ -129,7 +129,7 @@
 
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-<a href="{{ path('deleteUserAction', {id: app.user.id})}}"><button type="button" class="btn btn-info" style="margin-bottom:2em; margin-left: 1em; width:390px">Supprimer son compte</button></a> 
+<a href="{{ path('deleteUserAction', {id: app.user.id})}}"><button type="button" class="button">Supprimer son compte</button></a> 
 {%endif%}
         
 </blockquote>
