@@ -64,8 +64,9 @@
     
   <tbody>
     <tr>
+
          {% for user in users %}
-        
+        {%if user.role != 'ROLE_ADMIN' and user.role != 'ROLE_EMPLOYER' %}
       <td>{{ user.firstname }}</td>
       <td>{{ user.username }}</td>
       <td>{{ user.city }}</td>
@@ -80,7 +81,7 @@
                     {%endif%}
                     
         <td><div class="fiche"><a href="{{ path('contacter', {id: user.id}) }}">Contacter</a></div></td>
-
+        {%endif%}
     </tr>
 
       
