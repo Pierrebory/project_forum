@@ -1,5 +1,3 @@
-
-
 {% extends "layout.html.twig" %}
 
 
@@ -13,15 +11,13 @@
                 <h1>Messagerie privée</h1>
     </blockquote>
 
+
 <div class="col-sm-6">
             {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success">
                 {{ flashMessage }}
         </div>
             {% endfor %}
-    
-    
-    
     
     
                 
