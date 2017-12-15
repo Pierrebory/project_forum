@@ -25,7 +25,7 @@
                 <p style="padding: 1em;">{{ subject.message }}</p>
 			</article>
 
-        
+            <div id="responses">
             {% for response in responses %}
 			 <article style="text-align: center; border-radius: 1%; background-color: white; align-items: center; margin-left: 40em; margin-right: 40em; margin-bottom: 2em;  word-wrap: break-word">
                 
@@ -44,6 +44,7 @@
                 <p style="padding: 1em">{{ response.message }}</p> 
 			</article>
         {%endfor%}
+           </div>
 
 {{ form_start(responsesForm, { 'attr': {'class': 'form-horizontal'} }) }}
                 <div class="form-group" style="margin-left: 25em; margin-right: 25em">
@@ -74,15 +75,13 @@
                 <br>
                 <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
 
-                    <input type="submit" class="btn btn-primary btn-lg" id="action" value="Send" />
+                    <input type="submit" class="button" id="action" value="Envoyer" />
 
 
                 </div><br>
 
             {{ form_end(responsesForm) }}
            
-           
-<div id="result"></div>
 </div>
 
 {% endblock %}
@@ -99,16 +98,15 @@
                event.preventDefault();
                //construction de l'url de la requête avec les paramètres
                var url = "{{ path('responses') }}";
-                var message = $('.ck-editor__editable').html();
+            
                //alert(message);
-               $('#responses_message').val(message);
                $.ajax({
                    type: 'GET',
                    url: url,
                    data: $('form').serialize(),  
                    dataType: 'html',
                    success: function(data){
-                       $('#result').html(data);
+                       $('#responses').append(data);
                    },
                    error: function() {
                        alert('La requête n\'a pas abouti');
@@ -117,6 +115,7 @@
            });
        });
    </script> 
+
 
 
 

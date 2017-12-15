@@ -828,6 +828,7 @@ class HomeController{
             //si le formulaire a été soumis
             //on update avec les données envoyées par l'utilisateur
             $app['dao.alumni']->updateModif($id, $alumni);
+            $app['session']->getFlashBag()->add('success', 'Modification effectuée ! ');
         }
 
        return $app['twig']->render('modification.alumni.html.twig', array(
