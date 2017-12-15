@@ -931,6 +931,7 @@ class HomeController{
          if($user->getId() != $alumniId){
             //si l'utilisateur n'est pas l'auteur: accès interdit
             return $app['twig']->render('accesrestreint.html.twig');
+             
         }
         //on crée le formulaire et on lui passe l'article en paramètre
         //il va utiliser $article pour pré remplir les champs
@@ -942,6 +943,7 @@ class HomeController{
             //si le formulaire a été soumis
             //on update avec les données envoyées par l'utilisateur
             $app['dao.joboffers']->updateJobModif($id, $jobOffert);
+             $app['session']->getFlashBag()->add('success', 'Modification effectuée ! ');
         }
 
        return $app['twig']->render('modification.jobOffert.html.twig', array(

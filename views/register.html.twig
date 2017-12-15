@@ -5,7 +5,7 @@
     {% block content %}
 
             <blockquote class="blockquote text-center">
-            <h1 style="text-align: center; margin-top: 2em;">Formulaire d'inscription</h1>
+            <h1 style="text-align: center; margin-top: 3em; margin-bottom: 1em;">Formulaire d'inscription</h1>
 
             <h4 style="text-align: center;">
                 Veuillez remplir ce formulaire pour vous inscrire. <br>
@@ -13,8 +13,9 @@
             </h4>
 
                 
-            <p style="text-align: center;" style="margin-top: 1em;">Les champs marqués d'un * sont obligatoires.</p>
+            <p style="text-align: center;" style="margin-top: 2em;">Les champs marqués d'un * sont obligatoires.</p>
  
+                
            {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success">
                 {{ flashMessage }}
@@ -27,7 +28,7 @@
                 
             {{ form_start(userForm, { 'attr': {'class': 'form-horizontal'} }) }}
 
-                <div class="form-group" class="form-group" style="margin-left: 45em; margin-right: 45em; margin-top: 2em;">
+                <div class="form-group" class="form-group" style="margin-left: 30em; margin-right: 30em; margin-top: 2em;">
                     {{ form_label(userForm.username, null) }}
                     <div>
                         {% if userForm.username.vars.errors|length > 0 %}
@@ -50,7 +51,7 @@
                 
                 
                 
-                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
+                <div class="form-group" style="margin-left: 30em; margin-right: 30em">
                     {{ form_label(userForm.lastname, null) }}
                     <div>
                         {% if userForm.lastname.vars.errors|length > 0 %}
@@ -68,7 +69,7 @@
                 
                 
                 
-                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
+                <div class="form-group" style="margin-left: 30em; margin-right: 30em">
                     {{ form_label(userForm.firstname, null) }}
                     <div>
                         {% if userForm.firstname.vars.errors|length > 0 %}
@@ -83,7 +84,7 @@
                         }}) }}
                     </div>
                 </div>
-                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
+                <div class="form-group" style="margin-left: 30em; margin-right: 30em">
                     {{ form_label(userForm.email, null) }}
                     <div>
                         {% if userForm.email.vars.errors|length > 0 %}
@@ -103,7 +104,7 @@
                         }}) }}
                     </div>
                 </div>
-                <div class="form-group" style="margin-left: 40em; margin-right: 40em; margin-bottom: 10px;">
+                <div class="form-group" style="margin-left: 30em; margin-right: 30em; margin-bottom: 10px;">
                     {{ form_label(userForm.password.first, null, { 'label_attr':  {
                         'class': 'col-sm-5 control-label'
                     }}) }}
@@ -120,7 +121,7 @@
                         }}) }}
                     </div>
                 </div>
-                <div class="form-group" style="margin-left: 40em; margin-right: 40em; margin-bottom: 10px;">
+                <div class="form-group" style="margin-left: 30em; margin-right: 30em; margin-bottom: 30px;">
                     {{ form_label(userForm.password.second, null, { 'label_attr':  {
                         'class': 'col-sm-5 control-label'
                     }}) }}
@@ -130,7 +131,8 @@
                         }}) }}
                     </div>
                 </div>
-                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
+                
+                <div class="form-group" style="margin-left: 30em; margin-right: 30em; margin-bottom: 10px;">
                     {{ form_label(userForm.phone, null) }}
                     <div>
                         {% if userForm.phone.vars.errors|length > 0 %}
@@ -140,6 +142,7 @@
                                 {% endfor %}
                             </div>
                         {% endif %}
+                        
                         {% for flashMessage in app.session.flashbag.get('phoneNotUnique') %}
                             <div class="alert alert-danger">
                                 {{ flashMessage }}
@@ -149,8 +152,10 @@
                             'class': 'form-control'
                         }}) }}
                     </div>
-                </div>     
-                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
+             
+                
+                
+              
                     {{ form_label(userForm.city, null) }}
                     <div>
                         {% if userForm.city.vars.errors|length > 0 %}
@@ -164,8 +169,10 @@
                             'class': 'form-control'
                         }}) }}
                     </div>
-                </div>  
-                <div class="form-group" style="margin-left: 40em; margin-right: 40em">
+               
+                    
+                    
+          
                     {{ form_label(userForm.role, null) }}
                     <div>
                         {% if userForm.role.vars.errors|length > 0 %}
@@ -179,11 +186,13 @@
                             'class': 'form-control'
                         }}) }}
                     </div>
-                </div>   
+               
 
-                <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em; margin-top: 2em; ">
-                    <input type="submit" class="btn btn-primary btn-lg" value="Envoyer" style="background: #2f96b4" />
+                <div class="form-group" style="margin-left: 10em; margin-right: 10em; margin-top: 1em;">
+                
+                    <input type="submit" class="button" value="Envoyer">
                 </div>
+              
             {{ form_end(userForm) }}
 
       
