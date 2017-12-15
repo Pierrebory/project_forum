@@ -21,7 +21,7 @@
                <h2 id="sujet"><a href="{{ path('forumsubject', {idSubject: subject.id}) }} "style="color: #11A09A;">{{ subject.title }}</a></h2>
             
                
-                <p>publié le {{ subject.date_message|date("d/m/Y") }} à {{ subject.date_message|date("h:i:s") }} par {{ subject.user_id.username }}</p>
+                <p>publié le {{ subject.date_message|date("d/m/Y") }} à {{ subject.date_message|date("H:i:s") }} par {{ subject.user_id.username }}</p>
                 <p>{{ subject.message }}</p>
                {% if is_granted('ROLE_ADMIN') %}
                 <p><a href="{{ path('deleteAdminSubjectAction', {id: subject.id}) }}">Supprimer ce sujet</a></p>

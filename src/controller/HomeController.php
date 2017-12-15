@@ -48,8 +48,8 @@ class HomeController{
         
         //on récupère le token si l'utilisateur est connecté
         $token = $app['security.token_storage']->getToken();
-        if(NULL !== $token){
-            $user = $token->getUser();
+             if(NULL !== $token){
+         $user = $token->getUser();
         }
 
         return $app['twig']->render('annuaire.html.twig', array('users' => $users)); 
@@ -112,14 +112,12 @@ class HomeController{
             $receiverid = $request->attributes->get('id');
             
             $privatemessage = $app['dao.privatemessage']->insert(array(
-                'sender_id'=>$user->getId(),
-                'receiver_id'=>$receiverid,
-                'message'=>$privatemessage->getMessage()
+                                'sender_id'=>$user->getId(),
+                                'receiver_id'=>$receiverid,
+                                'message'=>$privatemessage->getMessage()
             ));
             
-            
             $app['session']->getFlashBag()->add('success', 'Votre message a bien été envoyé.');
-           
         }
 
         setlocale(LC_TIME, "fr_FR");
@@ -135,47 +133,7 @@ class HomeController{
         
     }
 
-/*        ///////////////////////PAGE SUJET FORUM//////////////////////// AAAAAAAAAAAAAAAAAAAAAAAAA
-    public function forumPageAction(Application $app, Request $request){
-        $subject = new Subjects();
-        $subjects =[];
-        $subjectForm = $app['form.factory']->create(subjectType::class, $subject);
-        $subjectForm->handleRequest($request);
-                 $subjects = $app['dao.subject']->getSubjects();
-         $token = $app['security.token_storage']->getToken();
-        if(NULL !== $token){
-            $user = $token->getUser();
-        }
-        if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
-            $subject->setUser_id($user->getId());
-             $subject->setDate_message(date('Y-m-d H:i:s'));
 
-         $app['dao.subject']->insert($subject);
-
-        
-       }
-        return $app['twig']->render('subject_forum.html.twig', array(
-            'subjectForm'=>$subjectForm->createView(),
-            'subject'=>$subject,
-            'subjects'=>$subjects));
-   
-
-    }
-    */
-     
-    
-    
-    
-    /*if($articleForm->isSubmitted() AND $articleForm->isValid()){
-            $app['dao.article']->insert(array(
-                'title'=>$article->getTitle(),
-                'content'=>$article->getContent(),
-                'author'=>$app['user']->getId()
-            ));*/
-    
-    
-    
-    
 
     //PAGE LISTE DES OFFRES D'EMPLOI
     public function offresAction(Application $app){
@@ -608,7 +566,7 @@ class HomeController{
 
         if(!empty($_POST)){
 
-/*            password_verify($_POST['oldPassword'], $$dataUser->getPassword())*/
+        /*   password_verify($_POST['oldPassword'], $$dataUser->getPassword())*/
             if(!password_verify($_POST['oldPassword'], $dataUser->getPassword())){
                 $app['session']->getFlashBag()->add('error', 'Vous n\'avez pas entré le bon mot de passe actuel.');       
                 $errors['1'] = 'erreur';   
@@ -678,33 +636,6 @@ class HomeController{
     
 
     
-     ///////////////////////PAGE REPONSE FORUM////////////////////////
-     /* public function subjectAction(Application $app, Request $request, $idSubject, $idUser){
-        
-        $response = new Responses();
-        $responses =[];
-        $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
-        $responsesForm->handleRequest($request);
-                 $responses = $app['dao.response']->getResponses($idSubject, $idUser);
-
-        if($responsesForm->isSubmitted() AND $responsesForm->isValid()){
-        $response->setUser_id($idUser);
-         $response->setSubject_id($idSubject);
-        $response->setDate_message(date('Y-m-d H:i:s'));
-         $app['dao.response']->insert($response);
-
-        
-       }
-        return $app['twig']->render('responses_forum.html.twig', array(
-            'responsesForm'=>$responsesForm->createView(),
-            'response'=>$response,
-        'responses'=>$responses));
-   
-
-    }*/
-    
-    
-    
     /////////////////////////////PAGE REPONSE FORUM////////////////////////////
     public function subjectAction(Application $app, Request $request, $idSubject){
 
@@ -732,8 +663,6 @@ class HomeController{
 
 
 
-         
-
         return $app['twig']->render('responses_forum.html.twig', array(
             'responsesForm'=>$responsesForm->createView(),
             'response'=>$response,
@@ -742,9 +671,6 @@ class HomeController{
    
 
     }
-    
-    
-    
     
     
     
@@ -949,7 +875,6 @@ class HomeController{
           'jobOffert' => $jobOffert)); 
 
     }
-
 
    
    public function updateResponseAction(Application $app, Request $request, $id){

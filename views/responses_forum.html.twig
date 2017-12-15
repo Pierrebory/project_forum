@@ -14,8 +14,8 @@
         <article style="text-align: center; border-radius: 1%; background-color: white; align-items: center; margin-left: 40em; margin-right: 40em; margin-bottom: 2em; word-wrap: break-word">
                 
 				
-				<img style="margin-top: 1em; margin-left: 1em; margin-right: 45em; padding-top: -1em;" src="{{ asset('img/avatar/' ~ subject.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -5em;">Message publié le {{ subject.date_message|date("d/m/Y") }} à {{ subject.date_message|date("h:i:s") }}
-				par {{ subject.user_id.username }}<p> {% if subject.date_edit != '0000-00-00 00:00:00' %} modifié le {{ subject.date_edit|date("d/m/Y") }} à {{ subject.date_edit|date("h:i:s") }} {% endif %} {% if is_granted('ROLE_ADMIN') %}</p>
+				<img style="margin-top: 1em; margin-left: 1em; margin-right: 45em; padding-top: -1em;" src="{{ asset('img/avatar/' ~ subject.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -5em;">Message publié le {{ subject.date_message|date("d/m/Y") }} à {{ subject.date_message|date("H:i:s") }}
+				par {{ subject.user_id.username }}<p> {% if subject.date_edit != '0000-00-00 00:00:00' %} modifié le {{ subject.date_edit|date("d/m/Y") }} à {{ subject.date_edit|date("H:i:s") }} {% endif %} {% if is_granted('ROLE_ADMIN') %}</p>
               <a style="float: right;" href="{{ path('deleteAdminResponseAction', {id: subject.id}) }}">Supprimer ce message</a><br>
              <a style="float: right" href="{{ path('updateAdminSubjectAction', {id: subject.id}) }}">Modifier ce message</a>
               
@@ -33,8 +33,8 @@
 
        <article style="text-align: center; border-radius: 1%; background-color: white; align-items: center; margin-left: 40em; margin-right: 40em; margin-bottom: 2em;  word-wrap: break-word">               
 				
-				<img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/' ~ response.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -5em;">Message publié le {{ response.date_message|date("d/m/Y") }} à {{ response.date_message|date("h:i:s") }} 
-				par {{ response.user_id.username }}<p> {% if response.date_edit != '0000-00-00 00:00:00' %} modifié le {{ response.date_edit|date("d/m/Y") }} à {{ response.date_edit|date("h:i:s") }}  {% endif %}  {% if is_granted('ROLE_ADMIN') %}</p>
+				<img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/' ~ response.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -5em;">Message publié le {{ response.date_message|date("d/m/Y") }} à {{ response.date_message|date("H:i:s") }} 
+				par {{ response.user_id.username }}<p> {% if response.date_edit != '0000-00-00 00:00:00' %} modifié le {{ response.date_edit|date("d/m/Y") }} à {{ response.date_edit|date("H:i:s") }}  {% endif %}  {% if is_granted('ROLE_ADMIN') %}</p>
               <a style="float: right" href="{{ path('deleteAdminResponseAction', {id: response.id}) }}">Supprimer ce message</a><br>
               <a style="float: right" href="{{ path('updateAdminResponseAction', {id: response.id}) }}">Modifier ce message</a>
               
@@ -59,7 +59,7 @@
                     </div>
                         {%endif%}
                         {{ form_widget(responsesForm.message, { 'attr':  {
-                            'class': 'form-control ckeditor'
+                            'class': 'form-control'
                         }}) }}
                     </div>
                     <div>
@@ -118,6 +118,11 @@
            });
        });
    </script> 
+
+
+
+
+<script src="https://cdn.ckeditor.com/ckeditor5/1.0.0-alpha.2/classic/ckeditor.js"></script>
 
 
 
