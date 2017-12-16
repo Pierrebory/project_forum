@@ -290,6 +290,7 @@ class HomeController{
         if(NULL !== $token){
             $user = $token->getUser();
         }
+
         if($subjectForm->isSubmitted() AND $subjectForm->isValid()){
             $subject->setUser_id($user->getId());
              $subject->setDate_message(date('Y-m-d H:i:s'));
@@ -298,6 +299,7 @@ class HomeController{
 
         
        }
+       
         return $app['twig']->render('subject_forum.html.twig', array(
             'subjectForm'=>$subjectForm->createView(),
             'subject'=>$subject,
@@ -643,7 +645,13 @@ class HomeController{
     
     /////////////////////////////PAGE REPONSE FORUM////////////////////////////
     public function subjectAction(Application $app, Request $request, $idSubject){
-
+        if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            
+            return $app->redirect($app['url_generator']->generate('login'));
+            throw new AccessDeniedHttpException();
+            
+        }
         $subject = $app['dao.subject']->getSubject($idSubject);
         $response = new Responses();
         $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
