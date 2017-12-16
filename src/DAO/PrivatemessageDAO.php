@@ -95,8 +95,7 @@ class PrivatemessageDAO extends DAO{
  
     // afficher le dernier message de la conversation
     public function updateMessagesState($contactId){
-        $result = $this->bdd->prepare('UPDATE privatemessage SET message_state = 1 WHERE sender_id = :id');
-        
+        $result = $this->bdd->prepare('UPDATE privatemessage SET message_state = 1 WHERE sender_id = :id');       
         $result->bindValue(':id', $contactId, \PDO::PARAM_INT);    
         return $result->execute();
     }     

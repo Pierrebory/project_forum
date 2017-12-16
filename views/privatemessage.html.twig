@@ -41,8 +41,9 @@
           {% endif %}
 
  
-            <p  style="margin-left:40em; margin-right: 40em; word-wrap: break-word;">{{ contact.message }} <span>{{ contact.date_message|date("d/m/Y") }} à {{ contact.date_message|date("H:i:s") }}</span></p> 
 
+            <p  style="margin-left:40em; margin-right: 40em; word-wrap: break-word;">{{ contact.message }} <br> {{ contact.date_message|date("d/m/Y") }} à {{ contact.date_message|date("H:i:s") }}</p> 
+          
 
             <hr style="margin-left: 3em; margin-right: 3em; border: 0;
              height: 1px;
@@ -52,11 +53,13 @@
 
          {% endfor %}
 
+
+
 </div>
 
 
-                <div id="result"></div>
 
+                <div id="derniermessage"></div>
 
             <div class="privatemessage_form">
 
@@ -90,12 +93,15 @@
                 
                 
         </div>
+
+
+
                                 
 {% endblock %}
 
 {% block javascript %}
 
-             
+
    <script>
        $(function(){
            $('#action').click(function(event){
@@ -110,7 +116,7 @@
                    data: $('form').serialize(),  
                    dataType: 'html',
                    success: function(data){
-                       $('#result').append(data);
+                       $('#messages').append(data);
                    },
                    error: function() {
                        alert('La requête n\'a pas abouti');
@@ -125,7 +131,7 @@
        function loadlink(){
         $('#messages').load("{{ path('contacter', {id: contactId}) }} #messages",function () {
              $(this).unwrap();
-             $('#result').empty();
+             $('#derniermessage').empty();
         });
     }
 
