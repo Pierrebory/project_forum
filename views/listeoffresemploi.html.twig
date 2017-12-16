@@ -6,7 +6,7 @@
         {% block content %}
 
         <div class="col-md-12 text-center">
-            <blockquote class="blockquote text-center" style="margin-top: 5em;">
+            <blockquote class="blockquote text-center" style="margin-top: 6em;">
                 <h1 style="margin-bottom: 0.5em;">Offres d'emploi</h1> 
       
                     <h4 style="margin-bottom: 4em;">Vous êtes recruteurs en informatique ? Inscrivez-vous pour poster vos offres d'emploi !</h4>
@@ -21,19 +21,29 @@
 
 {% endif %}
 
-            <form method="GET" style='margin-top:20px;'>
-            <input type="text" name="title" id="title" placeholder="Rentrer le nom de l'offre d'emploi"  style="margin-left: 1em; margin-bottom: 1em; width: 390px; margin-top:20px;">
+ 
+            
+
+            <blockquote class="blockquote text-center"> 
+            <form method="GET">
+            <input type="text" name="title" id="title" placeholder="Rentrer le nom de l'offre d'emploi"  style="width: 390px; margin-top:20px;">
             <button type="button" class="button" id="action">Recherche d'une offre d'emploi par son titre</button>
             </form>
 
             <div id="result"></div>
 
             <form method="GET">
-            <input type="text" name="city" id="city" placeholder="Rentrer une ville" style="margin-left: 1em; margin-bottom: 1em; width: 390px; margin-top:20px;">
+ 
+            
+
+
+            <input type="text" name="city" id="city" placeholder="Rentrer une ville" style="width: 390px; margin-top:20px;">
             <button type="button" class="button" id="action1">Recherche d'offres d'emploi par ville</button>
+            </form>
 
             <div id="result"></div>
-
+</blockquote> 
+    
 <table class="table table-striped" style="margin-left:10px; margin-top: 20px; width:1900px;">
   <thead>
     <tr>
@@ -46,7 +56,9 @@
      {% if is_granted('ROLE_ADMIN') %} <th scope="col">Suppression</th>{%endif%}
     </tr>
   </thead>
+    
 <tbody>
+    
     <tr>
          {% for offre in offres %} 
         

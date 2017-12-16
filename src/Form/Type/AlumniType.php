@@ -112,7 +112,7 @@ class AlumniType extends AbstractType
         
         $builder->add('contract', ChoiceType::class, array(
             'label' => 'Type de contrat', 
-            'required' => true,                                       
+            'required' => false,                                       
             'choices' => array(
                 'CDI' => 'CDI',
                 'CDD' => 'CDD',
@@ -127,7 +127,7 @@ class AlumniType extends AbstractType
         
         $builder->add('companytype', ChoiceType::class, array(
             'label' => 'Type d\'entreprise', 
-            'required' => true,                                       
+            'required' => false,                                       
             'choices' => array(
                 'ESN' => 'ESN',
                 'Agence digitale/communication' => 'Agence digitale/communication',
@@ -141,7 +141,7 @@ class AlumniType extends AbstractType
         
          $builder->add('wage', ChoiceType::class, array(
             'label' => 'Cochez votre tranche de salaire annuel brut', 
-            'required' => true,                                       
+            'required' => false,                                       
             'choices' => array(
                 'moins de 25k€' => 'moins de 25k€',
                 'entre 25k€ et 35 k€' =>  'entre 25k€ et 35 k€',

@@ -2,11 +2,11 @@
 
 namespace WF3\Form\Type;
 
+
 //les formulaires  vont toujours utiliser AbstractType et FormBuilderInterface
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-//on détaille les types de champs dont on aura besoin
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 //on utilise le validator de symfony
 use Symfony\Component\Validator\Constraints as Assert;
@@ -20,8 +20,7 @@ class PrivatemessageType extends AbstractType
     {
         //on liste les champs qu'on veut rajouter
         $builder
-             
-            ->add('message', TextType::class, array(
+            ->add('message', TextAreaType::class, array(
             'attr' => array(
                     'placeholder' => 'Message'
                 )))

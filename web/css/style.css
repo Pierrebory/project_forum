@@ -24,14 +24,15 @@ General
 ============================================================ */
 
 html {
-  height: 100%;
+    height: 100%;
 }
 
 body {
-  min-height: 100%;
-  position: relative;
-  padding-bottom: 14em;
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 14em;
     font-family: Merriweather, arial, sans-serif;
+ 
 }
 
 .bloc-principal {
@@ -178,7 +179,6 @@ a:hover, a:active {
 }
 
 h2 {
-
 	font-size: 30px;
 	margin-bottom:20px;
 }
@@ -402,13 +402,8 @@ section.inner {
 
 
 #services {
-
   color: #312f2b;   
     
-}
-
-#tronches{
-    text-align: center!important;
 }
 
 

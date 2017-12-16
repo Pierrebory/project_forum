@@ -70,7 +70,13 @@ class AdminController{
 
     
   
-
+ public function deleteAdminOffreAction(Application $app, $id){
+        $article = $app['dao.joboffers']->delete($id);
+        //on crée un message de réussite dans la session
+        $app['session']->getFlashBag()->add('success', 'offre bien supprimé');
+        //on redirige vers la page d'accueil
+        return $app->redirect($app['url_generator']->generate('home'));
+    }
 
 
 
@@ -104,13 +110,7 @@ public function updateAdminOffreAction(Application $app, Request $request, $id){
     }
 
 
-    public function deleteAdminOffreAction(Application $app, $id){
-        $article = $app['dao.joboffers']->delete($id);
-        //on crée un message de réussite dans la session
-        $app['session']->getFlashBag()->add('success', 'offre bien supprimé');
-        //on redirige vers la page d'accueil
-        return $app->redirect($app['url_generator']->generate('home'));
-    }
+   
 
 
     public function deleteAdminSubjectAction(Application $app, $id){

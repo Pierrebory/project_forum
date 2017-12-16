@@ -17,83 +17,86 @@
  
                 
            {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-success">
+            <div class="alert alert-success" >
                 {{ flashMessage }}
             </div>
             {% endfor %}
 
             
-
+            <!-- ZONE DE CHAMPS D'INCRIPTION -->
            
                 
             {{ form_start(userForm, { 'attr': {'class': 'form-horizontal'} }) }}
 
+            <!-- PSEUDO -->
+
                 <div class="form-group" class="form-group" style="margin-left: 30em; margin-right: 30em; margin-top: 2em;">
                     {{ form_label(userForm.username, null) }}
                     <div>
-                        {% if userForm.username.vars.errors|length > 0 %}
-                            <div class="alert alert-danger">
+                                                   
+                        {{ form_widget(userForm.username, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                </div>
+                {% if userForm.username.vars.errors|length > 0 %}
+                            <div class="alert alert-danger" style="margin-left: 30em; margin-right: 30em">
                                 {% for error in userForm.username.vars.errors %}
                                     {{ error.message }}
                                 {% endfor %}
                             </div>
                         {% endif %}
                         {% for flashMessage in app.session.flashbag.get('usernameNotUnique') %}
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger" style="margin-left: 30em; margin-right: 30em">
                                 {{ flashMessage }}
                             </div>
-                        {% endfor %}                           
-                        {{ form_widget(userForm.username, { 'attr':  {
-                            'class': 'form-control'
-                        }}) }}
-                    </div>
-                </div>
+                        {% endfor %}
                 
                 
-                
+               <!--  votre nom  -->
+
                 <div class="form-group" style="margin-left: 30em; margin-right: 30em">
                     {{ form_label(userForm.lastname, null) }}
-                    <div>
-                        {% if userForm.lastname.vars.errors|length > 0 %}
-                            <div class="alert alert-danger">
-                                {% for error in userForm.lastname.vars.errors %}
-                                    {{ error.message }}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
+                    <div>                        
                         {{ form_widget(userForm.lastname, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
                     </div>
                 </div>
                 
+                {% if userForm.lastname.vars.errors|length > 0 %}
+                    <div class="alert alert-danger" style="width: 770px; margin-left: 30em;">
+                        {% for error in userForm.lastname.vars.errors %}
+                            {{ error.message }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 
+                <!-- votre prénom -->
                 
                 <div class="form-group" style="margin-left: 30em; margin-right: 30em">
                     {{ form_label(userForm.firstname, null) }}
                     <div>
-                        {% if userForm.firstname.vars.errors|length > 0 %}
-                            <div class="alert alert-danger">
-                                {% for error in userForm.firstname.vars.errors %}
-                                    {{ error.message }}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
+                        
                         {{ form_widget(userForm.firstname, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
                     </div>
                 </div>
-                <div class="form-group" style="margin-left: 30em; margin-right: 30em">
-                    {{ form_label(userForm.email, null) }}
-                    <div>
-                        {% if userForm.email.vars.errors|length > 0 %}
-                            <div class="alert alert-danger">
-                                {% for error in userForm.email.vars.errors %}
+                {% if userForm.firstname.vars.errors|length > 0 %}
+                            <div class="alert alert-danger" style="width: 770px; margin-left: 30em;">
+                                {% for error in userForm.firstname.vars.errors %}
                                     {{ error.message }}
                                 {% endfor %}
                             </div>
                         {% endif %}
+
+                <!-- votre email -->
+
+                <div class="form-group" style="margin-left: 30em; margin-right: 30em">
+                    {{ form_label(userForm.email, null) }}
+                    <div>
+                       
                        {% for flashMessage in app.session.flashbag.get('emailNotUnique') %}
                             <div class="alert alert-danger">
                                 {{ flashMessage }}
@@ -104,25 +107,28 @@
                         }}) }}
                     </div>
                 </div>
+                 {% if userForm.email.vars.errors|length > 0 %}
+                            <div class="alert alert-danger" style="width: 770px; margin-left: 30em;">
+                                {% for error in userForm.email.vars.errors %}
+                                    {{ error.message }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                
+                <!-- le mot de passe -->
+
                 <div class="form-group" style="margin-left: 30em; margin-right: 30em; margin-bottom: 10px;">
                     {{ form_label(userForm.password.first, null, { 'label_attr':  {
                         'class': 'col-sm-5 control-label'
-                    }}) }}
-                    <div>
-                    {% if userForm.password.first.vars.errors|length > 0 %}
-                        <div class="alert alert-danger">
-                            {% for error in userForm.password.first.vars.errors %}
-                                {{ error.message }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    </div>                     
+                    }}) }}              
                     <div class="col-sm-4">
                         {{ form_widget(userForm.password.first, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
                     </div>
                 </div>
+
+
                 <div class="form-group" style="margin-left: 30em; margin-right: 30em; margin-bottom: 30px;">
                     {{ form_label(userForm.password.second, null, { 'label_attr':  {
                         'class': 'col-sm-5 control-label'
@@ -133,64 +139,82 @@
                         }}) }}
                     </div>
                 </div>
+
+                {% if userForm.password.first.vars.errors|length > 0 %}
+                    <div class="alert alert-danger" style="width: 770px; margin-left: 30em;">
+                        {% for error in userForm.password.first.vars.errors %}
+                            {{ error.message }}
+                        {% endfor %}
+                    </div>
+                {% endif %}       
+
+                <!-- téléphone -->
                 
                 <div class="form-group" style="margin-left: 30em; margin-right: 30em; margin-bottom: 10px;">
                     {{ form_label(userForm.phone, null) }}
-                    <div>
+                    
+                    </div>
+                    <div class="form-group" style="margin-left: 30em; margin-right: 30em; margin-bottom: 10px;">                     
+                        
+                       
+                       
+                        {{ form_widget(userForm.phone, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                        </div>
                         {% if userForm.phone.vars.errors|length > 0 %}
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger" style="margin-left: 30em; margin-right: 30em">
                                 {% for error in userForm.phone.vars.errors %}
                                     {{ error.message }}
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        
                         {% for flashMessage in app.session.flashbag.get('phoneNotUnique') %}
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger" style="width: 770px; margin-left: 30em;">
                                 {{ flashMessage }}
                             </div>
-                        {% endfor %}                           
-                        {{ form_widget(userForm.phone, { 'attr':  {
+                            {% endfor %}
+                    <!-- ville -->
+                
+               <div class="form-group" style="margin-left: 30em; margin-right: 30em; margin-bottom: 10px;">
+                    {{ form_label(userForm.city, null) }}
+                   
+                        
+                    </div>
+                        <div class="form-group" style="margin-left: 30em; margin-right: 30em; margin-bottom: 10px;">
+                        {{ form_widget(userForm.city, { 'attr':  {
                             'class': 'form-control'
                         }}) }}
                     </div>
-             
-                
-                
-              
-                    {{ form_label(userForm.city, null) }}
-                    <div>
-                        {% if userForm.city.vars.errors|length > 0 %}
-                            <div class="alert alert-danger">
+                     {% if userForm.city.vars.errors|length > 0 %}
+                            <div class="alert alert-danger" style="margin-left: 30em; margin-right: 30em">
                                 {% for error in userForm.city.vars.errors %}
                                     {{ error.message }}
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        {{ form_widget(userForm.city, { 'attr':  {
-                            'class': 'form-control'
-                        }}) }}
-                    </div>
-               
-                    
+                        
+                   <!--  QUI ETES VOUS ? -->
                     
           
                     {{ form_label(userForm.role, null) }}
                     <div>
-                        {% if userForm.role.vars.errors|length > 0 %}
+                        
+                        {{ form_widget(userForm.role, { 'attr':  {
+                            'class': 'form-control'
+                        }}) }}
+                    </div>
+                    {% if userForm.role.vars.errors|length > 0 %}
                             <div class="alert alert-danger">
                                 {% for error in userForm.role.vars.errors %}
                                     {{ error.message }}
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        {{ form_widget(userForm.role, { 'attr':  {
-                            'class': 'form-control'
-                        }}) }}
-                    </div>
                
+               <!-- BOUTON ENVOYER -->
 
-                <div class="form-group" style="margin-left: 10em; margin-right: 10em; margin-top: 1em;">
+                <div class="form-group" style="margin-left: 30em; margin-right: 30em; margin-top: 1em; margin-bottom: 50px;">
                 
                     <input type="submit" class="button" value="Envoyer">
                 </div>

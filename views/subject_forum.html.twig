@@ -5,14 +5,16 @@
 {% block content %}
 
 
-<div class="col-md-12 text-center">
-    <blockquote class="blockquote text-center" style="margin-top: 5em;">
 
-        <h1 style="text-align: center; margin-bottom: 1em;">Forum d'échange</h1>
+<div class="col-md-12 text-center">
+    <blockquote class="blockquote text-center" style="margin-top: 6em; margin-bottom: 3em;">
+
+        <h1 style="text-align: center;">Forum d'échange</h1>
         <h4>Echangez sur vos problématiques de code, sur le métier de développeur, sur les technologies...</h4>
                 
     </blockquote>
 </div>
+
 
          <div id="result"></div>
 
@@ -20,15 +22,17 @@
       {% for subject in subjects %}
             <article style="text-align: center">
              
-               <h2 id="sujet"><a href="{{ path('forumsubject', {idSubject: subject.id}) }}">{{ subject.title }}</a></h2>
+               <h2  id="sujet"><a style="color: #11A09A" href="{{ path('forumsubject', {idSubject: subject.id}) }}">{{ subject.title }}</a></h2>
             
                
                 <p>publié le {{ subject.date_message|date("d/m/Y") }} à {{ subject.date_message|date("H:i:s") }} par {{ subject.user_id.username }}</p>
-                <p>{{ subject.message }}</p>
-               {% if is_granted('ROLE_ADMIN') %}
+                <p style="word-wrap: break-word; margin-left: 39em; margin-right: 39em">{{ subject.message }}</p>
+               
+                {% if is_granted('ROLE_ADMIN') %}
                 <p><a href="{{ path('deleteAdminSubjectAction', {id: subject.id}) }}">Supprimer ce sujet</a></p>
                 <p><a href="{{ path('updateAdminSubjectAction', {id: subject.id}) }}">Modifier ce sujet</a></p>
                {%endif%}
+                
                <hr style=" border: 0;
                 height: 1px;
                 background: #333;
@@ -77,7 +81,11 @@
 <button type="button" class="button"><a href="{{ path('login') }}">Vous devez être connecté(e) pour poster un message.</a></button>
 
 
+
 {% endif %}{% endblock %}
+
+
+
 {% block javascript %}
 
              

@@ -155,7 +155,7 @@ $app->match('/admin/alumni/update/{id}', 'WF3\Controller\AdminController::update
 ->assert('id', '\d+')
 ->bind('updateAdminAlumniAction');
 
-$app->get('/amdin/user/delete/{id}', 'WF3\Controller\AdminController::deleteAdminUserAction')
+$app->get('/admin/user/delete/{id}', 'WF3\Controller\AdminController::deleteAdminUserAction')
 ->assert('id', '\d+')
 ->bind('deleteAdminUserAction');
 
