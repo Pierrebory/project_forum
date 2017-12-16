@@ -651,12 +651,7 @@ class HomeController{
             //je peux rediriger l'utilisateur non authentifié
             
             return $app->redirect($app['url_generator']->generate('login'));
-<<<<<<< HEAD
             throw new AccessDeniedHttpException();
-            
-=======
-            throw new AccessDeniedHttpException(); 
->>>>>>> 6d2b1db344838cda65756b79d7537846601c4803
         }
         $subject = $app['dao.subject']->getSubject($idSubject);
         $response = new Responses();
