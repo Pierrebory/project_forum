@@ -14,7 +14,7 @@
  
             <br>
 			
-			<h2> <p class="bold"> {{ user.firstname }} {{ user.username }}</p></h2>
+			<h2> <p class="bold"> {{ user.firstname }} {{ user.lastname}}</p></h2>
             
             
             
@@ -39,8 +39,11 @@
             <tr><th scope="row">Lien vers LinkedIn</th> <td>{{ alumni.linkedinurl  }}</td> </tr>
             <tr><th scope="row">Lien vers le CV</th> <td>{{ alumni.cv }}</td> </tr>
             <tr><th scope="row">Parrainage</th> <td>{{ alumni.sponsorship  }}</td> </tr>
-            
-            
+                    
+                  {% if is_granted('ROLE_EMPLOYER') %}  
+            <tr><th scope="row">Téléphone</th> <td>{{ user.phone }}</td> </tr>
+            <tr><th scope="row">Email</th> <td>{{ user.email  }}</td> </tr>
+                    {% endif %}
             
                 </tbody>
             </table>

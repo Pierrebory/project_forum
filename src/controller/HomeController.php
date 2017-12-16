@@ -36,14 +36,14 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 class HomeController{
 
 
-    //page d'accueil qui affiche tout les articles
+    //page d'accueil 
     public function homePageAction(Application $app){
 
         return $app['twig']->render('index.html.twig');
     }
     
     
-    //page Annuaire (liste des anciens élèves) qui affiche uniquement les noms des anciens élèves
+    //PAGE ANNUAIRE
     public function annuaireAction(Application $app){
         $users = $app['dao.users']->findAll();
         
@@ -236,7 +236,7 @@ class HomeController{
     
     
     
-  //page de suppression d'une offre d'emploi
+  //PAGE DE SUPPRESSION D'UNE OFFRE D'EMPLOI
     public function deleteOfferAction(Application $app, $id){
         //on va vérifier que l'utilisateur est connecté
         if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
@@ -740,8 +740,8 @@ class HomeController{
             $alumni->setAlumni_id($user->getId());
 
             $app['dao.alumni']->insert($alumni);                
-            $app['session']->getFlashBag()->add('success', 'vous êtes bien enregistré');
-            return $app->redirect($app['url_generator']->generate('home'));         
+            $app['session']->getFlashBag()->add('success', 'Vous êtes bien enregistré. merci !');
+                    
         }
 
         // j'envoi le formulaire
@@ -753,7 +753,7 @@ class HomeController{
     	
 
     
-    
+    //METHODE DE RECHERCHE PAR LE NOM DE L'ANCIEN ELEVE
     public function rechercheParUsername(Application $app, Request $request){
         
         $user =[];
@@ -773,7 +773,7 @@ class HomeController{
     }
     
     
-    
+    //SPPRESSION DE SON COMPTE
     public function deleteUserAction(Application $app, $id){
         //on va vérifier que l'utilisateur est connecté
         if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
@@ -797,13 +797,12 @@ class HomeController{
         }
 		$users = $app['dao.users']->delete($id);
         //on crée un message de réussite dans la session
-        $app['session']->getFlashBag()->add('success', 'fiche bien supprimé');
-        //on redirige vers la page d'accueil
-        return $app->redirect($app['url_generator']->generate('home'));
+        $app['session']->getFlashBag()->add('success', 'Compte supprimé.');
+      
 	}
     
     
-    
+    //MISE A JOUR DE SA FICHE DETAILLEE
       public function updateAlumniAction(Application $app, Request $request, $id){
           if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
             //je peux rediriger l'utilisateur non authentifié
@@ -843,7 +842,7 @@ class HomeController{
     }
     
     
-    
+    //MISE A JOUR DE SON OFFRE D'EMPLOI
      public function updateJobAction(Application $app, Request $request, $id){
           if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
             //je peux rediriger l'utilisateur non authentifié
@@ -884,6 +883,7 @@ class HomeController{
     }
 
    
+    //MODIFICATION REPONSE SUR LE FORUM
    public function updateResponseAction(Application $app, Request $request, $id){
           if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
             //je peux rediriger l'utilisateur non authentifié
@@ -922,6 +922,8 @@ class HomeController{
 
     }
 
+    
+    //MODIFICATION DU SUJET SUR LE FORUM
     public function updateSubjectAction(Application $app, Request $request, $id){
           if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
             //je peux rediriger l'utilisateur non authentifié
