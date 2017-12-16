@@ -280,6 +280,8 @@ class HomeController{
  
     ///////////////////////PAGE SUJET FORUM////////////////////////
     public function forumPageAction(Application $app, Request $request){
+        
+        
         $subject = new Subjects();
         $subjects =[];
         $subjectForm = $app['form.factory']->create(subjectType::class, $subject);
@@ -298,6 +300,8 @@ class HomeController{
 
         
        }
+        
+       
         return $app['twig']->render('subject_forum.html.twig', array(
             'subjectForm'=>$subjectForm->createView(),
             'subject'=>$subject,
@@ -643,7 +647,12 @@ class HomeController{
     
     /////////////////////////////PAGE REPONSE FORUM////////////////////////////
     public function subjectAction(Application $app, Request $request, $idSubject){
-
+        if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+            //je peux rediriger l'utilisateur non authentifié
+            
+            return $app->redirect($app['url_generator']->generate('login'));
+            throw new AccessDeniedHttpException(); 
+        }
         $subject = $app['dao.subject']->getSubject($idSubject);
         $response = new Responses();
         $responsesForm = $app['form.factory']->create(ResponsesType::class, $response);
