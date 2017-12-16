@@ -132,11 +132,14 @@
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
  
-<a href="{{ path('deleteUserAction', {id: app.user.id})}}"><button type="button" class="button">Supprimer son compte</button>
+     <a href="{{ path('deleteUserAction', {id: app.user.id})}}" onclick="return(confirm('Etes-vous sûr de vouloir supprimer votre compte ?'));"><button type="button" class="button" id="suppression">Supprimer son compte</button></a>
 
 {%endif%}
         
 </blockquote>
 
-        {% endblock %}
+{% endblock %}
+
+
+
         

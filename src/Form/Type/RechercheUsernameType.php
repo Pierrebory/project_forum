@@ -17,7 +17,7 @@ class RechercheUsernameType extends AbstractType
     {
         $builder
             
-            ->add('name', TextType::class, array(
+            ->add('lastname', TextType::class, array(
                 'constraints'     => array(
                                         new Assert\NotBlank(),
                                         new Assert\Length(array(

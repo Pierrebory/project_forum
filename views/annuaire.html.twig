@@ -19,12 +19,17 @@
             
 		</div>
 
+ 
     <!-- bouton incription connexion -->
 
+
+{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+>>>>>>> 7af30da65d814548479b11971d787230458a772c
     <blockquote class="blockquote text-center">
     <a href="{{ path('inscription') }}"><button type="button" class="button">Inscrivez-vous pour figurer dans l'annuaire</button></a>
     <a href="{{ path('login') }}"><button type="button" class="button">Connectez-vous pour accéder à l'annuaire détaillé</button></a>
     </blockquote>
+{% endif %}
 
 
   {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -41,7 +46,7 @@
 
 <div id="rechercheancien"> 
 <form  action="{{ path('rechercheParUsername')}}">
-    <input style="margin-left:1em; margin-bottom: 1em; width:390px; margin-top:20px;" type="text" name="name" placeholder="nom">
+    <input style="margin-left:1em; margin-bottom: 1em; width:390px; margin-top:20px;" type="text" name="lastname" placeholder="nom">
     <button type="submit" class="button">Rechercher un ancien</button>
 </form>
 </div>
@@ -50,7 +55,9 @@
 <!-- tableau des fiches des élèves -->
 
 
+
 <table style="width:1900px; margin-top: 20px;" class="table table-striped"  >
+
   <thead>
      
     <tr>
@@ -70,7 +77,7 @@
          {% for user in users %}
         {%if user.role != 'ROLE_ADMIN' and user.role != 'ROLE_EMPLOYER' %}
       <td>{{ user.firstname }}</td>
-      <td>{{ user.username }}</td>
+      <td>{{ user.lastname }}</td>
       <td>{{ user.city }}</td>
 
         <!-- détail dans le tableau -->
