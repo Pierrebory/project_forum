@@ -21,7 +21,6 @@
 
 
 
-
 <br>
 <br>
 
@@ -37,21 +36,24 @@
   </thead>
     
   <tbody>
+
+           {% for user in users %}
     <tr>
-         {% for user in users %}
+
 
       {% if user.receiver_id.id == app.user.id %}
-        <td><a href="{{ path('contacter', {id: user.sender_id.id}) }}">{{ user.sender_id.firstname }} {{ user.sender_id.lastname }}</a></td>
+        <td><a href="{{ path('contacter', {id: user.sender_id.id}) }}#derniermessage">{{ user.sender_id.firstname }} {{ user.sender_id.lastname }}</a></td>
+        <td><a href="{{ path('contacter', {id: user.sender_id.id}) }}#derniermessage"><span {% if user.message_state == 0 and user.receiver_id.id == app.user.id %} style="font-weight: bold;" {% endif %}>{{ user.message|length > 50 ? user.message|slice(0, 50) ~ '...' : user.message  }}</span></a></td>
       {% else %}
-        <td><a href="{{ path('contacter', {id: user.receiver_id.id}) }}">{{ user.receiver_id.firstname }} {{ user.receiver_id.lastname }}</a></td>
+        <td><a href="{{ path('contacter', {id: user.receiver_id.id}) }}#derniermessage">{{ user.receiver_id.firstname }} {{ user.receiver_id.lastname }}</a></td>
+        <td><a href="{{ path('contacter', {id: user.receiver_id.id}) }}#derniermessage"><span {% if user.message_state == 0 and user.receiver_id.id == app.user.id %} style="font-weight: bold;" {% endif %}>{{ user.message|length > 50 ? user.message|slice(0, 50) ~ '...' : user.message  }}</span></a></td>        
       {% endif %}
-      <td>{{ user.message }}</td>
-      <td>{{ user.date_message }}</td>
-
+      <td>{{ user.date_message|date("d/m/Y") }} à {{ user.date_message|date("H:i:s") }}</td>
 
     </tr>
-
   {% endfor %} 
+
+
 
   </tbody>
 </table>

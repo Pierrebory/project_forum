@@ -43,7 +43,7 @@
                     <li><a href="{{ path('contactezmoi') }}">Contact</a></li>
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li><a href="{{ path('profil', {id: app.user.id})}}">page perso</a></li> 
-                    <li><a href="{{ path('messagerie', {id: app.user.id})}}">messagerie {% if messagesCounter > 0 %} ({{ messagesCounter }}) {% endif %}</a></li>
+                    <li><a href="{{ path('messagerie', {id: app.user.id})}}">messagerie<span id="nbmessages"></span></a></li></span>
                     <li><a href="{{ path('logout') }}">déconnexion</a></li>   
 
                     {% else %}
@@ -105,6 +105,21 @@
 
    <!-- Custom JavaScript for this theme -->
    <script src="{{ asset('js/scrolling-nav.js') }}"></script>
+
+      <script>
+       
+       function loadlink(){
+        $('#nbmessages').load("{{ path('nombredemessages') }}",function () {
+        });
+    }
+
+    loadlink(); // This will run on page load
+    setInterval(function(){
+        loadlink() // this will run after every 5 seconds
+    }, 5000);
+
+   </script>
+
  
                {% block javascript %}{% endblock %}
 </body>

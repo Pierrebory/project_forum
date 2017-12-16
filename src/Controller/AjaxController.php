@@ -138,6 +138,25 @@ class AjaxController{
 }    
     
     
+    public function messagesNumberAction(Application $app){
+      if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')){
+        //je peux rediriger l'utilisateur non authentifié
+        //return $app->redirect($app['url_generator']->generate('home'));
+        throw new AccessDeniedHttpException();
+      }
+        //on récupère l'utilisateur connecté qui veut faire la suppression
+        //on récupère le token si l'utilisateur est connecté
+      $token = $app['security.token_storage']->getToken();
+      if(NULL !== $token){
+        $user = $token->getUser();
+      }
+
+      $counter = $app['dao.privatemessage']->unreadMessages($user->getId());
+
+       return $app['twig']->render('ajax/counter.html.twig', array(
+           'counter' => $counter));
+    }
+
     
     
     
