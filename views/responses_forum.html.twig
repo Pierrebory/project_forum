@@ -15,7 +15,11 @@
                 
 				
 				<img style="margin-top: 2em; margin-left: 40em; margin-right: 45em; padding-top: -1em;" src="{{ asset('img/avatar/' ~ subject.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -4em; margin-left: 47em;">Message publié le {{ subject.date_message|date("d/m/Y") }} à {{ subject.date_message|date("H:i:s") }}
-				par {{ subject.user_id.username }}<p style="margin-top: 0em; margin-left: 47em;"> {% if subject.date_edit != '0000-00-00 00:00:00' %} modifié le {{ subject.date_edit|date("d/m/Y") }} à {{ subject.date_edit|date("H:i:s") }}  {%endif%}
+				par {{ subject.user_id.username }}
+        <a href="{{ path('contacter', {id: subject.id}) }}"><i style="margin-left: 2em; position: relative" class="fa  fa-envelope-o" aria-hidden="true"></a></i>
+
+
+        <p style="margin-top: 0em; margin-left: 47em;"> {% if subject.date_edit != '0000-00-00 00:00:00' %} modifié le {{ subject.date_edit|date("d/m/Y") }} à {{ subject.date_edit|date("H:i:s") }}  {%endif%}
               
               
                 <p style="padding: 1em; color: black; margin-left: 39em; margin-top: 2em; word-wrap: break-word; margin-right: 39em;">{{ subject.message }}</p>
@@ -37,7 +41,9 @@
        <article>               
 				
 				<img style="margin-top: 2em; margin-left: 40em; margin-right: 45em; padding-top: -1em;" src="{{ asset('img/avatar/' ~ response.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -5em;"><p style="margin-top: -4em; margin-left: 47em;">Message publié le {{ response.date_message|date("d/m/Y") }} à {{ response.date_message|date("H:i:s") }} 
-				par {{ response.user_id.username }}<p style="margin-top: 1em; margin-left: 47em;"> {% if response.date_edit != '0000-00-00 00:00:00' %} modifié le {{ response.date_edit|date("d/m/Y") }} à {{ response.date_edit|date("H:i:s") }} </p> {% endif %}  <br>
+				par {{ response.user_id.username }}
+        <a href="{{ path('contacter', {id: response.user_id.id}) }}"><i style="margin-left: 2em; position: relative" class="fa  fa-envelope-o" aria-hidden="true"></a></i>
+        <p style="margin-top: 1em; margin-left: 47em;"> {% if response.date_edit != '0000-00-00 00:00:00' %} modifié le {{ response.date_edit|date("d/m/Y") }} à {{ response.date_edit|date("H:i:s") }} </p> {% endif %}  <br>
                 
                 <p style="padding: 1em; color: black; margin-left: 39em; margin-top: 2em; word-wrap: break-word; margin-right: 39em;">{{ response.message }}</p> 
                 {% if app.user.id == response.user_id.id %} <a style="float: right; margin-top: -2em; margin-right: 2em; border: 1px solid grey; border-radius: 5px; padding: 5px; text-decoration: none" href="{{ path('updateSubjectAction', {id: subject.id}) }}">Modifier ce message</a>{% endif %}
