@@ -8,6 +8,7 @@ class PrivateMessage{
     private $receiver_id;
     private $message;
     private $date_message;
+    private $message_state;
   
 
     
@@ -31,7 +32,9 @@ class PrivateMessage{
         return $this->date_message;
     }
     
-    
+    public function getMessage_state(){
+        return $this->message_state;
+    }    
 
     
         //setters
@@ -68,6 +71,10 @@ class PrivateMessage{
         }
     }
 
-
+    public function setMessage_state($message_state){
+        if(!empty($message_state) AND is_numeric($message_state)){
+            $this->message_state = $message_state; 
+        }
+    }
     
 }

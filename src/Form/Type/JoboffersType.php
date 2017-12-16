@@ -53,7 +53,7 @@ class JoboffersType extends AbstractType
         $builder->add('city', TextType::class, array(
             'label' => 'Ville',
             'attr' => array(
-                'placeholder' => 'Indiquez la ville et le département entre paranthèses'
+                'placeholder' => 'Indiquez la ville et le département entre parenthèses'
             ),
             'required' => true,                      
             'constraints' => array(

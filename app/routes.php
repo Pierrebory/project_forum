@@ -192,3 +192,7 @@ $app->match('/response/update/{id}', 'WF3\Controller\HomeController::updateRespo
 $app->match('/subject/update/{id}', 'WF3\Controller\HomeController::updateSubjectAction')
 ->assert('id', '\d+')
 ->bind('updateSubjectAction');
+
+// récupérer le nombre de messages
+$app->get('/nombredemessages', 'WF3\Controller\AjaxController::messagesNumberAction')
+->bind('nombredemessages');
