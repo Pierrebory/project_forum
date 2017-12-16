@@ -8,8 +8,9 @@
 
         {% block content %}
 
-		<div class="col-md-12 text-center" style="margin-bottom:5em;" >
+		<div class="col-md-12 text-center" style="margin-bottom:5em; width: 1900px;" >
             
+            <!-- titre -->
 
             <blockquote class="blockquote text-center"><h1 style="margin-top: 3em;" style="font-family: Merriweather, arial, sans-serif;">Annuaire des anciens de Webforce3</h1> </blockquote>
             <h4>Anciens étudiants de WebForce3, inscrivez-vous et consultez l'annuaire des anciens afin de connaître leur parcours et les contacter directement pour leur poser des questions.</h4>
@@ -18,7 +19,12 @@
             
 		</div>
 
+ 
+    <!-- bouton incription connexion -->
+
+
 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+>>>>>>> 7af30da65d814548479b11971d787230458a772c
     <blockquote class="blockquote text-center">
     <a href="{{ path('inscription') }}"><button type="button" class="button">Inscrivez-vous pour figurer dans l'annuaire</button></a>
     <a href="{{ path('login') }}"><button type="button" class="button">Connectez-vous pour accéder à l'annuaire détaillé</button></a>
@@ -30,9 +36,13 @@
     <blockquote class="blockquote text-center">
         <a href="{{ path('inscription/alumni') }}"><button type="button" class="button">Remplissez votre fiche détaillée</button></a>
         <a href="{{ path('updateAlumniAction', {id: app.user.id}) }}"><button type="button" class="button">Modifiez votre fiche détaillée</button></a> 
+
 {%endif%}
+
     </blockquote>
 
+
+  <!-- bouton recherche -->
 
 <div id="rechercheancien"> 
 <form  action="{{ path('rechercheParUsername')}}">
@@ -42,10 +52,12 @@
 </div>
 
 
-<br>
-<br>
+<!-- tableau des fiches des élèves -->
 
-<table style="width:1900px;" class="table table-striped"  >
+
+
+<table style="width:1900px; margin-top: 20px;" class="table table-striped"  >
+
   <thead>
      
     <tr>
@@ -57,16 +69,10 @@
      {% if is_granted('ROLE_ADMIN') %} <th scope="col">Suppression</th>{%endif%}
     <th scope="col">Contact</th>
     
-   
-    </tr>
-      	
-  </thead>
-
-   
-    
-    
+  </tr>      	
+  </thead>    
   <tbody>
-    <tr>
+  <tr>
 
          {% for user in users %}
         {%if user.role != 'ROLE_ADMIN' and user.role != 'ROLE_EMPLOYER' %}
@@ -74,7 +80,7 @@
       <td>{{ user.lastname }}</td>
       <td>{{ user.city }}</td>
 
-        
+        <!-- détail dans le tableau -->
 
         <td><div class="fiche"><a href="{{ path('fichedetaillee', {id: user.id}) }}">Fiche détaillée</a></div></td>
          {% if is_granted('ROLE_ADMIN') %}
@@ -86,17 +92,10 @@
         <td><div class="fiche"><a href="{{ path('contacter', {id: user.id}) }}">Contacter</a></div></td>
         {%endif%}
     </tr>
-
       
   {% endfor %} 
   </tbody>
 </table>
-
-
-
- 
-
-
 
     {% endblock %}
 

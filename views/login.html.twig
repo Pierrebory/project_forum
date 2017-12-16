@@ -2,7 +2,8 @@
   {% block title %}Connexion{% endblock %}
 
   {% block content %}
-
+            
+            <!-- CONNEXION -->
         
             <h1 style="margin-top: 4em; margin-bottom: 1em; text-align:center">Connexion</h1>
 
@@ -12,6 +13,7 @@
          </div>
          {% endif %}
 
+                <!-- CHAMP POUR SE CONNECTER -->
 
                  <div class="form-group" class="col-sm-12" style="margin-left: 60em; margin-right: 60em">
 
@@ -24,9 +26,7 @@
                          <input type="text" name="_username" value="{{ last_username }}" class="form-control" required autofocus>
                      </div>
                  </div>
-                 
-                 
-                 
+
                  <div class="form-group">
                      <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
                          <label>Mot de passe</label>  
@@ -37,6 +37,8 @@
                  <div style="margin-bottom: 1em; margin-top: 1em;"> 
                  <a href="{{ path('mdpoublie') }}">Mot de passe oublié</a>
                 </div>
+
+                <!-- BOUTON -->
                 
                 <button type="submit" class="button">Se connecter</button>
       

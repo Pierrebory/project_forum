@@ -21,7 +21,12 @@
 
 {% endif %}
 
-<blockquote class="blockquote text-center"> 
+ 
+            <form method="GET" style="margin-top:20px;">
+            <input type="text" name="title" id="title" placeholder="Rentrer le nom de l'offre d'emploi"  style="margin-left: 1em; margin-bottom: 1em; width: 390px; margin-top:20px;">
+            <button type="button" class="button" id="action" style="width: 360px;">Recherche d'une offre d'emploi par son titre</button>
+
+            <blockquote class="blockquote text-center"> 
             <form method="GET">
             <input type="text" name="title" id="title" placeholder="Rentrer le nom de l'offre d'emploi"  style="width: 390px; margin-top:20px;">
             <button type="button" class="button" id="action">Recherche d'une offre d'emploi par son titre</button>
@@ -30,9 +35,15 @@
             <div id="result"></div>
 
             <form method="GET">
+ 
+            <input type="text" name="city" id="city" placeholder="Rentrer une ville" style="margin-left: 1em; margin-bottom: 1em; width: 390px;">
+            <button type="button" class="button" id="action1" style="width: 360px;">Recherche d'offres d'emploi par ville</button>
+
+
             <input type="text" name="city" id="city" placeholder="Rentrer une ville" style="width: 390px; margin-top:20px;">
             <button type="button" class="button" id="action1">Recherche d'offres d'emploi par ville</button>
             </form>
+
             <div id="result"></div>
 </blockquote> 
     

@@ -2,12 +2,15 @@
 
 {% block title %} Recherche {% endblock %}
 
+
+
 {% block content %}
-<br><br>
-<br><br>
+
+<h1 style="margin-top: 80px; text-align: center;">Recherche d'un ancien élève</h1>
 {% for users in user%}
 
-<article>
+
+<article style="margin-top: 80px; text-align: center;">
 {%if users.role != 'ROLE_ADMIN' and users.role != 'ROLE_EMPLOYER' %}
     <h1><a href="{{ path('fichedetaillee', {id: users.id}) }}">{{ users.username }}</a></h1>
     <p>{{ users.lastname }}</p>

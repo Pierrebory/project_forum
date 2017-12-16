@@ -8,6 +8,8 @@
 <div class="col-md-12 text-center">
     <blockquote class="blockquote text-center" style="margin-top: 5em;">
 
+      <!-- TITRE -->
+
         <h1 style="text-align: center; margin-bottom: 1em;">Forum d'échange</h1>
         <h4>Echangez sur vos problématiques de code, sur le métier de développeur, sur les technologies...</h4>
                 
@@ -40,6 +42,8 @@
 
 {{ form_start(subjectForm, { 'attr': {'class': 'form-horizontal'} }) }}
 
+<!-- SUJET DES ARTICLES DU FORUM -->
+
 
                <div class="form-group" style="margin-left: 45em; margin-top:20px; width: 35%;">
                    {{ form_label(subjectForm.title, null) }}
@@ -71,13 +75,16 @@
 
 {% else %}
 
-<button type="button" class="button"><a href="{{ path('login') }}">Vous devez être connecté(e) pour poster un message.</a></button>
+<!-- BOUTON  -->
+
+<button type="button" class="button" style="margin-bottom: 50px; margin-left:62em;"><a href="{{ path('login') }}">Vous devez être connecté(e) pour poster un message.</a></button>
 
 
 {% endif %}{% endblock %}
 {% block javascript %}
 
-             
+             <!-- AJAX -->
+
    <script>
        $(function(){
            $('#action').click(function(event){
