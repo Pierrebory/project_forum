@@ -18,11 +18,12 @@
             
 		</div>
 
-
+{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
     <blockquote class="blockquote text-center">
     <a href="{{ path('inscription') }}"><button type="button" class="button">Inscrivez-vous pour figurer dans l'annuaire</button></a>
     <a href="{{ path('login') }}"><button type="button" class="button">Connectez-vous pour accéder à l'annuaire détaillé</button></a>
     </blockquote>
+{% endif %}
 
 
   {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -70,7 +71,7 @@
          {% for user in users %}
         {%if user.role != 'ROLE_ADMIN' and user.role != 'ROLE_EMPLOYER' %}
       <td>{{ user.firstname }}</td>
-      <td>{{ user.username }}</td>
+      <td>{{ user.lastname }}</td>
       <td>{{ user.city }}</td>
 
         
