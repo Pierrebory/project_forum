@@ -27,10 +27,12 @@
                
                 <p>publié le {{ subject.date_message|date("d/m/Y") }} à {{ subject.date_message|date("H:i:s") }} par {{ subject.user_id.username }}</p>
                 <p>{{ subject.message }}</p>
-               {% if is_granted('ROLE_ADMIN') %}
+               
+                {% if is_granted('ROLE_ADMIN') %}
                 <p><a href="{{ path('deleteAdminSubjectAction', {id: subject.id}) }}">Supprimer ce sujet</a></p>
                 <p><a href="{{ path('updateAdminSubjectAction', {id: subject.id}) }}">Modifier ce sujet</a></p>
                {%endif%}
+                
                <hr style=" border: 0;
                 height: 1px;
                 background: #333;

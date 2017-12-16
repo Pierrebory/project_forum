@@ -1,7 +1,11 @@
 <!doctype html>
 <html>
 <head>
-               
+
+
+<!-- 
+  lien avec la page layout -->
+
 
 <meta charset="utf-8">
 <title>WebForce3</title>
@@ -28,7 +32,7 @@
            <div class="navbar navbar-inverse navbar-fixed-top">
              <div class="navbar-inner">
                <div class="container">
-                 <!-- Responsive navbar -->
+                 <!-- Navbar responsive -->
                  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                  </a>
 
@@ -57,23 +61,29 @@
                 
                </div>
  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+
+                    <!-- BONJOUR USERNAME -->
+
                    <span style="color: white;float:right; position: relative; right: 5em; bottom: 2em;">Bonjour {{ app.user.username}}</span>
                    {% endif %}
              </div>
            </div>
          </div>
        </header>
-       <body>
+       <body style="background-color: #f2f2f2;">
       <div>
           {% block content %}{% endblock %}
        </div>
 <!--footer-->
-       <footer style="margin-bottom: 1em;">
+       <footer>
    <div class="container">
      <div class="row">
       <div class="col-md-12">
         <div class="span6 offset3">       
           <ul class="social-networks">
+
+            <!-- LES ICONES POUR LES RESEAUX SOCIAUX -->
 
              <li><a href="https://twitter.com/_webforce3?lang=fr"><img src="{{ asset ('img/icons/twitter.png') }}"></a></li>
              <li><a href="https://fr.linkedin.com/edu/webforce3-373011"><img src="{{ asset ('img/icons/linkedin.png') }}"></a></li>

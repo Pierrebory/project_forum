@@ -759,16 +759,16 @@ class HomeController{
         $user =[];
         $rechercheForm = $app['form.factory']->create(RechercheUsernameType::class);
         $rechercheForm->handleRequest($request);
-        if(NULL!==($request->query->get('name'))){
+        if(NULL!==($request->query->get('lastname'))){
             //le formulaire a été envoyé
             //$request->request est égal à $_POST
             //$request->query est égal à $_GET
             $post = $request->request->get('search_engine');
-            $user = $app['dao.users']->getUsernameLike($request->query->get('name'));        }
+            $user = $app['dao.users']->getUsernameLike($request->query->get('lastname'));       
+             }
         return $app['twig']->render('recherche.username.html.twig', array(
             'form'=>$rechercheForm->createView(),
             'user'=>$user,
-            'test'=>$request->query
         ));
     }
     

@@ -1,12 +1,17 @@
-            
-        <article style="text-align: center; border: ridge;  background-color: white; align-items: center; margin-left: 40em; margin-right: 40em; margin-bottom: 2em; box-shadow: 6px 6px 6px #d6d5d5;   word-wrap: break-word">
+<article>               
 				
-				<img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/web/uploads/' ~ response.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -2em;">Message publié le {{ response.date_message }} par {{ response.user_id.username }}</p>
-                  <a style="float: right" href="{{ path('updateSubjectAction', {id: subject.id}) }}">Modifier ce message</a>  
-            <hr style="margin-left: 3em; margin-right: 3em; border: 0; height: 1px; background: #333; background-image: linear-gradient(to right, #ccc, #333, #ccc);">
-                <p style="padding: 1em;">{{ response.message }}</p>
-            
+				<img style="margin-top: 2em; margin-left: 40em; margin-right: 45em; padding-top: -1em;" src="{{ asset('img/avatar/' ~ response.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -5em;"><p style="margin-top: -4em; margin-left: 47em;">Message publié le {{ response.date_message|date("d/m/Y") }} à {{ response.date_message|date("H:i:s") }} 
+				par {{ response.user_id.username }}<p style="margin-top: 1em; margin-left: 47em;"> {% if response.date_edit != '0000-00-00 00:00:00' %} modifié le {{ response.date_edit|date("d/m/Y") }} à {{ response.date_edit|date("H:i:s") }} </p> {% endif %}  <br>
+                
+                <p style="padding: 1em; color: black; margin-left: 39em; margin-top: 2em; word-wrap: break-word; margin-right: 39em;">{{ response.message }}</p> 
+                {% if app.user.id == response.user_id.id %} <a style="float: right; margin-top: -2em; margin-right: 2em; border: 1px solid grey; border-radius: 5px; padding: 5px; text-decoration: none" href="{{ path('updateSubjectAction', {id: subject.id}) }}">Modifier ce message</a>{% endif %}
+                {% if is_granted('ROLE_ADMIN') %}</p>
+              <a style="float: right" href="{{ path('deleteAdminResponseAction', {id: response.id}) }}">Supprimer ce message</a><br>
+             <a style="float: right" href="{{ path('updateAdminResponseAction', {id: response.id}) }}">Modifier ce message </a>
+              
+              {%endif%}
+              <hr style="margin-left: 3em; margin-right: 3em; border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);">  
 			</article>
-       
-
-

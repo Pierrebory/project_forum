@@ -2,11 +2,14 @@
 
              <article style="text-align: center;"; 
              >
-                <h2><a href="{{ path('forumsubject', {idSubject:subject.id}) }}">{{ subject.title }}</a></h2>
+                <h2><a href="{{ path('forumsubject', {idSubject:subject.id}) }}" style="color: #11A09A; ">{{ subject.title }}</a></h2>
 				
                  <p>publié le {{ subject.date_message }} par {{ subject.user_id.username }} </p>
 			
-                <p>{{ subject.message }}</p><hr>
+                <p>{{ subject.message }}</p><hr style=" border: 0;
+                height: 1px;
+                background: #333;
+                background-image: linear-gradient(to right, #ccc, #333, #ccc);">
 			</article>
 
 	
