@@ -1,7 +1,7 @@
             
         <article style="text-align: center; border: ridge;  background-color: white; align-items: center; margin-left: 40em; margin-right: 40em; margin-bottom: 2em; box-shadow: 6px 6px 6px #d6d5d5;   word-wrap: break-word">
 				
-				<img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/web/uploads/' ~ response.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -2em;">Message publié le {{ response.date_message }} par {{ response.user_id.username }}</p>
+				<img style="margin-top: 1em; margin-left: 1em; margin-right: 45em" src="{{ asset('img/avatar/' ~ response.user_id.avatar) }}" class="img img-responsive img-rounded" width="75"><p style="margin-top: -2em;">Message publié le {{ response.date_message }} par {{ response.user_id.username }}</p>
                   <a style="float: right" href="{{ path('updateSubjectAction', {id: subject.id}) }}">Modifier ce message</a>  
             <hr style="margin-left: 3em; margin-right: 3em; border: 0; height: 1px; background: #333; background-image: linear-gradient(to right, #ccc, #333, #ccc);">
                 <p style="padding: 1em;">{{ response.message }}</p>
