@@ -10,12 +10,19 @@
 {% for users in user%}
 
 
-<article style="margin-top: 80px; text-align: center;">
+<article style="margin-top: 30px; text-align: center;">
 {%if users.role != 'ROLE_ADMIN' and users.role != 'ROLE_EMPLOYER' %}
-    <h1><a href="{{ path('fichedetaillee', {id: users.id}) }}">{{ users.username }}</a></h1>
+	<img style="margin-right:25em; margin-bottom: -10em" src="{{ asset('img/avatar/' ~ users.avatar) }}" class="img img-responsive img-rounded" width="100">
+    <h1><a href="{{ path('fichedetaillee', {id: users.id}) }}">{{ users.username }}</a></h1><a href="{{ path('contacter', {id: users.id}) }}#derniermessage	"><i style="margin-left: 10em; position: relative; bottom: 1.5em" class="fa fa-2x fa-envelope-o" aria-hidden="true"></a></i>
     <p>{{ users.lastname }}</p>
     <p>{{ users.firstname }}</p>
+    <hr style=" 
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); margin-top: 4em
+">
 {%endif%}
+
 </article>
 
 {% endfor %}
